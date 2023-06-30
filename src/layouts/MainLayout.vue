@@ -4,6 +4,16 @@
       <q-toolbar class="contlogo">
         <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
         <img class="contlogo" src="public/img/logouttn.png" />
+        <q-btn-dropdown v-if="isLogin" icon="account_circle" :label="user.correo" color="primary">
+              <q-list>
+                <q-item clickable v-close-popup @click="logout">
+                  <q-item-section>
+                    <q-item-label>Log out</q-item-label>
+                  </q-item-section>
+                </q-item>
+              </q-list>
+            </q-btn-dropdown>
+            <q-btn v-else color="white" flat type="a" :to="{name : 'login'}" icon="account_circle" label="login" />
       </q-toolbar>
     </q-header>
 
@@ -61,20 +71,52 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { defineComponent,ref } from "vue";
+import { useQuasar } from "quasar"
+import { useUserStore } from "src/stores/user-store";
+import { useRoute, useRouter } from 'vue-router';
 
-export default {
+export default defineComponent({
   setup() {
+    const router= useRouter();
+    const userStore = useUserStore();
     const leftDrawerOpen = ref(false);
-
+    const $q = useQuasar();
+    const isLogin = ref();
+    const user = userStore.getUser;
     return {
+      $q,
+      router,
+      userStore,
       leftDrawerOpen,
       toggleLeftDrawer() {
         leftDrawerOpen.value = !leftDrawerOpen.value;
       },
     };
   },
-};
+  methods:{
+    logout(){
+      this.$q.sessionStorage.remove("user");
+      this.userStore.userLogout();
+      this.router.push({ name: "login"});
+    }
+  },
+  computed: {
+    isLogin() {
+      if (this.user) {
+        return true;
+      }else {
+        return false
+      }
+    },
+    user(){
+      if (!this.userStore.getUser && this.$q.sessionStorage.getItem("user")) {
+        this.userStore.setUser(this.$q.sessionStorage.getItem("user"));
+      }
+      return this.userStore.getUser;
+    },
+  },
+})
 </script>
 
 <style>

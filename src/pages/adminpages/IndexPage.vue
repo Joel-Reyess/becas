@@ -1,4 +1,10 @@
 <template>
+  <q-form
+    @submit="onSubmit"
+    @reset="onReset"
+    class="q-gutter-md"
+  >
+
   <div class="my-card">
     <div class="back">
       <p class="bien">Bienvenido</p>
@@ -42,61 +48,62 @@
       </q-card-section>
     </div>
   </div>
+  </q-form>
 </template>
 
 <script>
 import { defineComponent, ref } from "vue";
-// import { api } from "src/boot/axios";
-// import { SessionStorage } from "quasar";
-// import { useUserStore } from "src/stores/user-store";
-// import { useRouter } from "vue-router";
-// import { route } from "quasar/wrappers";
+import { api } from "src/boot/axios";
+import { SessionStorage } from "quasar";
+import { useUserStore } from "src/stores/user-store";
+import { useRouter } from "vue-router";
+import { route } from "quasar/wrappers";
 
 export default defineComponent({
   name: "IndexPage",
   components: {},
 
   setup() {
-    // const userStore = useUserStore();
-    // const router = useRouter();
-    // const correo = ref();
-    // const contrasena = ref();
-    // function onSubmit() {
-    //     console.log(correo.value, contrasena.value);
-    //     api.post('/api/login',{
-    //       correo: correo.value,
-    //       contrasena: contrasena.value,
-    //     }).then((res) => {
-    //       if (res.data.msg) {
-    //         alert(res.data.msg);
-    //       } else {
-    //         SessionStorage.set("usuario", res.data);
-    //         userStore.setUser(res.data);
-    //         router.push({name: "index"})
-    //       }
-    //     })
-    //     .catch((err) => console.error(err));
-    //   }
-    //   function onReset() {
-    //     correo.value="";
-    //     contrasena.value="";
-    //   }
+    const userStore = useUserStore();
+    const router = useRouter();
+    const correo = ref();
+    const contrasena = ref();
+    function onSubmit() {
+        console.log(correo.value, contrasena.value);
+        api.post('http://127.0.0.1:3000/api/login',{
+          correo: correo.value,
+          contrasena: contrasena.value,
+        }).then((res) => {
+          if (res.data.msg) {
+            alert(res.data.msg);
+          } else {
+            SessionStorage.set("usuario", res.data);
+            userStore.setUser(res.data);
+            router.push({name: "index"})
+          }
+        })
+        .catch((err) => console.error(err));
+      }
+      function onReset() {
+        correo.value="";
+        contrasena.value="";
+      }
     return {
       isPwd: ref(true),
-      // correo,
-      // contrasena,
-      // userStore,
-      // router,
-      // onSubmit,
-      // onReset
+      correo,
+      contrasena,
+      userStore,
+      router,
+      onSubmit,
+      onReset
     }
   },
-  // beforeMount (){
-  //     if (SessionStorage.getItem("usuario")) {
-  //       this.userStore.setUser(SessionStorage.getItem('usuario'));
-  //       this.router.push({name: "index"});
-  //     }
-  //   }
+  beforeMount (){
+      if (SessionStorage.getItem("usuario")) {
+        this.userStore.setUser(SessionStorage.getItem('usuario'));
+        this.router.push({name: "index"});
+      }
+    }
 });
 
 </script>

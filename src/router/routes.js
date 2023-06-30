@@ -1,3 +1,12 @@
+import { useUserStore } from "src/stores/user-store";
+
+function verifyLogin(to){
+  const userStore = useUserStore();
+  if (!userStore.getUser) {
+    return { name: "login"};
+  }
+}
+
 const routes = [
   {
     path: "/",
