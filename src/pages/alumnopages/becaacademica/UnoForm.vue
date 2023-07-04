@@ -33,6 +33,7 @@
             ]"
             class="col-5 q-pt-lg"
           />
+          <q-space />
           <q-input
             filled
             v-model="curp"
@@ -59,10 +60,11 @@
             ]"
             class="col-5 q-pt-lg"
           />
+          <q-space />
           <q-input
             filled
             type="email"
-            v-model="correo"
+            v-model="correoinstitucional"
             label="Correo"
             hint="Correo Institucional"
             lazy-rules
@@ -75,20 +77,21 @@
           <q-space />
           <q-input
             filled
-            v-model="correotutor"
-            label="Correo del tutor"
-            hint="Correo de tutor"
+            v-model="beca"
+            label="Tipo de beca"
+            hint="Beca que desea solicitar"
             lazy-rules
             :rules="[
-              (val) => (val !== null && val !== '') || 'Por favor completa este campo',
+              (val) => (val && val.length > 0) || 'Por favor completa este campo',
             ]"
             class="col-5 q-pt-lg"
           />
+          <q-space />
           <q-input
-            filled
-            v-model="carrera"
-            label="Carrera"
-            hint="Carrera cursando"
+          filled
+          v-model="carrera"
+          label="Carrera"
+          hint="Carrera cursando"
             lazy-rules
             :rules="[
               (val) => (val && val.length > 0) || 'Por favor completa este campo',
@@ -107,9 +110,22 @@
             ]"
             class="col-5 q-pt-lg"
           />
+          <q-space />
           <q-input
             filled
-            v-model="cuatri"
+            v-model="grado"
+            label="Grado"
+            hint="Grado al que perteneces"
+            lazy-rules
+            :rules="[
+              (val) => (val !== null && val !== '') || 'Por favor completa este campo',
+            ]"
+            class="col-5 q-pt-lg"
+            />
+            <q-space />
+            <q-input
+            filled
+            v-model="cuatrimestre"
             label="Cuatrimestre"
             hint="Cuatrimestre al que deseas aplicar la beca"
             lazy-rules
@@ -118,9 +134,9 @@
                 (val && val.length > 0) || 'Por favor completa este campo',
             ]"
             class="col-5 q-pt-lg"
-          />
-          <q-space />
-          <q-input
+            />
+            <q-space />
+            <q-input
             filled
             v-model="grupo"
             label="Grupo"
@@ -130,7 +146,20 @@
               (val) => (val !== null && val !== '') || 'Por favor completa este campo',
             ]"
             class="col-5 q-pt-lg"
-          />
+            />
+            <q-space />
+            <q-input
+              filled
+              v-model="correotutor"
+              label="Correo del tutor"
+              hint="Correo de tutor"
+              lazy-rules
+              :rules="[
+                (val) => (val !== null && val !== '') || 'Por favor completa este campo',
+              ]"
+              class="col-5 q-pt-lg"
+            />
+            <q-space />
           <q-input
             filled
             v-model="genero"
@@ -141,6 +170,7 @@
             ]"
             class="col-5 q-pt-lg"
           />
+       
         </div>
 
         <q-toggle
@@ -149,7 +179,7 @@
         />
 
         <div>
-          <q-btn label="Continuar" type="submit" color="primary" @click="onClick" to="/alumno/academica/paso2" />
+          <q-btn label="Continuar" type="submit" color="primary" @click="onSubmit" to="/alumno/academica/paso2" />
 
         </div>
       </q-form>
@@ -162,6 +192,8 @@ import { defineComponent, ref } from "vue";
 import { useQuasar } from "quasar";
 import ButtonProgress from "src/components/Alumno/ButtonProgress.vue";
 import ProgresoBar from "src/components/Alumno/ProgresoBar.vue";
+import formState from "src/formState.js";
+
 export default {
   components: {
     ButtonProgress,
@@ -170,65 +202,74 @@ export default {
   setup() {
     const $q = useQuasar();
 
-    const nombre = ref(null);
-    const matricula = ref(null);
-    const curp = ref(null);
-    const telefono = ref(null);
-    const correo = ref(null);
-    const correotutor = ref(null);
-    const carrera = ref(null);
-    const area = ref(null);
-    const cuatri = ref(null);
-    const grupo = ref(null);
-    const genero = ref(null);
-    const accept = ref(false);
+    const onSubmit = () => {
+      if (formState.accept !== true) {
+        $q.notify({
+          color: "red-5",
+          textColor: "white",
+          icon: "warning",
+          message: "Necesitas revisar que todo este correcto",
+        });
+      } else {
+        const formData = {
+          nombre: formState.nombre,
+          matricula: formState.matricula,
+          curp: formState.curp,
+          telefono: formState.telefono,
+          correoinstitucional: formState.correoinstitucional,
+          beca: formState.beca,
+          carrera: formState.carrera,
+          area: formState.area,
+          grado: formState.grado,
+          cuatrimestre: formState.cuatrimestre,
+          grupo: formState.grupo,
+          correotutor: formState.correotutor,
+          genero: formState.genero,
+        };
+
+        axios
+          .post('/api/form', formData)
+          .then(res => {
+            $q.notify({
+              color: 'green-4',
+              textColor: 'white',
+              icon: 'cloud_done',
+              message: 'Datos enviados correctamente',
+            });
+          })
+          .catch(error => {
+            console.error('Error al enviar los datos:', error);
+            $q.notify({
+              color: 'red-5',
+              textColor: 'white',
+              icon: 'warning',
+              message: 'Error al enviar los datos',
+            });
+          });
+      }
+    };
+
+    const onReset = () => {
+      formState.nombre = null;
+      formState.matricula = null;
+      formState.curp = null;
+      formState.telefono = null;
+      formState.correoinstitucional = null;
+      formState.beca = null;
+      formState.carrera = null;
+      formState.area = null;
+      formState.grado = null;
+      formState.cuatrimestre = null;
+      formState.grupo = null;
+      formState.correotutor = null;
+      formState.genero = null;
+      formState.accept = false;
+    };
 
     return {
-      nombre,
-      matricula,
-      curp,
-      telefono,
-      correo,
-      correotutor,
-      carrera,
-      area,
-      cuatri,
-      grupo,
-      genero,
-      accept,
-
-      onSubmit() {
-        if (accept.value !== true) {
-          $q.notify({
-            color: "red-5",
-            textColor: "white",
-            icon: "warning",
-            message: "Necesitas revisar que todo este correcto",
-          });
-        } else {
-          $q.notify({
-            color: "green-4",
-            textColor: "white",
-            icon: "cloud_done",
-            message: "Submitted",
-          });
-        }
-      },
-
-      onReset() {
-        nombre.value = null;
-        matricula.value = null;
-        curp.value = null;
-        telefono.value = null;
-        correo.value = null;
-        correotutor.value = null;
-        carrera.value = null;
-        area.value = null;
-        cuatri.value = null;
-        grupo.value = null;
-        genero.value = null;
-        accept.value = false;
-      },
+      formState,
+      onSubmit,
+      onReset,
     };
   },
 };

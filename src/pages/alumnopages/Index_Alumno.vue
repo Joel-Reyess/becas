@@ -110,11 +110,11 @@
     </q-card>
     <q-card class="my-card" flat bordered>
       <q-img
-        src="public/img/cultural.jpg"
+        src="public/img/transporte.jpg"
       />
       <q-card-section>
 
-        <div class="text-h5 q-mt-sm q-mb-xs">Cultural</div>
+        <div class="text-h5 q-mt-sm q-mb-xs">Transporte</div>
       </q-card-section>
       <q-card-actions>
         <q-btn flat color="primary" label="Solicitar" />
