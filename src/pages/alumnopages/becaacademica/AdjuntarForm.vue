@@ -7,10 +7,47 @@
     <p>¡Adjuntar solo archivos PDF!</p>
     <q-space />
     <div class="q-pa-xs q-pt-lg">
-      <q-card class="my-card">
-        <q-file filled bottom-slots v-model="model" label="Credencial" counter max-files="12" accept="application/pdf">
+      <q-card class="my-card q-card--bordered">
+        <q-form
+          @submit="onSubmit"
+          @reset="onReset"
+          class="q-gutter-md"
+        >
+        <div class="row" padding>
+        <q-file filled bottom-slots class="col-5 q-pt-lg" v-model="solicitud" label="Solicitud" counter max-files="12" accept="application/pdf">
           <q-btn round dense flat icon="add" @click.stop.prevent />
         </q-file>
+        <q-space />
+        <q-file filled bottom-slots class="col-5 q-pt-lg" v-model="credencial" label="Credencial, ambos lados" counter max-files="12" accept="application/pdf">
+          <q-btn round dense flat icon="add" @click.stop.prevent />
+        </q-file>
+        <q-space />
+        <q-file filled bottom-slots class="col-5 q-pt-lg" v-model="boleta" label="Boleta de calificaciones" counter max-files="12" accept="application/pdf">
+          <q-btn round dense flat icon="add" @click.stop.prevent />
+        </q-file>
+        <q-space />
+        <q-file filled bottom-slots class="col-5 q-pt-lg" v-model="comprobante" label="Comprobante de ingresos" counter max-files="12" accept="application/pdf">
+          <q-btn round dense flat icon="add" @click.stop.prevent />
+        </q-file>
+        <q-space />
+        <q-file filled bottom-slots class="col-5 q-pt-lg" v-model="socioeconomicos" label="Datos socioeconomicos" counter max-files="12" accept="application/pdf">
+          <q-btn round dense flat icon="add" @click.stop.prevent />
+        </q-file>
+        <q-space />
+        <q-file filled bottom-slots class="col-5 q-pt-lg" v-model="compromiso" label="Carta compromiso y aceptacion de beca" counter max-files="12" accept="application/pdf">
+          <q-btn round dense flat icon="add" @click.stop.prevent />
+        </q-file>
+        <q-space />
+        <q-file filled bottom-slots class="col-5 q-pt-lg" v-model="conducta" label="Carta buena conducta" counter max-files="12" accept="application/pdf">
+          <q-btn round dense flat icon="add" @click.stop.prevent />
+        </q-file>
+        <q-space />
+        <div class="col-12 q-pt-lg">
+            <q-btn label="Submit" type="submit" color="primary"/>
+          </div>
+          <q-space />
+        </div>
+      </q-form>
       </q-card>
     </div>
   </q-page>
@@ -29,7 +66,13 @@ export default {
   },
   setup () {
     return {
-      model: ref(null)
+      solicitud: ref(null),
+      credencial: ref(null),
+      boleta: ref(null),
+      comprobante: ref(null),
+      socioeconomicos: ref(null),
+      compromiso: ref(null),
+      conducta: ref(null)
     }
   }
 }

@@ -67,4 +67,7 @@ export default {
 
 <style>
 
+.my-card{
+  max-width: 550px;
+}
 </style>

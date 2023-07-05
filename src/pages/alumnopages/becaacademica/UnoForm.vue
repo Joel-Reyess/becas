@@ -170,7 +170,7 @@
             ]"
             class="col-5 q-pt-lg"
           />
-       
+
         </div>
 
         <q-toggle
@@ -192,7 +192,6 @@ import { defineComponent, ref } from "vue";
 import { useQuasar } from "quasar";
 import ButtonProgress from "src/components/Alumno/ButtonProgress.vue";
 import ProgresoBar from "src/components/Alumno/ProgresoBar.vue";
-import formState from "src/formState.js";
 
 export default {
   components: {
@@ -249,25 +248,8 @@ export default {
       }
     };
 
-    const onReset = () => {
-      formState.nombre = null;
-      formState.matricula = null;
-      formState.curp = null;
-      formState.telefono = null;
-      formState.correoinstitucional = null;
-      formState.beca = null;
-      formState.carrera = null;
-      formState.area = null;
-      formState.grado = null;
-      formState.cuatrimestre = null;
-      formState.grupo = null;
-      formState.correotutor = null;
-      formState.genero = null;
-      formState.accept = false;
-    };
 
     return {
-      formState,
       onSubmit,
       onReset,
     };
