@@ -115,7 +115,7 @@
             filled
             v-model="grado"
             label="Grado"
-            hint="Grado al que perteneces"
+            hint="Grado al que perteneces ya se TSU, LIC o ING"
             lazy-rules
             :rules="[
               (val) => (val !== null && val !== '') || 'Por favor completa este campo',
@@ -192,6 +192,7 @@ import { defineComponent, ref } from "vue";
 import { useQuasar } from "quasar";
 import ButtonProgress from "src/components/Alumno/ButtonProgress.vue";
 import ProgresoBar from "src/components/Alumno/ProgresoBar.vue";
+import { useRouter } from "vue-router";
 
 export default {
   components: {
@@ -200,9 +201,23 @@ export default {
   },
   setup() {
     const $q = useQuasar();
-
+    const router = useRouter();
+    const nombre = ref();
+    const matricula = ref();
+    const curp = ref();
+    const telefono = ref();
+    const correoinstitucional = ref();
+    const beca = ref();
+    const carrera = ref();
+    const area = ref();
+    const grado = ref();
+    const cuatrimestre = ref();
+    const grupo = ref();
+    const correotutor = ref();
+    const genero = ref();
     const onSubmit = () => {
-      if (formState.accept !== true) {
+      const accept = true;
+      if (accept !== true) {
         $q.notify({
           color: "red-5",
           textColor: "white",
@@ -211,19 +226,19 @@ export default {
         });
       } else {
         const formData = {
-          nombre: formState.nombre,
-          matricula: formState.matricula,
-          curp: formState.curp,
-          telefono: formState.telefono,
-          correoinstitucional: formState.correoinstitucional,
-          beca: formState.beca,
-          carrera: formState.carrera,
-          area: formState.area,
-          grado: formState.grado,
-          cuatrimestre: formState.cuatrimestre,
-          grupo: formState.grupo,
-          correotutor: formState.correotutor,
-          genero: formState.genero,
+          nombre: nombre.value,
+          matricula: matricula.value,
+          curp: curp.value,
+          telefono: telefono.value,
+          correoinstitucional: correoinstitucional.value,
+          beca: beca.value,
+          carrera: carrera.value,
+          area: area.value,
+          grado: grado.value,
+          cuatrimestre: cuatrimestre.value,
+          grupo: grupo.value,
+          correotutor: correotutor.value,
+          genero: genero.value,
         };
 
         axios
@@ -235,6 +250,7 @@ export default {
               icon: 'cloud_done',
               message: 'Datos enviados correctamente',
             });
+            router.push('/alumno/academica/paso3');
           })
           .catch(error => {
             console.error('Error al enviar los datos:', error);
@@ -248,10 +264,22 @@ export default {
       }
     };
 
-
     return {
       onSubmit,
-      onReset,
+      nombre,
+      matricula,
+      curp,
+      telefono,
+      correoinstitucional,
+      beca,
+      carrera,
+      area,
+      grado,
+      cuatrimestre,
+      grupo,
+      correotutor,
+      genero,
+
     };
   },
 };
@@ -270,5 +298,9 @@ export default {
   font-size: 18px;
 
   font-weight: 700;
+}
+
+.my-card{
+  display: contents;
 }
 </style>

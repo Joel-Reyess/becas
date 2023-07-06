@@ -42,8 +42,12 @@
           <q-btn round dense flat icon="add" @click.stop.prevent />
         </q-file>
         <q-space />
+        <q-toggle
+          v-model="accept"
+          label="Ya revise que las respuestas sean correctas"
+        />
         <div class="col-12 q-pt-lg">
-            <q-btn label="Submit" type="submit" color="primary"/>
+            <q-btn label="Continuar" type="submit" color="primary"/>
           </div>
           <q-space />
         </div>

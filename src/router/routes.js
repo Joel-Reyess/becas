@@ -79,6 +79,11 @@ const routes = [
         name: "academica/paso2",
         component: () => import("src/pages/alumnopages/becaacademica/AdjuntarForm.vue"),
       },
+      {
+        path: "academica/paso3",
+        name: "academica/paso3",
+        component: () => import("src/pages/alumnopages/becaacademica/ResumenBeca.vue"),
+      },
     ],
   },
 
