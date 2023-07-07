@@ -42,9 +42,11 @@ import { mapActions } from 'vuex';
 
 export default {
   setup() {
-    const formData = route.params;
+    const formData = ref(null);
 
     onMounted(() => {
+      const savedFormData = JSON.parse(localStorage.getItem('formData'));
+      formData.value = savedFormData;
       axios.get('/api/form')
       .then(response => {
         formData.value = response.data;
@@ -53,8 +55,19 @@ export default {
         console.error('Error al obtener los datos:', error);
       });
     });
+
+    const onSubmit = () => {
+      // Realizar el proceso de envío a la base de datos
+      // ...
+
+      // Limpiar o eliminar los datos del localStorage
+      localStorage.removeItem('formData');
+    };
+
+
     return {
       formData,
+      onSubmit,
     };
   },
 };

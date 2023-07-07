@@ -77,6 +77,7 @@
           <q-space />
           <q-input
             filled
+            type="text"
             v-model="beca"
             label="Tipo de beca"
             hint="Beca que desea solicitar"
@@ -115,7 +116,7 @@
             filled
             v-model="grado"
             label="Grado"
-            hint="Grado al que perteneces ya se TSU, LIC o ING"
+            hint="Grado al que perteneces ya sea TSU, LIC o ING"
             lazy-rules
             :rules="[
               (val) => (val !== null && val !== '') || 'Por favor completa este campo',
@@ -188,11 +189,12 @@
 </template>
 
 <script>
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, onMounted } from "vue";
 import { useQuasar } from "quasar";
 import ButtonProgress from "src/components/Alumno/ButtonProgress.vue";
 import ProgresoBar from "src/components/Alumno/ProgresoBar.vue";
 import { useRouter } from "vue-router";
+import axios from "axios";
 
 export default {
   components: {
@@ -201,6 +203,7 @@ export default {
   },
   setup() {
     const $q = useQuasar();
+    const accept = ref(false);
     const router = useRouter();
     const nombre = ref();
     const matricula = ref();
@@ -215,6 +218,16 @@ export default {
     const grupo = ref();
     const correotutor = ref();
     const genero = ref();
+
+    onMounted(async () => {
+      try {
+        const response = await axios.get("http://127.0.0.1:3000/api/becas/1");
+        beca.value = response.data[0].idbeca;
+      } catch (error) {
+        console.error("Error al obtener la beca:", error);
+      }
+    });
+
     const onSubmit = () => {
       const accept = true;
       if (accept !== true) {
@@ -240,9 +253,10 @@ export default {
           correotutor: correotutor.value,
           genero: genero.value,
         };
+        localStorage.setItem('formData', JSON.stringify(formData));
 
         axios
-          .post('/api/form', formData)
+          .post('http://127.0.0.1:3000/api/form', formData)
           .then(res => {
             $q.notify({
               color: 'green-4',
@@ -279,7 +293,7 @@ export default {
       grupo,
       correotutor,
       genero,
-
+      accept,
     };
   },
 };
