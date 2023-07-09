@@ -69,6 +69,7 @@ export default {
     DosProgresoBar,
   },
   setup () {
+    const accept = ref(false);
     return {
       solicitud: ref(null),
       credencial: ref(null),
@@ -76,7 +77,8 @@ export default {
       comprobante: ref(null),
       socioeconomicos: ref(null),
       compromiso: ref(null),
-      conducta: ref(null)
+      conducta: ref(null),
+      accept,
     }
   }
 }

@@ -75,56 +75,64 @@
             class="col-5 q-pt-lg"
           />
           <q-space />
-          <q-input
+          <q-select
             filled
-            type="text"
             v-model="beca"
             label="Tipo de beca"
             hint="Beca que desea solicitar"
             lazy-rules
             :rules="[
-              (val) => (val && val.length > 0) || 'Por favor completa este campo',
+              (val) =>
+                (val && val.length > 0) || 'Por favor completa este campo',
             ]"
             class="col-5 q-pt-lg"
+            :options="becas"
+
           />
           <q-space />
-          <q-input
-          filled
-          v-model="carrera"
-          label="Carrera"
-          hint="Carrera cursando"
+          <q-select
+            filled
+            v-model="carrera"
+            label="Carrera"
+            hint="Carrera cursando"
             lazy-rules
             :rules="[
-              (val) => (val && val.length > 0) || 'Por favor completa este campo',
+              (val) =>
+                (val !== null && val !== undefined) || 'Por favor completa este campo',
             ]"
             class="col-5 q-pt-lg"
+            :options="carreras"
           />
           <q-space />
-          <q-input
+          <q-select
             filled
             v-model="area"
             label="Area"
             hint="Area cursando"
             lazy-rules
             :rules="[
-              (val) => (val !== null && val !== '') || 'Por favor completa este campo',
+              (val) =>
+                (val !== null && val !== undefined) || 'Por favor completa este campo',
             ]"
             class="col-5 q-pt-lg"
+            :options="areas"
           />
           <q-space />
-          <q-input
+          <q-select
             filled
             v-model="grado"
             label="Grado"
             hint="Grado al que perteneces ya sea TSU, LIC o ING"
             lazy-rules
             :rules="[
-              (val) => (val !== null && val !== '') || 'Por favor completa este campo',
+              (val) =>
+                (val !== null && val !== undefined) || 'Por favor completa este campo',
             ]"
             class="col-5 q-pt-lg"
-            />
-            <q-space />
-            <q-input
+            :options="grados"
+          />
+          <q-space />
+          <q-input
             filled
             v-model="cuatrimestre"
             label="Cuatrimestre"
@@ -135,43 +143,62 @@
                 (val && val.length > 0) || 'Por favor completa este campo',
             ]"
             class="col-5 q-pt-lg"
-            />
-            <q-space />
-            <q-input
+          />
+          <q-space />
+          <q-input
             filled
             v-model="grupo"
             label="Grupo"
             hint="Grupo al que perteneces"
             lazy-rules
             :rules="[
-              (val) => (val !== null && val !== '') || 'Por favor completa este campo',
-            ]"
-            class="col-5 q-pt-lg"
-            />
-            <q-space />
-            <q-input
-              filled
-              v-model="correotutor"
-              label="Correo del tutor"
-              hint="Correo de tutor"
-              lazy-rules
-              :rules="[
-                (val) => (val !== null && val !== '') || 'Por favor completa este campo',
-              ]"
-              class="col-5 q-pt-lg"
-            />
-            <q-space />
-          <q-input
-            filled
-            v-model="genero"
-            label="Genero"
-            lazy-rules
-            :rules="[
-              (val) => (val !== null && val !== '') || 'Por favor completa este campo',
+              (val) =>
+                (val !== null && val !== '') || 'Por favor completa este campo',
             ]"
             class="col-5 q-pt-lg"
           />
-
+          <q-space />
+          <q-input
+            filled
+            v-model="correotutor"
+            label="Correo del tutor"
+            hint="Correo de tutor"
+            lazy-rules
+            :rules="[
+              (val) =>
+                (val !== null && val !== '') || 'Por favor completa este campo',
+            ]"
+            class="col-5 q-pt-lg"
+          />
+          <q-space />
+          <q-select
+            filled
+            v-model="genero"
+            label="Genero"
+            hint="Selecciona tu genero"
+            lazy-rules
+            :rules="[
+              (val) =>
+                (val !== null && val !== undefined) || 'Por favor completa este campo',
+            ]"
+            class="col-5 q-pt-lg"
+            :options="generos"
+          />
+          <q-space />
+          <q-select
+            filled
+            v-model="estado"
+            label="Pendiente"
+            hint="Así inicia el estado de tu beca"
+            lazy-rules
+            :rules="[
+              (val) =>
+                (val && val.length > 0) || 'Por favor completa este campo',
+            ]"
+            class="col-5 q-pt-lg"
+            :options="estados"
+          />
+          <q-space />
         </div>
 
         <q-toggle
@@ -180,8 +207,13 @@
         />
 
         <div>
-          <q-btn label="Continuar" type="submit" color="primary" @click="onSubmit" to="/alumno/academica/paso2" />
-
+          <q-btn
+            label="Continuar"
+            type="submit"
+            color="primary"
+            @click="onSubmit"
+            to="/alumno/academica/paso2"
+          />
         </div>
       </q-form>
     </div>
@@ -190,7 +222,8 @@
 
 <script>
 import { defineComponent, ref, onMounted } from "vue";
-import { useQuasar } from "quasar";
+import { useQuasar } from 'quasar';
+import { Notify } from 'quasar';
 import ButtonProgress from "src/components/Alumno/ButtonProgress.vue";
 import ProgresoBar from "src/components/Alumno/ProgresoBar.vue";
 import { useRouter } from "vue-router";
@@ -210,25 +243,167 @@ export default {
     const curp = ref();
     const telefono = ref();
     const correoinstitucional = ref();
-    const beca = ref();
-    const carrera = ref();
-    const area = ref();
-    const grado = ref();
+    const beca = ref(null);
+    const carrera = ref({
+      value: null,
+      label: ''
+    });
+    const area = ref({
+      value: null,
+      label:''
+    });
+    const grado = ref({
+      value: null,
+      label: ''
+    });
     const cuatrimestre = ref();
     const grupo = ref();
     const correotutor = ref();
-    const genero = ref();
+    const genero = ref({
+      value: null,
+      label: ''
+    });
+    const estado = ref(null);
+
+    const becas = ref([]);
+    const estados = ref([]);
+    const carreras = ref([]);
+    const areas = ref([]);
+    const grados = ref([]);
+    const generos = ref([]);
 
     onMounted(async () => {
       try {
         const response = await axios.get("http://127.0.0.1:3000/api/becas/1");
-        beca.value = response.data[0].idbeca;
+        const becaData = response.data;
+        if (becaData) {
+          beca.value = becaData.beca;
+        }
+        console.log(response);
       } catch (error) {
         console.error("Error al obtener la beca:", error);
       }
     });
 
+    onMounted(async () => {
+      try {
+        const response = await axios.get("http://127.0.0.1:3000/api/estados/1");
+        const estadoData = response.data;
+        if (estadoData) {
+          estado.value = estadoData.estado;
+        }
+        console.log(response);
+      } catch (error) {
+        console.error("Error al obtener la beca:", error);
+      }
+    });
+
+    onMounted(async () => {
+      try {
+        const response = await axios.get("http://127.0.0.1:3000/api/carrera");
+        const carreraData = response.data;
+        if (carreraData && carreraData.length > 0) {
+          carreras.value = carreraData.map(item => ({
+            label: item.carrera,
+            value: item.carrera
+          }));
+          carrera.value = carreras.value[0];
+        }
+        console.log(response);
+      } catch (error) {
+        console.error("Error al obtener la carrera:", error);
+      }
+    });
+
+    onMounted(async () => {
+      try {
+        const response = await axios.get("http://127.0.0.1:3000/api/area");
+        const areaData = response.data;
+        if (areaData && areaData.length > 0) {
+          areas.value = areaData.map(item => ({
+            label: item.area,
+            value: item.area
+          }));
+          area.value = areas.value[0];
+        }
+        console.log(response);
+      } catch (error) {
+        console.error("Error al obtener el area:", error);
+      }
+    });
+
+    onMounted(async () => {
+      try {
+        const response = await axios.get("http://127.0.0.1:3000/api/grado");
+        const gradoData = response.data;
+        if (gradoData && gradoData.length > 0) {
+          grados.value = gradoData.map(item => ({
+            label: item.grado,
+            value: item.grado
+          }));
+          grado.value = grados.value[0];
+        }
+        console.log(response);
+      } catch (error) {
+        console.error("Error al obtener el grado:", error);
+      }
+    });
+
+    onMounted(async () => {
+      try {
+        const response = await axios.get("http://127.0.0.1:3000/api/genero");
+        const generoData = response.data;
+        if (generoData && generoData.length > 0) {
+          generos.value = generoData.map(item => ({
+            label: item.genero,
+            value: item.genero
+          }));
+          genero.value = generos.value[0];
+        }
+        console.log(response);
+      } catch (error) {
+        console.error("Error al obtener el genero:", error);
+      }
+    });
+
+
+
+    const formData = ref ({
+      nombre: "",
+      matricula: "",
+      curp: "",
+      telefono: "",
+      correoinstitucional: "",
+      beca: [],
+      carrera: [],
+      area: [],
+      grado: [],
+      cuatrimestre: "",
+      grupo: "",
+      correotutor: "",
+      genero: [],
+      estado: []
+    });
+    localStorage.setItem("formData", JSON.stringify(formData));
+
     const onSubmit = () => {
+      formData.value = {
+        nombre: nombre.value,
+        matricula: matricula.value,
+        curp: curp.value,
+        telefono: telefono.value,
+        correoinstitucional: correoinstitucional.value,
+        beca: beca.value,
+        carrera: carrera.value,
+        area: area.value,
+        grado: grado.value,
+        cuatrimestre: cuatrimestre.value,
+        grupo: grupo.value,
+        correotutor: correotutor.value,
+        genero: genero.value,
+        estado: estado.value
+      };
+      localStorage.setItem("formData", JSON.stringify(formData.value));
       const accept = true;
       if (accept !== true) {
         $q.notify({
@@ -238,41 +413,24 @@ export default {
           message: "Necesitas revisar que todo este correcto",
         });
       } else {
-        const formData = {
-          nombre: nombre.value,
-          matricula: matricula.value,
-          curp: curp.value,
-          telefono: telefono.value,
-          correoinstitucional: correoinstitucional.value,
-          beca: beca.value,
-          carrera: carrera.value,
-          area: area.value,
-          grado: grado.value,
-          cuatrimestre: cuatrimestre.value,
-          grupo: grupo.value,
-          correotutor: correotutor.value,
-          genero: genero.value,
-        };
-        localStorage.setItem('formData', JSON.stringify(formData));
-
         axios
-          .post('http://127.0.0.1:3000/api/form', formData)
-          .then(res => {
+          .post("http://127.0.0.1:3000/api/form", formData)
+          .then((res) => {
             $q.notify({
-              color: 'green-4',
-              textColor: 'white',
-              icon: 'cloud_done',
-              message: 'Datos enviados correctamente',
+              color: "green-4",
+              textColor: "white",
+              icon: "cloud_done",
+              message: "Datos enviados correctamente",
             });
-            router.push('/alumno/academica/paso3');
+            router.push("/alumno/academica/paso3");
           })
-          .catch(error => {
-            console.error('Error al enviar los datos:', error);
+          .catch((error) => {
+            console.error("Error al enviar los datos:", error);
             $q.notify({
-              color: 'red-5',
-              textColor: 'white',
-              icon: 'warning',
-              message: 'Error al enviar los datos',
+              color: "red-5",
+              textColor: "white",
+              icon: "warning",
+              message: "Error al enviar los datos",
             });
           });
       }
@@ -293,7 +451,14 @@ export default {
       grupo,
       correotutor,
       genero,
+      estado,
       accept,
+      becas,
+      estados,
+      carreras,
+      areas,
+      grados,
+      generos,
     };
   },
 };
@@ -314,7 +479,7 @@ export default {
   font-weight: 700;
 }
 
-.my-card{
+.my-card {
   display: contents;
 }
 </style>
