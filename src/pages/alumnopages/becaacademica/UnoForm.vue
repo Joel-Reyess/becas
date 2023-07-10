@@ -259,10 +259,7 @@ export default {
     const cuatrimestre = ref();
     const grupo = ref();
     const correotutor = ref();
-    const genero = ref({
-      value: null,
-      label: ''
-    });
+    const genero = ref(null);
     const estado = ref(null);
 
     const becas = ref([]);
@@ -303,11 +300,8 @@ export default {
         const response = await axios.get("http://127.0.0.1:3000/api/carrera");
         const carreraData = response.data;
         if (carreraData && carreraData.length > 0) {
-          carreras.value = carreraData.map(item => ({
-            label: item.carrera,
-            value: item.carrera
-          }));
-          carrera.value = carreras.value[0];
+          carreras.value = carreraData.map(item => item.carrera)
+            carrera.value = carreras.value[0];
         }
         console.log(response);
       } catch (error) {
@@ -320,11 +314,8 @@ export default {
         const response = await axios.get("http://127.0.0.1:3000/api/area");
         const areaData = response.data;
         if (areaData && areaData.length > 0) {
-          areas.value = areaData.map(item => ({
-            label: item.area,
-            value: item.area
-          }));
-          area.value = areas.value[0];
+          areas.value = areaData.map(item => item.area)
+            area.value = areas.value[0];
         }
         console.log(response);
       } catch (error) {
@@ -337,11 +328,8 @@ export default {
         const response = await axios.get("http://127.0.0.1:3000/api/grado");
         const gradoData = response.data;
         if (gradoData && gradoData.length > 0) {
-          grados.value = gradoData.map(item => ({
-            label: item.grado,
-            value: item.grado
-          }));
-          grado.value = grados.value[0];
+          grados.value = gradoData.map(item => item.grado)
+            grado.value = grados.value[0];
         }
         console.log(response);
       } catch (error) {
@@ -354,10 +342,7 @@ export default {
         const response = await axios.get("http://127.0.0.1:3000/api/genero");
         const generoData = response.data;
         if (generoData && generoData.length > 0) {
-          generos.value = generoData.map(item => ({
-            label: item.genero,
-            value: item.genero
-          }));
+          generos.value = generoData.map(item => item.genero);
           genero.value = generos.value[0];
         }
         console.log(response);
@@ -387,6 +372,7 @@ export default {
     localStorage.setItem("formData", JSON.stringify(formData));
 
     const onSubmit = () => {
+      beca.value = beca.value.id;
       formData.value = {
         nombre: nombre.value,
         matricula: matricula.value,
