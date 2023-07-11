@@ -369,10 +369,9 @@ export default {
       genero: [],
       estado: []
     });
-    localStorage.setItem("formData", JSON.stringify(formData));
+    localStorage.setItem("formData", JSON.stringify(formData.value));
 
     const onSubmit = () => {
-      beca.value = beca.value.id;
       formData.value = {
         nombre: nombre.value,
         matricula: matricula.value,
@@ -387,10 +386,18 @@ export default {
         grupo: grupo.value,
         correotutor: correotutor.value,
         genero: genero.value,
-        estado: estado.value
+        estado: estado.value.value,
       };
+      if (beca.value === "Academica") {
+        formData.value.beca = 1;
+      }
+      if (estado.value === "Pendiente") {
+        formData.value.estado = 1;
+      }
+
       localStorage.setItem("formData", JSON.stringify(formData.value));
       const accept = true;
+
       if (accept !== true) {
         $q.notify({
           color: "red-5",

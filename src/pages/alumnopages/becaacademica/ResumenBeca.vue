@@ -16,14 +16,13 @@
       <p>CURP: {{ formData && formData.curp }}</p>
       <p>Telefono: {{ formData && formData.telefono }}</p>
       <p>Correo Institucional: {{ formData && formData.correoinstitucional }}</p>
-      <p>Beca: {{ formData && formData.idbeca }}</p>
-      <p>Carrera: {{ formData && formData.carrera }}</p>
-      <p>Area: {{ formData && formData.area }}</p>
-      <p>Grado: {{ formData && formData.grado }}</p>
+      <p>Carrera: {{ formData && formData.carrera.label }}</p>
+      <p>Area: {{ formData && formData.area.label }}</p>
+      <p>Grado: {{ formData && formData.grado.label }}</p>
       <p>Cuatrimestre: {{ formData && formData.cuatrimestre }}</p>
       <p>Grupo: {{ formData && formData.grupo }}</p>
       <p>Correo Tutor: {{ formData && formData.correotutor }}</p>
-      <p>Genero: {{ formData && formData.genero }}</p>
+      <p>Genero: {{ formData && formData.genero.label }}</p>
       <div>
         <q-btn label="Subir" type="submit" color="primary"/>
       </div>
@@ -57,6 +56,8 @@ export default {
         genero: '',
       });
 
+      const beca = ref('');
+
       onMounted(() => {
         const savedFormData = JSON.parse(localStorage.getItem('formData'));
         if (savedFormData) {
@@ -67,6 +68,9 @@ export default {
 
     const onSubmit = () => {
 
+      if (beca.value === "Academica") {
+        formData.value.beca = 1;
+      }
       localStorage.setItem('formData', JSON.stringify(formData.value));
       axios
         .post('http://127.0.0.1:3000/api/form', formData.value)
@@ -74,7 +78,7 @@ export default {
           console.log('Datos enviados correctamente');
         })
         .catch((error) => {
-          console.error('Error al enviar los datos:', error);
+          console.error('Error al enviar los datos:', error.response.data);
         });
 
       localStorage.removeItem('formData');
@@ -84,6 +88,7 @@ export default {
     return {
       formData,
       onSubmit,
+      beca,
     };
   },
 };
