@@ -21,7 +21,7 @@
         <div class="text-h5 q-mt-sm q-mb-xs">Cultural</div>
       </q-card-section>
       <q-card-actions>
-        <q-btn flat color="primary" label="Solicitar" />
+        <q-btn flat color="primary" label="Solicitar" @click="onClick" to="/alumno/cultural"/>
       </q-card-actions>
     </q-card>
     <q-card class="my-card" flat bordered>
@@ -33,7 +33,7 @@
         <div class="text-h5 q-mt-sm q-mb-xs">Deportiva</div>
       </q-card-section>
       <q-card-actions>
-        <q-btn flat color="primary" label="Solicitar" />
+        <q-btn flat color="primary" label="Solicitar" @click="onClick" to="/alumno/deportiva"/>
       </q-card-actions>
     </q-card>
     <q-card class="my-card" flat bordered>
@@ -45,7 +45,7 @@
         <div class="text-h5 q-mt-sm q-mb-xs">Económica</div>
       </q-card-section>
       <q-card-actions>
-        <q-btn flat color="primary" label="Solicitar" />
+        <q-btn flat color="primary" label="Solicitar" @click="onClick" to="/alumno/economica"/>
       </q-card-actions>
     </q-card>
     <q-card class="my-card" flat bordered>
@@ -57,7 +57,7 @@
         <div class="text-h5 q-mt-sm q-mb-xs">Excelencia</div>
       </q-card-section>
       <q-card-actions>
-        <q-btn flat color="primary" label="Solicitar" />
+        <q-btn flat color="primary" label="Solicitar" @click="onClick" to="/alumno/excelencia"/>
       </q-card-actions>
     </q-card>
     <q-card class="my-card" flat bordered>
@@ -69,7 +69,7 @@
         <div class="text-h5 q-mt-sm q-mb-xs">Inclusión</div>
       </q-card-section>
       <q-card-actions>
-        <q-btn flat color="primary" label="Solicitar" />
+        <q-btn flat color="primary" label="Solicitar" @click="onClick" to="/alumno/inclusion"/>
       </q-card-actions>
     </q-card>
     <q-card class="my-card" flat bordered>
@@ -81,7 +81,7 @@
         <div class="text-h5 q-mt-sm q-mb-xs">Postgrado</div>
       </q-card-section>
       <q-card-actions>
-        <q-btn flat color="primary" label="Solicitar" />
+        <q-btn flat color="primary" label="Solicitar" @click="onClick" to="/alumno/postgrado"/>
       </q-card-actions>
     </q-card>
     <q-card class="my-card" flat bordered>
@@ -93,7 +93,7 @@
         <div class="text-h5 q-mt-sm q-mb-xs">Referencia</div>
       </q-card-section>
       <q-card-actions>
-        <q-btn flat color="primary" label="Solicitar" />
+        <q-btn flat color="primary" label="Solicitar" @click="onClick" to="/alumno/referencia"/>
       </q-card-actions>
     </q-card>
     <q-card class="my-card" flat bordered>
@@ -105,7 +105,7 @@
         <div class="text-h5 q-mt-sm q-mb-xs">Reincorporación</div>
       </q-card-section>
       <q-card-actions>
-        <q-btn flat color="primary" label="Solicitar" />
+        <q-btn flat color="primary" label="Solicitar" @click="onClick" to="/alumno/reincorporacion"/>
       </q-card-actions>
     </q-card>
     <q-card class="my-card" flat bordered>
@@ -117,7 +117,7 @@
         <div class="text-h5 q-mt-sm q-mb-xs">Transporte</div>
       </q-card-section>
       <q-card-actions>
-        <q-btn flat color="primary" label="Solicitar" />
+        <q-btn flat color="primary" label="Solicitar" @click="onClick" to="/alumno/transporte"/>
       </q-card-actions>
     </q-card>
   </div>

@@ -1,7 +1,7 @@
 <template>
   <q-page>
     <div class="q-pa-md">
-      <div class="title">Beca Academica</div>
+      <div class="title">Beca Cultural</div>
       <button-progress></button-progress>
       <TresProgress></TresProgress>
 
@@ -202,7 +202,7 @@ export default {
 
     const onSubmit = () => {
 
-      if (beca.value === "Academica") {
+      if (beca.value === "cultural") {
         formData.value.beca = 1;
       }
       localStorage.setItem('formData', JSON.stringify(formData.value));
