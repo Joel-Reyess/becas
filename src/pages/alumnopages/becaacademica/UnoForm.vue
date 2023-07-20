@@ -448,6 +448,71 @@ export default {
             });
           });
       }
+
+      const onSubmit = () => {
+      formDataCarta.value = {
+        nombre: nombre.value,
+        matricula: matricula.value,
+        domicilio: domicilio.value,
+        telefono: telefono.value,
+        celular: celular.value,
+        correoper: correoper.value,
+        nacimiento: nacimiento.value,
+        estadocivil: estadocivil.value,
+        genero: genero.value.value,
+        beca: beca.value.value,
+        nivelestudios: nivelestudios.value,
+        escuela: escuela.value,
+        tipoes: tipoes.value,
+        municipio: municipio.value,
+        promedio: promedio.value,
+        carrera: carrera.value.value,
+        area: area.value.value,
+        cuatrimestre: cuatrimestre.value,
+        grupo: grupo.value,
+        promedioult: promedioult.value,
+        apoyo: apoyo.value,
+        nombreapoyo: nombreapoyo.value,
+        apoyoint: apoyoint,value,
+        motivos: motivos.value,
+
+      };
+
+      localStorage.setItem("formDataCarta", JSON.stringify(formDataCarta.value));
+      const accept = true;
+
+      if (accept !== true) {
+        $q.notify({
+          color: "red-5",
+          textColor: "white",
+          icon: "warning",
+          message: "Necesitas revisar que todo este correcto",
+        });
+      } else {
+        axios
+          .post("http://127.0.0.1:3000/api/form/carta", formDataCarta)
+          .then((res) => {
+            $q.notify({
+              color: "green-4",
+              textColor: "white",
+              icon: "cloud_done",
+              message: "Datos enviados correctamente",
+            });
+            router.push("/alumno/academica/paso3");
+          })
+          .catch((error) => {
+            console.error("Error al enviar los datos:", error);
+            $q.notify({
+              color: "red-5",
+              textColor: "white",
+              icon: "warning",
+              message: "Error al enviar los datos",
+            });
+          });
+      }
+    };
+
+
     };
 
 

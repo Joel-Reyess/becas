@@ -93,7 +93,7 @@
             class="col-5 q-pt-lg"
           />
           <q-space />
-          <q-input
+          <q-date
             filled
             v-model="nacimiento"
             label="Fecha de nacimiento"
@@ -163,7 +163,7 @@
           <q-space />
           <q-input
             filled
-            v-model="escuela"
+            v-model="nombreescuela"
             label="Nombre de la escuela"
             hint="Escribe el nombre de la escuela"
             lazy-rules
@@ -176,7 +176,7 @@
           <q-space />
           <q-input
             filled
-            v-model="tipoes"
+            v-model="tipoescuela"
             label="Tipo de escuela publica o privada"
             hint="Escribe el tipo de la escuela"
             lazy-rules
@@ -246,7 +246,7 @@
           <q-space />
           <q-input
             filled
-            v-model="cuatrimestre"
+            v-model="cuatrisoli"
             label="Cuatrimestre"
             hint="¿En que cuatrimestre se encuentra al momento de solicitar la beca?"
             lazy-rules
@@ -303,7 +303,7 @@
           <q-input
             filled
             type="number"
-            v-model="apoyoint"
+            v-model="cuanto"
             label="¿Con cúanto lo apoyan?"
             hint="Escribe la cantidad que recibes de apoyo"
             class="col-5 q-pt-lg"
@@ -311,7 +311,7 @@
           <q-space />
           <q-input
             filled
-            v-model="motivos"
+            v-model="motivo"
             label="Motivo"
             hint="Escribe el motivo por el cual cree que se le debe conceder la beca"
             lazy-rules
@@ -335,7 +335,7 @@
             type="submit"
             color="primary"
             @click="onSubmit"
-            to="/alumno/academica/paso2"
+            to="/alumno/academica/paso1"
           />
         </div>
       </q-form>
@@ -367,7 +367,7 @@ export default {
     const telefono = ref();
     const celular = ref();
     const correoper = ref();
-    const nacimiento = ref();
+    const nacimiento = ref(new Date());
     const estadocivil = ref ();
     const genero = ref(null);
     const beca = ref({
@@ -375,8 +375,8 @@ export default {
       label:"",
     });
     const nivelestudios = ref();
-    const escuela = ref();
-    const tipoes = ref();
+    const nombreescuela = ref();
+    const tipoescuela = ref();
     const municipio = ref();
     const promedio = ref();
     const carrera = ref({
@@ -387,13 +387,13 @@ export default {
       value: null,
       label: "",
     });
-    const cuatrimestre = ref();
+    const cuatrisoli = ref();
     const grupo = ref();
     const promedioult = ref();
     const apoyo = ref();
     const nombreapoyo = ref();
-    const apoyoint = ref();
-    const motivos = ref();
+    const cuanto = ref();
+    const motivo = ref();
 
 
     const becas = ref([]);
@@ -477,7 +477,7 @@ export default {
       }
     });
 
-    const formData = ref({
+    const formDataCarta = ref({
       nombre: "",
       matricula: "",
       domicilio: "",
@@ -489,24 +489,24 @@ export default {
       genero: [],
       beca: [],
       nivelestudios: "",
-      escuela: "",
-      tipoes: "",
+      nombreescuela: "",
+      tipoescuela: "",
       municipio: "",
       promedio: "",
       carrera: [],
       area: [],
-      cuatrimestre: "",
+      cuatrisoli: "",
       grupo: "",
       promedioult: "",
       apoyo: "",
       nombreapoyo: "",
-      apoyoint: "",
-      motivos: "",
+      cuanto: "",
+      motivo: "",
     });
-    localStorage.setItem("formData", JSON.stringify(formData.value));
+    localStorage.setItem("formDataCarta", JSON.stringify(formDataCarta.value));
 
     const onSubmit = () => {
-      formData.value = {
+      formDataCarta.value = {
         nombre: nombre.value,
         matricula: matricula.value,
         domicilio: domicilio.value,
@@ -518,23 +518,23 @@ export default {
         genero: genero.value.value,
         beca: beca.value.value,
         nivelestudios: nivelestudios.value,
-        escuela: escuela.value,
-        tipoes: tipoes.value,
+        nombreescuela: nombreescuela.value,
+        tipoescuela: tipoescuela.value,
         municipio: municipio.value,
         promedio: promedio.value,
         carrera: carrera.value.value,
         area: area.value.value,
-        cuatrimestre: cuatrimestre.value,
+        cuatrisoli: cuatrisoli.value,
         grupo: grupo.value,
         promedioult: promedioult.value,
         apoyo: apoyo.value,
         nombreapoyo: nombreapoyo.value,
-        apoyoint: apoyoint,value,
-        motivos: motivos.value,
+        cuanto: cuanto.value,
+        motivo: motivo.value,
 
       };
 
-      localStorage.setItem("formData", JSON.stringify(formData.value));
+      localStorage.setItem("formDataCarta", JSON.stringify(formDataCarta.value));
       const accept = true;
 
       if (accept !== true) {
@@ -546,7 +546,7 @@ export default {
         });
       } else {
         axios
-          .post("http://127.0.0.1:3000/api/form/carta", formData)
+          .post("http://127.0.0.1:3000/api/form/carta", formDataCarta)
           .then((res) => {
             $q.notify({
               color: "green-4",
@@ -554,7 +554,7 @@ export default {
               icon: "cloud_done",
               message: "Datos enviados correctamente",
             });
-            router.push("/alumno/academica/paso3");
+            router.push("/alumno/academica/paso1");
           })
           .catch((error) => {
             console.error("Error al enviar los datos:", error);
@@ -581,19 +581,19 @@ export default {
       genero,
       beca,
       nivelestudios,
-      escuela,
-      tipoes,
+      nombreescuela,
+      tipoescuela,
       municipio,
       promedio,
       carrera,
       area,
-      cuatrimestre,
+      cuatrisoli,
       grupo,
       promedioult,
       apoyo,
       nombreapoyo,
-      apoyoint,
-      motivos,
+      cuanto,
+      motivo,
       accept,
       becas,
       carreras,

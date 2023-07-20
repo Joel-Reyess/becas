@@ -62,6 +62,107 @@
                   </div>
                 </div>
               </q-card-section>
+              <q-card-section>
+                <div class="q-pa-md">
+                  <p class="q-mb-sm">Los datos enviados son:</p>
+                  <div class="q-mb-sm">
+                    <strong>Nombre:</strong>
+                    <span>{{ formDataCarta && formDataCarta.nombre }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Matrícula:</strong>
+                    <span>{{ formDataCarta && formDataCarta.matricula }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Domicilio:</strong>
+                    <span>{{ formDataCarta && formDataCarta.domicilio }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Teléfono:</strong>
+                    <span>{{ formDataCarta && formDataCarta.telefono }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Celular:</strong>
+                    <span>{{ formDataCarta && formDataCarta.celular }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Correo:</strong>
+                    <span>{{ formDataCarta && formDataCarta.correoper }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Nacimiento:</strong>
+                    <span>{{ formDataCarta && formDataCarta.nacimiento }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Estado Civil:</strong>
+                    <span>{{ formDataCarta && formDataCarta.estadocivil }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Género:</strong>
+                    <span>{{ getGeneroContent(formDataCarta && formDataCarta.genero) }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Beca:</strong>
+                    <span>{{ getBecaContent(formDataCarta && formDataCarta.genero) }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Nivel de Estudios:</strong>
+                    <span>{{ formDataCarta && formDataCarta.nivelestudios }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Nombre de la Escuela:</strong>
+                    <span>{{ formDataCarta && formDataCarta.nombreescuela }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Tipo de la Escuela:</strong>
+                    <span>{{ formDataCarta && formDataCarta.tipoescuela }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Municipio de la Escuela:</strong>
+                    <span>{{ formDataCarta && formDataCarta.municipio }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Promedio de la Escuela:</strong>
+                    <span>{{ formDataCarta && formDataCarta.promedio}}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Carrera:</strong>
+                    <span>{{ getCarreraContent(formDataCarta && formDataCarta.carrera) }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Área:</strong>
+                    <span>{{ getAreaContent(formDataCarta && formDataCarta.area) }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Cuatrimestre:</strong>
+                    <span>{{ formDataCarta && formDataCarta.cuatrisoli }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Ultimo promedio obtenido:</strong>
+                    <span>{{ formDataCarta && formDataCarta.promedioult }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Grupo:</strong>
+                    <span>{{ formDataCarta && formDataCarta.grupo }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Apoyo:</strong>
+                    <span>{{ formDataCarta && formDataCarta.apoyo }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Nombre del Apoyo:</strong>
+                    <span>{{ formDataCarta && formDataCarta.nombreapoyo }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Cantidad del Apoyo:</strong>
+                    <span>{{ formDataCarta && formDataCarta.cuanto }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Motivo:</strong>
+                    <span>{{ formDataCarta && formDataCarta.motivo }}</span>
+                  </div>
+                </div>
+              </q-card-section>
 
               <q-card-actions align="right">
                 <q-btn label="Subir" type="submit" color="primary" class="q-mb-md" />
@@ -99,11 +200,39 @@ export default {
         genero: '',
       });
 
+      const formDataCarta = ref ({
+        nombre: "",
+        matricula: "",
+        domicilio: "",
+        telefono: "",
+        celular: "",
+        correoper: "",
+        nacimiento: "",
+        estadocivil:"",
+        genero: "",
+        beca: "",
+        nivelestudios: "",
+        nombreescuela: "",
+        tipoescuela: "",
+        municipio: "",
+        promedio: "",
+        carrera: "",
+        area: "",
+        cuatrisoli: "",
+        grupo: "",
+        promedioult: "",
+        apoyo: "",
+        nombreapoyo: "",
+        cuanto: "",
+        motivo: "",
+      });
+
       const beca = ref('');
       const carreras = ref([]);
       const areas = ref([]);
       const grados = ref([]);
       const generos = ref([]);
+      const becas = ref([]);
 
       const getCarreraContent = (idcarrera) => {
       const carrera = carreras.value.find(c => c.value === idcarrera);
@@ -120,6 +249,10 @@ export default {
       const getGeneroContent = (idgenero) => {
       const genero = generos.value.find(c => c.value === idgenero);
       return genero ? genero.label : '';
+    };
+      const getBecaContent = (idbeca) => {
+      const beca = becas.value.find(c => c.value === idbeca);
+      return beca ? beca.label : '';
     };
 
     onMounted(async () => {
@@ -176,6 +309,12 @@ export default {
           Object.assign(formData.value, savedFormData);
           console.log(savedFormData);
         }
+
+        const savedFormDataCarta = JSON.parse(localStorage.getItem('formDataCarta'));
+        if (savedFormDataCarta) {
+          Object.assign(formDataCarta.value, savedFormDataCarta);
+          console.log(savedFormDataCarta);
+        }
       } catch (error) {
         console.error("Error al obtener la carrera:", error);
       }
@@ -198,10 +337,29 @@ export default {
         console.error("Error al obtener la carrera:", error);
       }
 
+
+      try {
+        const response = await axios.get("http://127.0.0.1:3000/api/becas/all");
+        const becaData = response.data;
+        if (becaData && becaData.length > 0) {
+          becas.value = becaData.map((item) => {
+            return {
+              label: item.beca,
+              value: item.idbeca,
+            };
+          });
+        }
+        console.log(response);
+
+
+      } catch (error) {
+        console.error("Error al obtener la beca:", error);
+      }
+
     });
 
     const onSubmit = () => {
-
+      //para el formulario de la beca
       if (beca.value === "Academica") {
         formData.value.beca = 1;
       }
@@ -216,11 +374,25 @@ export default {
         });
 
       localStorage.removeItem('formData');
+
+      //para los datos de la solicitud del alumno
+      localStorage.setItem('formDataCarta', JSON.stringify(formDataCarta.value));
+      axios
+        .post('http://127.0.0.1:3000/api/form/carta', formDataCarta.value)
+        .then((res) => {
+          console.log('Datos enviados correctamente');
+        })
+        .catch((error) => {
+          console.error('Error al enviar los datos:', error.response.data);
+        });
+
+      localStorage.removeItem('formDataCarta');
     };
 
 
     return {
       formData,
+      formDataCarta,
       onSubmit,
       beca,
       getCarreraContent,
@@ -228,6 +400,7 @@ export default {
       getGradoContent,
       getGeneroContent,
       carreras,
+      getBecaContent,
     };
   },
 };
