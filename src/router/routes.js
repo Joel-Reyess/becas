@@ -70,6 +70,11 @@ const routes = [
         component: () => import("src/pages/alumnopages/becaacademica/PreForm.vue"),
       },
       {
+        path: "academica/prepaso",
+        name: "academica/prepaso",
+        component: () => import("src/pages/alumnopages/becaacademica/SocioAca.vue"),
+      },
+      {
         path: "academica/paso1",
         name: "academica/paso1",
         component: () => import("src/pages/alumnopages/becaacademica/UnoForm.vue"),

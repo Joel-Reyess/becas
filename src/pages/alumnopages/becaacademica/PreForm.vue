@@ -554,7 +554,7 @@ export default {
               icon: "cloud_done",
               message: "Datos enviados correctamente",
             });
-            router.push("/alumno/academica/paso1");
+            router.push("/alumno/academica/prepaso");
           })
           .catch((error) => {
             console.error("Error al enviar los datos:", error);

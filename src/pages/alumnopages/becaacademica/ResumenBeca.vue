@@ -103,7 +103,7 @@
                   </div>
                   <div class="q-mb-sm">
                     <strong>Beca:</strong>
-                    <span>{{ getBecaContent(formDataCarta && formDataCarta.genero) }}</span>
+                    <span>{{ getBecaContent(formDataCarta && formDataCarta.beca) }}</span>
                   </div>
                   <div class="q-mb-sm">
                     <strong>Nivel de Estudios:</strong>
@@ -160,6 +160,147 @@
                   <div class="q-mb-sm">
                     <strong>Motivo:</strong>
                     <span>{{ formDataCarta && formDataCarta.motivo }}</span>
+                  </div>
+                </div>
+              </q-card-section>
+              <q-card-section>
+                <div class="q-pa-md">
+                  <p class="q-mb-sm">Los datos enviados de los socioeconomicos son:</p>
+                  <div class="q-mb-sm">
+                    <strong>Nombre:</strong>
+                    <span>{{ formDataSocio && formDataSocio.nombre }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Nacimiento:</strong>
+                    <span>{{ formDataSocio && formDataSocio.nacimiento }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Domicilio:</strong>
+                    <span>{{ formDataSocio && formDataSocio.domicilio }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Con quien vives actualmente:</strong>
+                    <span>{{ formDataSocio && formDataSocio.conquienvive }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Teléfono:</strong>
+                    <span>{{ formDataSocio && formDataSocio.telefono }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Celular:</strong>
+                    <span>{{ formDataSocio && formDataSocio.celular }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Modo de trasporte para llegar al domicilio:</strong>
+                    <span>{{ formDataSocio && formDataSocio.transorte }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Ingresos mensuales propios:</strong>
+                    <span>{{ formDataSocio && formDataSocio.ingreso }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Aporte a los ingresos del padre:</strong>
+                    <span>{{ getGeneroContent(formDataSocio && formDataSocio.padre) }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Aporte a los ingresos del madre:</strong>
+                    <span>{{ getBecaContent(formDataSocio && formDataSocio.madre) }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Aporte a los ingresos de los hermanos:</strong>
+                    <span>{{ formDataSocio && formDataSocio.hermanos }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Total de ingresos mensuales:</strong>
+                    <span>{{ formDataSocio && formDataSocio.total }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Egresos en alimentacion mensuales:</strong>
+                    <span>{{ formDataSocio && formDataSocio.alimentacion }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Egresos en telefonia mensuales:</strong>
+                    <span>{{ formDataSocio && formDataSocio.telefonia }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Egresos en credito de vivienda mensuales:</strong>
+                    <span>{{ formDataSocio && formDataSocio.credito}}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Egresos en renta mensuales:</strong>
+                    <span>{{ formDataSocio && formDataSocio.renta }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Egresos en servicios basicos mensuales:</strong>
+                    <span>{{ formDataSocio && formDataSocio.servicios }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Egresos en abonos o creditos mensuales:</strong>
+                    <span>{{ formDataSocio && formDataSocio.abonos }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Egresos en importe de transorte mensuales:</strong>
+                    <span>{{ formDataSocio && formDataSocio.importe }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Total de egresos mensuales:</strong>
+                    <span>{{ formDataSocio && formDataSocio.totale }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>La situación de tu vivienda:</strong>
+                    <span>{{ formDataSocio && formDataSocio.vivienda }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Tus paredes son de:</strong>
+                    <span>{{ formDataSocio && formDataSocio.paredes }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Tu techo es de:</strong>
+                    <span>{{ formDataSocio && formDataSocio.techos }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Tu piso es de:</strong>
+                    <span>{{ formDataSocio && formDataSocio.pisos }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Cuentas con un mobiliario de:</strong>
+                    <span>{{ formDataSocio && formDataSocio.mobiliario }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Servicios Médicos con los que cuenta la familia:</strong>
+                    <span>{{ formDataSocio && formDataSocio.servmedico }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Frecuencia con la que asiste al médico:</strong>
+                    <span>{{ formDataSocio && formDataSocio.asistencia }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Padeces de enfermedad cronica:</strong>
+                    <span>{{ formDataSocio && formDataSocio.cronicas }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>El tipo de enfermedad cronica es de:</strong>
+                    <span>{{ formDataSocio && formDataSocio.tipo }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Alimentacion que prefieres o consumes regularmente es de:</strong>
+                    <span>{{ formDataSocio && formDataSocio.consumo }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Actividades Familiares el fin de semana:</strong>
+                    <span>{{ formDataSocio && formDataSocio.finde }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Actividades del alumno:</strong>
+                    <span>{{ formDataSocio && formDataSocio.actividades }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Tiempo de traslado:</strong>
+                    <span>{{ formDataSocio && formDataSocio.traslado }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Medio de Transporte:</strong>
+                    <span>{{ formDataSocio && formDataSocio.mediotra }}</span>
                   </div>
                 </div>
               </q-card-section>
@@ -225,6 +366,43 @@ export default {
         nombreapoyo: "",
         cuanto: "",
         motivo: "",
+      });
+
+      const formDataSocio = ref({
+        nombre: "",
+        nacimiento: "",
+        domicilio: "",
+        conquienvive: "",
+        telefono: "",
+        celular: "",
+        transporte: "",
+        ingreso:"",
+        padre: "",
+        madre: "",
+        hermanos: "",
+        total: "",
+        alimentacion: "",
+        telefonia: "",
+        credito: "",
+        renta: "",
+        servicios: "",
+        abono: "",
+        importe: "",
+        totale: "",
+        vivienda: "",
+        paredes: "",
+        techos: "",
+        pisos: "",
+        mobiliario: "",
+        servmedico: "",
+        asistencia: "",
+        cronicas: "",
+        tipo: "",
+        consumo: "",
+        finde: "",
+        actividades: "",
+        traslado: "",
+        mediotra: "",
       });
 
       const beca = ref('');
@@ -315,6 +493,12 @@ export default {
           Object.assign(formDataCarta.value, savedFormDataCarta);
           console.log(savedFormDataCarta);
         }
+
+        const savedFormDataSocio = JSON.parse(localStorage.getItem('formDataSocio'));
+        if (savedFormDataSocio) {
+          Object.assign(formDataSocio.value, savedFormDataSocio);
+          console.log(savedFormDataSocio);
+        }
       } catch (error) {
         console.error("Error al obtener la carrera:", error);
       }
@@ -387,12 +571,26 @@ export default {
         });
 
       localStorage.removeItem('formDataCarta');
+
+      //para el formulario de socioeconomicos
+      localStorage.setItem('formDataSocio', JSON.stringify(formDataSocio.value));
+      axios
+        .post('http://127.0.0.1:3000/api/form/socio', formDataSocio.value)
+        .then((res) => {
+          console.log('Datos enviados correctamente');
+        })
+        .catch((error) => {
+          console.error('Error al enviar los datos:', error.response.data);
+        });
+
+      localStorage.removeItem('formDataSocio');
     };
 
 
     return {
       formData,
       formDataCarta,
+
       onSubmit,
       beca,
       getCarreraContent,
