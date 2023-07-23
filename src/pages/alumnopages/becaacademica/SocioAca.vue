@@ -29,11 +29,6 @@
             v-model="nacimiento"
             label="Fecha de nacimiento"
             hint="Fecha valida"
-            lazy-rules
-            :rules="[
-              (val) =>
-                (val !== null && val !== '') || 'Por favor completa este campo',
-            ]"
             class="col-5 q-pt-lg"
           />
           <q-space />
@@ -399,6 +394,7 @@ export default {
     const abonos = ref();
     const importe = ref();
     const totale = ref();
+    const vivienda = ref();
     const paredes = ref();
     const techos = ref();
     const pisos = ref();
@@ -431,7 +427,7 @@ export default {
       credito: "",
       renta: "",
       servicios: "",
-      abono: "",
+      abonos: "",
       importe: "",
       totale: "",
       vivienda: "",
@@ -470,7 +466,7 @@ export default {
         credito: credito.value,
         renta: renta.value,
         servicios: servicios.value,
-        abono: abono.value,
+        abonos: abonos.value,
         importe: importe.value,
         totale: totale.value,
         vivienda: vivienda.value,

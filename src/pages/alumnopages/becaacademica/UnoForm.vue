@@ -512,9 +512,7 @@ export default {
             });
           });
       }
-    };
-
-
+      const onSubmit = () => {
       formDataSocio.value = {
         nombre: nombre.value,
         nacimiento: nacimiento.value,
@@ -584,12 +582,14 @@ export default {
             });
           });
       }
-
+    }
     };
 
+  };
 
-    return {
-      onSubmit,
+
+  return {
+    onSubmit,
       nombre,
       matricula,
       curp,

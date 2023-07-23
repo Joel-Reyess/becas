@@ -11,7 +11,7 @@
             <q-card class="q-pa-md">
               <q-card-section>
                 <div class="q-pa-md">
-                  <p class="q-mb-sm">Los datos enviados son:</p>
+                  <p class="q-mb-sm">Los datos de la solicitud a enviar son:</p>
                   <div class="q-mb-sm">
                     <strong>Nombre:</strong>
                     <span>{{ formData && formData.nombre }}</span>
@@ -64,7 +64,7 @@
               </q-card-section>
               <q-card-section>
                 <div class="q-pa-md">
-                  <p class="q-mb-sm">Los datos enviados son:</p>
+                  <p class="q-mb-sm">Los datos del solicitante a enviar son:</p>
                   <div class="q-mb-sm">
                     <strong>Nombre:</strong>
                     <span>{{ formDataCarta && formDataCarta.nombre }}</span>
@@ -386,7 +386,7 @@ export default {
         credito: "",
         renta: "",
         servicios: "",
-        abono: "",
+        abonos: "",
         importe: "",
         totale: "",
         vivienda: "",
@@ -590,7 +590,7 @@ export default {
     return {
       formData,
       formDataCarta,
-
+      formDataSocio,
       onSubmit,
       beca,
       getCarreraContent,

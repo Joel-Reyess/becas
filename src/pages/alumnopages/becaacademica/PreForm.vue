@@ -403,16 +403,10 @@ export default {
 
     onMounted(async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:3000/api/becas/all");
+        const response = await axios.get("http://127.0.0.1:3000/api/becas/1");
         const becaData = response.data;
-        if (becaData && becaData.length > 0) {
-          becas.value = becaData.map((item) => {
-            return {
-              label: item.beca,
-              value: item.idbeca,
-            };
-          });
-          beca.value = becas.value[0];
+        if (becaData) {
+          beca.value = becaData.beca;
         }
         console.log(response);
       } catch (error) {
@@ -533,6 +527,9 @@ export default {
         motivo: motivo.value,
 
       };
+      if (beca.value === "Academica") {
+        formData.value.beca = 1;
+      }
 
       localStorage.setItem("formDataCarta", JSON.stringify(formDataCarta.value));
       const accept = true;
