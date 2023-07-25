@@ -1,7 +1,137 @@
 <template>
   <p class="titulo">Inicio</p>
-<botones-fil></botones-fil>
+  <div class="q-pa-md-container">
+    <div class="q-pa-md">
+    <q-btn-dropdown
+      color="secondary"
+      class="buttoms"
+      text-color="black"
+      label="Becas"
+      v-model="selectedBeca"
+    >
+      <q-list>
+        <!-- Mostrar las opciones de becas desde la lista obtenida del servidor -->
+        <q-item v-for="beca in becas" :key="beca.idbeca" clickable v-close-popup @click="onItemClick(beca.beca)">
+          <q-item-section>
+            <q-item-label>{{ beca.beca }}</q-item-label>
+          </q-item-section>
+        </q-item>
+      </q-list>
+    </q-btn-dropdown>
+  </div>
+          <div class="q-pa-md">
+            <q-btn-dropdown
+              color="secondary"
+              class="buttoms"
+              text-color="black"
+              label="Carrera"
+            >
+              <q-list>
+                <q-item clickable v-close-popup @click="onItemClick">
+                  <q-item-section>
+                    <q-item-label>Photos</q-item-label>
+                  </q-item-section>
+                </q-item>
 
+                <q-item clickable v-close-popup @click="onItemClick">
+                  <q-item-section>
+                    <q-item-label>Videos</q-item-label>
+                  </q-item-section>
+                </q-item>
+
+                <q-item clickable v-close-popup @click="onItemClick">
+                  <q-item-section>
+                    <q-item-label>Articles</q-item-label>
+                  </q-item-section>
+                </q-item>
+              </q-list>
+            </q-btn-dropdown>
+          </div>
+          <div class="q-pa-md">
+            <q-btn-dropdown
+              color="secondary"
+              class="buttoms"
+              text-color="black"
+              label="Area"
+            >
+              <q-list>
+                <q-item clickable v-close-popup @click="onItemClick">
+                  <q-item-section>
+                    <q-item-label>Photos</q-item-label>
+                  </q-item-section>
+                </q-item>
+
+                <q-item clickable v-close-popup @click="onItemClick">
+                  <q-item-section>
+                    <q-item-label>Videos</q-item-label>
+                  </q-item-section>
+                </q-item>
+
+                <q-item clickable v-close-popup @click="onItemClick">
+                  <q-item-section>
+                    <q-item-label>Articles</q-item-label>
+                  </q-item-section>
+                </q-item>
+              </q-list>
+            </q-btn-dropdown>
+          </div>
+          <div class="q-pa-md">
+            <q-btn-dropdown
+              color="secondary"
+              class="buttoms"
+              text-color="black"
+              label="Grado"
+            >
+              <q-list>
+                <q-item clickable v-close-popup @click="onItemClick">
+                  <q-item-section>
+                    <q-item-label>Photos</q-item-label>
+                  </q-item-section>
+                </q-item>
+
+                <q-item clickable v-close-popup @click="onItemClick">
+                  <q-item-section>
+                    <q-item-label>Videos</q-item-label>
+                  </q-item-section>
+                </q-item>
+
+                <q-item clickable v-close-popup @click="onItemClick">
+                  <q-item-section>
+                    <q-item-label>Articles</q-item-label>
+                  </q-item-section>
+                </q-item>
+              </q-list>
+            </q-btn-dropdown>
+          </div>
+          <div class="q-pa-md">
+            <q-btn-dropdown
+              color="secondary"
+              class="buttoms"
+              text-color="black"
+              label="Genero"
+            >
+              <q-list>
+                <q-item clickable v-close-popup @click="onItemClick">
+                  <q-item-section>
+                    <q-item-label>Photos</q-item-label>
+                  </q-item-section>
+                </q-item>
+
+                <q-item clickable v-close-popup @click="onItemClick">
+                  <q-item-section>
+                    <q-item-label>Videos</q-item-label>
+                  </q-item-section>
+                </q-item>
+
+                <q-item clickable v-close-popup @click="onItemClick">
+                  <q-item-section>
+                    <q-item-label>Articles</q-item-label>
+                  </q-item-section>
+                </q-item>
+              </q-list>
+            </q-btn-dropdown>
+          </div>
+</div>
 <div class="q-pa-md">
     <q-table
       flat bordered
@@ -26,34 +156,29 @@
 </template>
 
 <script>
-import { defineComponent,ref } from "vue";
+import { defineComponent,ref, onMounted } from "vue";
 import { exportFile, useQuasar } from 'quasar';
 import BotonesFil from "src/components/Admin/BotonesFil.vue";
+import axios from "axios";
+import { computed } from "vue";
 
-
-
-  const columns = [
+const columns = [
   {
-    name: 'name',
+    name: 'nombre',
     required: true,
-    label: 'Dessert (100g serving)',
+    label: 'Nombre',
     align: 'left',
-    field: row => row.name,
+    field: row => row.nombre,
     format: val => `${val}`,
     sortable: true
   },
-  { name: 'calories', align: 'center', label: 'Calories', field: 'calories', sortable: true },
-  { name: 'fat', label: 'Fat (g)', field: 'fat', sortable: true },
-  { name: 'carbs', label: 'Carbs (g)', field: 'carbs' },
-  { name: 'protein', label: 'Protein (g)', field: 'protein' },
-  { name: 'sodium', label: 'Sodium (mg)', field: 'sodium' },
-  { name: 'calcium', label: 'Calcium (%)', field: 'calcium', sortable: true, sort: (a, b) => parseInt(a, 10) - parseInt(b, 10) },
-  { name: 'iron', label: 'Iron (%)', field: 'iron', sortable: true, sort: (a, b) => parseInt(a, 10) - parseInt(b, 10) }
-]
+  { name: 'beca', align: 'center', label: 'Beca', field: 'beca', sortable: true },
+  { name: 'carrera', label: 'Carrera', field: 'carrera', sortable: true },
+  { name: 'area', label: 'Área', field: 'area' },
+  { name: 'grado', label: 'Grado', field: 'grado' },
+  { name: 'genero', label: 'Género', field: 'genero' }
+];
 
-const rows = [
-
-]
 
 function wrapCsvValue (val, formatFn, row) {
   let formatted = formatFn !== void 0
@@ -80,20 +205,60 @@ function isActiveButton(route) {
 
 export default {
   components: {
-    BotonesFil,
   },
   setup () {
     const data = ref([]);
     const $q = useQuasar()
+    const selectedBeca = ref(null);
+    const becas = ref([]);
+
+    const filteredData = computed(() => {
+      if (!selectedBeca.value) {
+        return data.value;
+      } else {
+        return data.value.filter((item) => item.beca === selectedBeca.value);
+      }
+    });
+    
+    function onItemClick(selectedItem) {
+      selectedBeca.value = selectedItem;
+    }
+
+    // Realizar una solicitud al servidor para obtener la lista de becas
+    onMounted(() => {
+      axios.get('http://127.0.0.1:3000/api/becas/all')
+        .then(response => {
+          becas.value = response.data;
+        })
+        .catch(error => {
+          console.error('Error al obtener las becas:', error);
+        });
+    });
+
+    function onItemClick(selectedItem) {
+      selectedBeca.value = selectedItem;
+    }
+
+    axios.get('http://127.0.0.1:3000/api/columns')
+      .then(response => {
+        data.value = response.data;
+      })
+      .catch(error => {
+        console.error('Error al obtener los datos:', error);
+    });
+
     return {
       columns,
-      rows,
       data,
+      selectedBeca,
+      filteredData,
+      onItemClick,
+      becas,
 
       exportTable () {
         // naive encoding to csv format
         const content = [columns.map(col => wrapCsvValue(col.label))].concat(
-          rows.map(row => columns.map(col => wrapCsvValue(
+          data.value.map(row => columns.map(col => wrapCsvValue(
             typeof col.field === 'function'
               ? col.field(row)
               : row[ col.field === void 0 ? col.name : col.field ],

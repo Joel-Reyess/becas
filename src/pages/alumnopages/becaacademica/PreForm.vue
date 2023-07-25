@@ -528,7 +528,7 @@ export default {
 
       };
       if (beca.value === "Academica") {
-        formData.value.beca = 1;
+        formDataCarta.value.beca = 1;
       }
 
       localStorage.setItem("formDataCarta", JSON.stringify(formDataCarta.value));

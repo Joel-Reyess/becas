@@ -2,7 +2,7 @@
   <q-page class="q-pa-md container" padding>
     <p class="title">Beca Academica</p>
     <button-progress></button-progress>
-    <dos-progreso-bar></dos-progreso-bar>
+    <tres-progress></tres-progress>
     <q-space />
     <p>¡Adjuntar solo archivos PDF!</p>
     <q-space />
@@ -12,33 +12,26 @@
           @submit="onSubmit"
           @reset="onReset"
           class="q-gutter-md"
+          enctype="multipart/form-data"
         >
         <div class="row" padding>
-        <q-file filled bottom-slots class="col-5 q-pt-lg" v-model="solicitud" label="Solicitud" counter max-files="12" accept="application/pdf">
+        <q-file filled bottom-slots class="col-5 q-pt-lg" v-model="credencial" name="pdfFiles" label="Credencial, ambos lados" counter max-files="12" accept="application/pdf">
           <q-btn round dense flat icon="add" @click.stop.prevent />
         </q-file>
         <q-space />
-        <q-file filled bottom-slots class="col-5 q-pt-lg" v-model="credencial" label="Credencial, ambos lados" counter max-files="12" accept="application/pdf">
+        <q-file filled bottom-slots class="col-5 q-pt-lg" v-model="boleta" name="pdfFiles" label="Boleta de calificaciones" counter max-files="12" accept="application/pdf">
           <q-btn round dense flat icon="add" @click.stop.prevent />
         </q-file>
         <q-space />
-        <q-file filled bottom-slots class="col-5 q-pt-lg" v-model="boleta" label="Boleta de calificaciones" counter max-files="12" accept="application/pdf">
+        <q-file filled bottom-slots class="col-5 q-pt-lg" v-model="comprobante" name="pdfFiles" label="Comprobante de ingresos" counter max-files="12" accept="application/pdf">
           <q-btn round dense flat icon="add" @click.stop.prevent />
         </q-file>
         <q-space />
-        <q-file filled bottom-slots class="col-5 q-pt-lg" v-model="comprobante" label="Comprobante de ingresos" counter max-files="12" accept="application/pdf">
+        <q-file filled bottom-slots class="col-5 q-pt-lg" v-model="compromiso" name="pdfFiles" label="Carta compromiso y aceptacion de beca" counter max-files="12" accept="application/pdf">
           <q-btn round dense flat icon="add" @click.stop.prevent />
         </q-file>
         <q-space />
-        <q-file filled bottom-slots class="col-5 q-pt-lg" v-model="socioeconomicos" label="Datos socioeconomicos" counter max-files="12" accept="application/pdf">
-          <q-btn round dense flat icon="add" @click.stop.prevent />
-        </q-file>
-        <q-space />
-        <q-file filled bottom-slots class="col-5 q-pt-lg" v-model="compromiso" label="Carta compromiso y aceptacion de beca" counter max-files="12" accept="application/pdf">
-          <q-btn round dense flat icon="add" @click.stop.prevent />
-        </q-file>
-        <q-space />
-        <q-file filled bottom-slots class="col-5 q-pt-lg" v-model="conducta" label="Carta buena conducta" counter max-files="12" accept="application/pdf">
+        <q-file filled bottom-slots class="col-5 q-pt-lg" v-model="conducta" name="pdfFiles" label="Carta buena conducta" counter max-files="12" accept="application/pdf">
           <q-btn round dense flat icon="add" @click.stop.prevent />
         </q-file>
         <q-space />
@@ -59,29 +52,81 @@
 </template>
 
 <script>
-import { defineComponent,ref } from "vue";
+import { defineComponent, ref } from "vue";
 import ButtonProgress from "src/components/Alumno/ButtonProgress.vue";
-import DosProgresoBar from "src/components/Alumno/DosProgresoBar.vue";
-export default {
+import TresProgress from 'src/components/Alumno/TresProgress.vue';
+import axios from "axios";
 
-  components:{
+export default {
+  components: {
     ButtonProgress,
-    DosProgresoBar,
-  },
-  setup () {
+    TresProgress,
+},
+  setup() {
     const accept = ref(false);
+    const files = ref({
+      credencial: null,
+      boleta: null,
+      comprobante: null,
+      compromiso: null,
+      conducta: null,
+    });
+
+    const onFileChange = (fieldName, event) => {
+      const file = event.target.files[0];
+      files.value[fieldName] = file;
+    };
+
+    const onSubmit = async () => {
+      // Crear un objeto FormData para enviar los archivos
+      const formData = new FormData();
+
+      // Agregar cada archivo al objeto FormData
+      Object.entries(files.value).forEach(([fieldName, file]) => {
+        if (file) {
+          formData.append(fieldName, file);
+        }
+      });
+
+      // Agregar otros datos relevantes si los tienes, por ejemplo, formData.append('nombre', 'valor');
+
+      try {
+        // Enviar la solicitud POST al servidor usando Axios (asegúrate de importar Axios)
+        await axios.post('http://127.0.0.1:3000/api/upload', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data', // Es importante configurar correctamente el encabezado Content-Type para el envío de archivos
+          },
+        });
+
+        // Aquí podrías mostrar un mensaje de éxito o realizar otras acciones después de cargar los archivos
+        console.log('Archivos cargados exitosamente.');
+      } catch (error) {
+        // Manejo de errores
+        console.error('Error al cargar los archivos:', error);
+      }
+    };
+
+    const readAsBase64 = (file) => {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = (event) => {
+          resolve(event.target.result);
+        };
+      });
+    };
+
     return {
-      solicitud: ref(null),
+      onSubmit,
       credencial: ref(null),
       boleta: ref(null),
       comprobante: ref(null),
-      socioeconomicos: ref(null),
       compromiso: ref(null),
       conducta: ref(null),
       accept,
-    }
-  }
-}
+    };
+  },
+};
 </script>
 
 <style lang="scss" scoped>
