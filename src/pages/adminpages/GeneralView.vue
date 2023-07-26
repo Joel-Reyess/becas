@@ -2,46 +2,46 @@
   <p class="titulo">Inicio</p>
   <div class="q-pa-md-container">
     <div class="q-pa-md">
-    <q-btn-dropdown
-      color="secondary"
-      class="buttoms"
-      text-color="black"
-      label="Becas"
-      v-model="selectedBeca"
-    >
-      <q-list>
-        <!-- Mostrar las opciones de becas desde la lista obtenida del servidor -->
-        <q-item v-for="beca in becas" :key="beca.idbeca" clickable v-close-popup @click="onItemClick(beca.beca)">
-          <q-item-section>
-            <q-item-label>{{ beca.beca }}</q-item-label>
-          </q-item-section>
-        </q-item>
-      </q-list>
+      <q-btn-dropdown
+        color="secondary"
+        class="buttoms"
+        text-color="black"
+        label="Becas"
+        :model-value="isBecaDropdownOpen"
+      >
+        <q-list>
+          <q-item
+            v-for="beca in becas"
+            :key="beca.idbeca"
+            clickable
+            v-close-popup
+            @click="onItemClick(beca.beca, 'beca')"
+          >
+            <q-item-section>
+              <q-item-label>{{ beca.beca }}</q-item-label>
+            </q-item-section>
+          </q-item>
+        </q-list>
     </q-btn-dropdown>
   </div>
-          <div class="q-pa-md">
+        <div class="q-pa-md">
             <q-btn-dropdown
               color="secondary"
               class="buttoms"
               text-color="black"
               label="Carrera"
+              :model-value="isCarreraDropdownOpen"
             >
               <q-list>
-                <q-item clickable v-close-popup @click="onItemClick">
+                <q-item
+                  v-for="carrera in carreras"
+                  :key="carrera.idcarrera"
+                  clickable
+                  v-close-popup
+                  @click="onItemClick(carrera.carrera, 'carrera')"
+                >
                   <q-item-section>
-                    <q-item-label>Photos</q-item-label>
-                  </q-item-section>
-                </q-item>
-
-                <q-item clickable v-close-popup @click="onItemClick">
-                  <q-item-section>
-                    <q-item-label>Videos</q-item-label>
-                  </q-item-section>
-                </q-item>
-
-                <q-item clickable v-close-popup @click="onItemClick">
-                  <q-item-section>
-                    <q-item-label>Articles</q-item-label>
+                    <q-item-label>{{ carrera.carrera }}</q-item-label>
                   </q-item-section>
                 </q-item>
               </q-list>
@@ -53,23 +53,18 @@
               class="buttoms"
               text-color="black"
               label="Area"
+              :model-value="isAreaDropdownOpen"
             >
               <q-list>
-                <q-item clickable v-close-popup @click="onItemClick">
+                <q-item
+                  v-for="area in areas"
+                  :key="area.idarea"
+                  clickable
+                  v-close-popup
+                  @click="onItemClick (area.area, 'area')"
+                >
                   <q-item-section>
-                    <q-item-label>Photos</q-item-label>
-                  </q-item-section>
-                </q-item>
-
-                <q-item clickable v-close-popup @click="onItemClick">
-                  <q-item-section>
-                    <q-item-label>Videos</q-item-label>
-                  </q-item-section>
-                </q-item>
-
-                <q-item clickable v-close-popup @click="onItemClick">
-                  <q-item-section>
-                    <q-item-label>Articles</q-item-label>
+                    <q-item-label>{{ area.area }}</q-item-label>
                   </q-item-section>
                 </q-item>
               </q-list>
@@ -81,23 +76,18 @@
               class="buttoms"
               text-color="black"
               label="Grado"
+              :model-value="isGradoDropdownOpen"
             >
               <q-list>
-                <q-item clickable v-close-popup @click="onItemClick">
+                <q-item
+                  v-for="grado in grados"
+                  :key="grado.idgrado"
+                  clickable
+                  v-close-popup
+                  @click="onItemClick (grado.grado, 'grado')"
+                >
                   <q-item-section>
-                    <q-item-label>Photos</q-item-label>
-                  </q-item-section>
-                </q-item>
-
-                <q-item clickable v-close-popup @click="onItemClick">
-                  <q-item-section>
-                    <q-item-label>Videos</q-item-label>
-                  </q-item-section>
-                </q-item>
-
-                <q-item clickable v-close-popup @click="onItemClick">
-                  <q-item-section>
-                    <q-item-label>Articles</q-item-label>
+                    <q-item-label>{{ grado.grado }}</q-item-label>
                   </q-item-section>
                 </q-item>
               </q-list>
@@ -109,23 +99,18 @@
               class="buttoms"
               text-color="black"
               label="Genero"
+              :model-value="isGeneroDropdownOpen"
             >
               <q-list>
-                <q-item clickable v-close-popup @click="onItemClick">
+                <q-item
+                  v-for="genero in generos"
+                  :key="genero.idgenero"
+                  clickable
+                  v-close-popup
+                  @click="onItemClick (genero.genero, 'genero')"
+                >
                   <q-item-section>
-                    <q-item-label>Photos</q-item-label>
-                  </q-item-section>
-                </q-item>
-
-                <q-item clickable v-close-popup @click="onItemClick">
-                  <q-item-section>
-                    <q-item-label>Videos</q-item-label>
-                  </q-item-section>
-                </q-item>
-
-                <q-item clickable v-close-popup @click="onItemClick">
-                  <q-item-section>
-                    <q-item-label>Articles</q-item-label>
+                    <q-item-label>{{ genero.genero }}</q-item-label>
                   </q-item-section>
                 </q-item>
               </q-list>
@@ -136,11 +121,25 @@
     <q-table
       flat bordered
       title="Solicitudes"
-      :rows="data"
+      :rows="filteredData"
       :columns="columns"
       color="primary"
       row-key="name"
     >
+    <template v-slot:body="props">
+      <q-tr :props="props">
+        <q-td v-for="col in props.cols" :key="col.name" :props="props">
+          <template v-if="col.name === 'nombre'"> <!-- Ajusta aquí el nombre de la columna que tiene el ID del registro -->
+            <router-link :to="'/details/' + props.row.idsolicitud"> <!-- Así se pasa el ID como parámetro en la URL -->
+              {{ props.row[col.name] }}
+            </router-link>
+          </template>
+          <template v-else>
+            {{ props.row[col.name] }}
+          </template>
+        </q-td>
+      </q-tr>
+    </template>
       <template v-slot:top-right>
         <q-btn
           color="primary"
@@ -156,11 +155,11 @@
 </template>
 
 <script>
-import { defineComponent,ref, onMounted } from "vue";
+import { defineComponent,ref, onMounted, computed } from "vue";
 import { exportFile, useQuasar } from 'quasar';
 import BotonesFil from "src/components/Admin/BotonesFil.vue";
 import axios from "axios";
-import { computed } from "vue";
+import { useRouter } from "vue-router";
 
 const columns = [
   {
@@ -176,7 +175,8 @@ const columns = [
   { name: 'carrera', label: 'Carrera', field: 'carrera', sortable: true },
   { name: 'area', label: 'Área', field: 'area' },
   { name: 'grado', label: 'Grado', field: 'grado' },
-  { name: 'genero', label: 'Género', field: 'genero' }
+  { name: 'genero', label: 'Género', field: 'genero' },
+  { name: 'idsolicitud', label: 'Solicitud', field: 'idsolicitud' }
 ];
 
 
@@ -204,24 +204,86 @@ function isActiveButton(route) {
     }
 
 export default {
+
+  name: 'DetailsPage',
+  // props: {
+  //   // Aquí recibes el parámetro del ID del registro de la URL
+  //   id: {
+  //     type: String,
+  //     required: true,
+  //   },
+  // },
+
+  data() {
+    return {
+      // Variables para almacenar los datos del registro
+      // Puedes cargar los datos aquí usando la API en el método 'created'
+    };
+  },
+
+  methods: {
+    loadData() {
+      // Llama a la API para obtener los detalles del registro usando this.id
+      // Actualiza los datos del registro en las variables de data
+    },
+  },
+
   components: {
   },
   setup () {
+    const router = useRouter(); // Agrega esta línea para obtener el enrutador
     const data = ref([]);
     const $q = useQuasar()
     const selectedBeca = ref(null);
     const becas = ref([]);
+    const carreras = ref([]);
+    const areas = ref([]);
+    const grados = ref([]);
+    const generos = ref([]);
+    const selectedCarrera = ref(null);
+    const selectedArea = ref(null);
+    const selectedGrado = ref(null);
+    const selectedGenero = ref(null);
+
+    const isBecaDropdownOpen = ref(false);
+    const isCarreraDropdownOpen = ref(false);
+    const isAreaDropdownOpen = ref(false);
+    const isGradoDropdownOpen = ref(false);
+    const isGeneroDropdownOpen = ref(false);
+
 
     const filteredData = computed(() => {
-      if (!selectedBeca.value) {
-        return data.value;
-      } else {
-        return data.value.filter((item) => item.beca === selectedBeca.value);
-      }
+      return data.value.filter((item) => {
+        const filterByBeca = !selectedBeca.value || item.beca === selectedBeca.value;
+        const filterByCarrera = !selectedCarrera.value || item.carrera === selectedCarrera.value;
+        const filterByArea = !selectedArea.value || item.area === selectedArea.value;
+        const filterByGrado = !selectedGrado.value || item.grado === selectedGrado.value;
+        const filterByGenero = !selectedGenero.value || item.genero === selectedGenero.value;
+
+        return filterByBeca && filterByCarrera && filterByArea && filterByGrado && filterByGenero;
+      });
     });
-    
-    function onItemClick(selectedItem) {
-      selectedBeca.value = selectedItem;
+
+
+    const idsolicitud = computed(() => {
+      // Aquí obtenemos el 'id' del registro desde el enrutador
+      return router.currentRoute.value.params.idsolicitud;
+    });
+
+    onMounted(() => {
+      loadData(); // Llama a la función para cargar los datos utilizando el 'id'
+    });
+
+    function loadData() {
+      // Aquí llamas a la API para obtener los detalles del registro utilizando el 'id'
+      axios
+        .get(`http://127.0.0.1:3000/api/solicitud/${router.currentRoute.value.params.idsolicitud}`)
+        .then((response) => {
+          data.value = response.data; // Actualiza los datos del registro en la variable 'data'
+        })
+        .catch((error) => {
+          console.error('Error al obtener los detalles del registro:', error);
+        });
     }
 
     // Realizar una solicitud al servidor para obtener la lista de becas
@@ -235,9 +297,45 @@ export default {
         });
     });
 
-    function onItemClick(selectedItem) {
-      selectedBeca.value = selectedItem;
-    }
+    onMounted(() => {
+      axios.get('http://127.0.0.1:3000/api/carrera')
+        .then(response => {
+          carreras.value = response.data;
+        })
+        .catch(error => {
+          console.error('Error al obtener las carreras:', error);
+        });
+    });
+
+    onMounted(() => {
+      axios.get('http://127.0.0.1:3000/api/area')
+        .then(response => {
+          areas.value = response.data;
+        })
+        .catch(error => {
+          console.error('Error al obtener las areas:', error);
+        });
+    });
+
+    onMounted(() => {
+      axios.get('http://127.0.0.1:3000/api/grado')
+        .then(response => {
+          grados.value = response.data;
+        })
+        .catch(error => {
+          console.error('Error al obtener las grados:', error);
+        });
+    });
+
+    onMounted(() => {
+      axios.get('http://127.0.0.1:3000/api/genero')
+        .then(response => {
+          generos.value = response.data;
+        })
+        .catch(error => {
+          console.error('Error al obtener las generos:', error);
+        });
+    });
 
     axios.get('http://127.0.0.1:3000/api/columns')
       .then(response => {
@@ -247,6 +345,34 @@ export default {
         console.error('Error al obtener los datos:', error);
     });
 
+
+    function onItemClick(selectedItem, dropdownType) {
+      switch (dropdownType) {
+        case 'beca':
+          selectedBeca.value = selectedItem;
+          break;
+        case 'carrera':
+          selectedCarrera.value = selectedItem;
+          break;
+        case 'area':
+          selectedArea.value = selectedItem;
+          break;
+        case 'grado':
+          selectedGrado.value = selectedItem;
+          break;
+        case 'genero':
+          selectedGenero.value = selectedItem;
+          break;
+        default:
+          break;
+      }
+      isBecaDropdownOpen.value = false;
+      isCarreraDropdownOpen.value = false;
+      isAreaDropdownOpen.value = false;
+      isGradoDropdownOpen.value = false;
+      isGeneroDropdownOpen.value = false;
+    }
+
     return {
       columns,
       data,
@@ -254,6 +380,15 @@ export default {
       filteredData,
       onItemClick,
       becas,
+      carreras,
+      areas,
+      grados,
+      generos,
+      isBecaDropdownOpen,
+      isCarreraDropdownOpen,
+      isAreaDropdownOpen,
+      isGradoDropdownOpen,
+      isGeneroDropdownOpen,
 
       exportTable () {
         // naive encoding to csv format

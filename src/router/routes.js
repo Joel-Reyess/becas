@@ -21,7 +21,7 @@ const routes = [
         path: "menu",
         name: "menu",
         component: () => import("src/pages/adminpages/GeneralView.vue"),
-        
+
       },
       {
         path: "aproved",
@@ -42,6 +42,11 @@ const routes = [
         path: "reva",
         name: "reva",
         component: () => import("src/pages/adminpages/RevalidadosPage.vue"),
+      },
+      {
+        path: '/details/:id', // El ID es el identificador único del registro que se pasará en la URL
+        name: 'DetailsPage',
+        component: () => import("src/pages/adminpages/DetallesBeca.vue"),
       },
     ],
   },
