@@ -12,14 +12,14 @@
                   <p class="q-mb-sm"><strong>Nombre:</strong> {{ formData && formData.nombre }}</p>
                   <p class="q-mb-sm"><strong>Matrícula:</strong> {{ formData && formData.matricula }}</p>
                   <p class="q-mb-sm"><strong>Telefono:</strong> {{ formData && formData.telefono }}</p>
-                  <p class="q-mb-sm"><strong>Beca:</strong> {{ getBecaContent(formData && formData.idbeca, becas) }}</p>
-                  <p class="q-mb-sm"><strong>Carrera:</strong> {{ getCarreraContent(formData && formData.idcarrera, carreras) }}</p>
-                  <p class="q-mb-sm"><strong>Area:</strong> {{ getAreaContent(formData && formData.idarea, areas) }}</p>
-                  <p class="q-mb-sm"><strong>Grado:</strong> {{ getGradoContent(formData && formData.idgrado, grados) }}</p>
+                  <p class="q-mb-sm"><strong>Beca:</strong> {{ getBecaContent(formData && formData.idbeca) }}</p>
+                  <p class="q-mb-sm"><strong>Carrera:</strong> {{ getCarreraContent(formData && formData.idcarrera) }}</p>
+                  <p class="q-mb-sm"><strong>Area:</strong> {{ getAreaContent(formData && formData.idarea) }}</p>
+                  <p class="q-mb-sm"><strong>Grado:</strong> {{ getGradoContent(formData && formData.idgrado) }}</p>
                   <p class="q-mb-sm"><strong>Cuatrimestre:</strong> {{ formData && formData.cuatrimestre }}</p>
                   <p class="q-mb-sm"><strong>Grupo:</strong> {{ formData && formData.grupo }}</p>
                   <p class="q-mb-sm"><strong>Correo tutor:</strong> {{ formData && formData.correotutor }}</p>
-                  <p class="q-mb-sm"><strong>Genero:</strong> {{ getGeneroContent(formData && formData.idgenero, generos) }}</p>
+                  <p class="q-mb-sm"><strong>Genero:</strong> {{ getGeneroContent(formData && formData.idgenero) }}</p>
                   <p class="q-mb-sm"><strong>Estado:</strong> {{ formData && formData.idestado }}</p>
                 </div>
               </q-card-section>
@@ -38,10 +38,17 @@ import { useRouter } from 'vue-router';
 
 export default{
 
-  setup () {
+  props: {
+    idsolicitud: {
+      type: String,
+      required: true,
+    },
+  },
+  setup (props) {
+
+
 
     const router = useRouter();
-    const { id: idsolicitud } = router.props || {};
 
     const formData = ref(null);
     const carreras = ref([]);
@@ -50,13 +57,129 @@ export default{
     const generos = ref([]);
     const becas = ref([]);
 
+    const getCarreraContent = (idcarrera) => {
+          const carrera = carreras.value.find((c) => c.value === idcarrera);
+          return carrera ? carrera.label : "";
+        };
+        const getAreaContent = (idarea) => {
+          const area = areas.value.find((c) => c.value === idarea);
+          return area ? area.label : "";
+        };
+        const getGradoContent = (idgrado) => {
+          const grado = grados.value.find((c) => c.value === idgrado);
+          return grado ? grado.label : "";
+        };
+        const getGeneroContent = (idgenero) => {
+          const genero = generos.value.find((c) => c.value === idgenero);
+          return genero ? genero.label : "";
+        };
+        const getBecaContent = (idbeca) => {
+          const beca = becas.value.find((c) => c.value === idbeca);
+          return beca ? beca.label : "";
+        };
+
+
+    onMounted(async () => {
+      try {
+        const response = await axios.get("http://127.0.0.1:3000/api/carrera");
+        const carreraData = response.data;
+        if (carreraData && carreraData.length > 0) {
+          carreras.value = carreraData.map((item) => {
+            return {
+              label: item.carrera,
+              value: item.idcarrera,
+            };
+          });
+        }
+        console.log(response);
+      } catch (error) {
+        console.error("Error al obtener la carrera:", error);
+      }
+      try {
+        const response = await axios.get("http://127.0.0.1:3000/api/carrera");
+        const carreraData = response.data;
+        if (carreraData && carreraData.length > 0) {
+          carreras.value = carreraData.map((item) => {
+            return {
+              label: item.carrera,
+              value: item.idcarrera,
+            };
+          });
+        }
+        console.log(response);
+      } catch (error) {
+        console.error("Error al obtener la carrera:", error);
+      }
+      try {
+        const response = await axios.get("http://127.0.0.1:3000/api/area");
+        const areaData = response.data;
+        if (areaData && areaData.length > 0) {
+          areas.value = areaData.map((item) => {
+            return {
+              label: item.area,
+              value: item.idarea,
+            };
+          });
+        }
+        console.log(response);
+      } catch (error) {
+        console.error("Error al obtener el area:", error);
+      }
+
+      try {
+        const response = await axios.get("http://127.0.0.1:3000/api/grado");
+        const gradoData = response.data;
+        if (gradoData && gradoData.length > 0) {
+          grados.value = gradoData.map((item) => {
+            return {
+              label: item.grado,
+              value: item.idgrado,
+            };
+          });
+        }
+        console.log(response);
+      } catch (error) {
+        console.error("Error al obtener el grado:", error);
+      }
+
+        try {
+        const response = await axios.get("http://127.0.0.1:3000/api/genero");
+        const generoData = response.data;
+        if (generoData && generoData.length > 0) {
+          generos.value = generoData.map((item) => {
+            return {
+              label: item.genero,
+              value: item.idgenero,
+            };
+          });
+        }
+        console.log(response);
+      } catch (error) {
+        console.error("Error al obtener el genero:", error);
+      }
+
+      try {
+        const response = await axios.get("http://127.0.0.1:3000/api/becas/all");
+        const becaData = response.data;
+        if (becaData && becaData.length > 0) {
+          becas.value = becaData.map((item) => {
+            return {
+              label: item.beca,
+              value: item.idbeca,
+            };
+          });
+        }
+        console.log(response);
+      } catch (error) {
+        console.error("Error al obtener la beca:", error);
+      }
+    });
+
     onMounted(() => {
-      if (router.props && router.props.id) {
-        const { id } = router.props;
+      if (props.idsolicitud) {
         // Realizar una solicitud al servidor para obtener los detalles del registro usando el ID recibido
-        // Reemplaza 'your_api_endpoint' con la URL de tu API para obtener los detalles del registro.
         axios
-          .get(`api/solicitud/${id}`)
+          .get(`http://127.0.0.1:3000/api/solicitud/${props.idsolicitud}`)
           .then((response) => {
             formData.value = response.data;
           })
@@ -114,27 +237,6 @@ export default{
         });
     });
 
-    const getCarreraContent = (idcarrera) => {
-          const carrera = carreras.value.find((c) => c.value === idcarrera);
-          return carrera ? carrera.label : "";
-        };
-        const getAreaContent = (idarea) => {
-          const area = areas.value.find((c) => c.value === idarea);
-          return area ? area.label : "";
-        };
-        const getGradoContent = (idgrado) => {
-          const grado = grados.value.find((c) => c.value === idgrado);
-          return grado ? grado.label : "";
-        };
-        const getGeneroContent = (idgenero) => {
-          const genero = generos.value.find((c) => c.value === idgenero);
-          return genero ? genero.label : "";
-        };
-        const getBecaContent = (idbeca) => {
-          const beca = becas.value.find((c) => c.value === idbeca);
-          return beca ? beca.label : "";
-        };
-
     // Función para obtener el nombre correspondiente a un ID desde la lista
     function getNombreFromId(id, lista) {
       const item = lista.value.find(item => item.id === id);
@@ -147,10 +249,8 @@ export default{
       getAreaContent,
       getGradoContent,
       getGeneroContent,
-      carreras,
       getBecaContent,
     };
-
 
   }
 

@@ -270,9 +270,7 @@ export default {
       return router.currentRoute.value.params.idsolicitud;
     });
 
-    onMounted(() => {
-      loadData(); // Llama a la función para cargar los datos utilizando el 'id'
-    });
+    
 
     function loadData() {
       // Aquí llamas a la API para obtener los detalles del registro utilizando el 'id'

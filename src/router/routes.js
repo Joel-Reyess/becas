@@ -44,9 +44,10 @@ const routes = [
         component: () => import("src/pages/adminpages/RevalidadosPage.vue"),
       },
       {
-        path: '/details/:id', // El ID es el identificador único del registro que se pasará en la URL
+        path: '/details/:idsolicitud', // El ID es el identificador único del registro que se pasará en la URL
         name: 'DetailsPage',
         component: () => import("src/pages/adminpages/DetallesBeca.vue"),
+        props: true,
       },
     ],
   },
