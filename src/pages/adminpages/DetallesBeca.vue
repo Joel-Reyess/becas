@@ -20,7 +20,9 @@
                   <p class="q-mb-sm"><strong>Grupo:</strong> {{ formData && formData.grupo }}</p>
                   <p class="q-mb-sm"><strong>Correo tutor:</strong> {{ formData && formData.correotutor }}</p>
                   <p class="q-mb-sm"><strong>Genero:</strong> {{ getGeneroContent(formData && formData.idgenero) }}</p>
-                  <p class="q-mb-sm"><strong>Estado:</strong> {{ formData && formData.idestado }}</p>
+                  <p class="q-mb-sm"><strong>Estado:</strong> {{ getEstadoContent(formData && formData.idestado) }}</p>
+                  <q-select v-model="estadoRef" :options="estados" label="Estado" />
+                  <q-btn type="submit" color="primary" label="Guardar" class="q-mt-md" />
                 </div>
               </q-card-section>
             </q-card>
@@ -46,16 +48,15 @@ export default{
   },
   setup (props) {
 
-
-
     const router = useRouter();
-
+    const estadoRef = ref(null);
     const formData = ref(null);
     const carreras = ref([]);
     const areas = ref([]);
     const grados = ref([]);
     const generos = ref([]);
     const becas = ref([]);
+    const estados = ref([]);
 
     const getCarreraContent = (idcarrera) => {
           const carrera = carreras.value.find((c) => c.value === idcarrera);
@@ -77,7 +78,25 @@ export default{
           const beca = becas.value.find((c) => c.value === idbeca);
           return beca ? beca.label : "";
         };
+        const getEstadoContent = (idestado) => {
+          const estado = estados.value.find((c) => c.value === idestado);
+          return estado ? estado.label : "";
+        };
 
+        const onSubmit = async () => {
+          try {
+            // Realiza una solicitud HTTP para actualizar el registro con el nuevo valor del estado
+            await axios.put(`http://127.0.0.1:3000/api/solicitud/${props.idsolicitud}`, {
+              idestado: estadoRef.value.value, // Aquí envías el nuevo valor del estado seleccionado
+            });
+
+            // Maneja el éxito, por ejemplo, muestra un mensaje de éxito o navega a otra página
+            console.log('Registro actualizado correctamente');
+          } catch (error) {
+            console.error('Error al actualizar el registro:', error);
+            // Maneja el error, por ejemplo, muestra un mensaje de error al usuario
+          }
+        };
 
     onMounted(async () => {
       try {
@@ -173,6 +192,22 @@ export default{
       } catch (error) {
         console.error("Error al obtener la beca:", error);
       }
+
+      try {
+        const response = await axios.get("http://127.0.0.1:3000/api/estado");
+        const estadoData = response.data;
+        if (estadoData && estadoData.length > 0) {
+          estados.value = estadoData.map((item) => {
+            return {
+              label: item.estado,
+              value: item.idestado,
+            };
+          });
+        }
+        console.log(response);
+      } catch (error) {
+        console.error("Error al obtener la beca:", error);
+      }
     });
 
     onMounted(() => {
@@ -182,6 +217,9 @@ export default{
           .get(`http://127.0.0.1:3000/api/solicitud/${props.idsolicitud}`)
           .then((response) => {
             formData.value = response.data;
+
+            // Inicializar el estado seleccionado en el q-select con el valor actual del registro
+            estadoRef.value = formData.value.idestado;
           })
           .catch((error) => {
             console.error('Error al obtener los detalles del registro:', error);
@@ -235,6 +273,14 @@ export default{
         .catch(error => {
           console.error('Error al obtener los géneros:', error);
         });
+
+      axios.get('http://127.0.0.1:3000/api/estado')
+        .then(response => {
+          estados.value = response.data;
+        })
+        .catch(error => {
+          console.error('Error al obtener los géneros:', error);
+        });
     });
 
     // Función para obtener el nombre correspondiente a un ID desde la lista
@@ -250,10 +296,13 @@ export default{
       getGradoContent,
       getGeneroContent,
       getBecaContent,
+      getEstadoContent,
+
+      estadoRef,
+      estados,
+      onSubmit,
     };
-
   }
-
 };
 
 </script>

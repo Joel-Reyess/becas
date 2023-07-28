@@ -1,226 +1,431 @@
 <template>
-    <p class="titulo">En proceso</p>
-
-  <botones-fil></botones-fil>
-
-  <div class="q-pa-md">
-      <q-table
-        flat bordered
-        title="Treats"
-        :rows="rows"
-        :columns="columns"
-        color="primary"
-        row-key="name"
+  <p class="titulo">Becas en proceso</p>
+  <div class="q-pa-md-container">
+    <div class="q-pa-md">
+      <q-btn-dropdown
+        color="secondary"
+        class="buttoms"
+        text-color="black"
+        label="Becas"
+        :model-value="isBecaDropdownOpen"
       >
-        <template v-slot:top-right>
-          <q-btn
-            color="primary"
-            icon-right="archive"
-            label="Export to csv"
-            no-caps
-            @click="exportTable"
-          />
-        </template>
-      </q-table>
-    </div>
+        <q-list>
+          <q-item
+            v-for="beca in becas"
+            :key="beca.idbeca"
+            clickable
+            v-close-popup
+            @click="onItemClick(beca.beca, 'beca')"
+          >
+            <q-item-section>
+              <q-item-label>{{ beca.beca }}</q-item-label>
+            </q-item-section>
+          </q-item>
+        </q-list>
+    </q-btn-dropdown>
+  </div>
+        <div class="q-pa-md">
+            <q-btn-dropdown
+              color="secondary"
+              class="buttoms"
+              text-color="black"
+              label="Carrera"
+              :model-value="isCarreraDropdownOpen"
+            >
+              <q-list>
+                <q-item
+                  v-for="carrera in carreras"
+                  :key="carrera.idcarrera"
+                  clickable
+                  v-close-popup
+                  @click="onItemClick(carrera.carrera, 'carrera')"
+                >
+                  <q-item-section>
+                    <q-item-label>{{ carrera.carrera }}</q-item-label>
+                  </q-item-section>
+                </q-item>
+              </q-list>
+            </q-btn-dropdown>
+          </div>
+          <div class="q-pa-md">
+            <q-btn-dropdown
+              color="secondary"
+              class="buttoms"
+              text-color="black"
+              label="Area"
+              :model-value="isAreaDropdownOpen"
+            >
+              <q-list>
+                <q-item
+                  v-for="area in areas"
+                  :key="area.idarea"
+                  clickable
+                  v-close-popup
+                  @click="onItemClick (area.area, 'area')"
+                >
+                  <q-item-section>
+                    <q-item-label>{{ area.area }}</q-item-label>
+                  </q-item-section>
+                </q-item>
+              </q-list>
+            </q-btn-dropdown>
+          </div>
+          <div class="q-pa-md">
+            <q-btn-dropdown
+              color="secondary"
+              class="buttoms"
+              text-color="black"
+              label="Grado"
+              :model-value="isGradoDropdownOpen"
+            >
+              <q-list>
+                <q-item
+                  v-for="grado in grados"
+                  :key="grado.idgrado"
+                  clickable
+                  v-close-popup
+                  @click="onItemClick (grado.grado, 'grado')"
+                >
+                  <q-item-section>
+                    <q-item-label>{{ grado.grado }}</q-item-label>
+                  </q-item-section>
+                </q-item>
+              </q-list>
+            </q-btn-dropdown>
+          </div>
+          <div class="q-pa-md">
+            <q-btn-dropdown
+              color="secondary"
+              class="buttoms"
+              text-color="black"
+              label="Genero"
+              :model-value="isGeneroDropdownOpen"
+            >
+              <q-list>
+                <q-item
+                  v-for="genero in generos"
+                  :key="genero.idgenero"
+                  clickable
+                  v-close-popup
+                  @click="onItemClick (genero.genero, 'genero')"
+                >
+                  <q-item-section>
+                    <q-item-label>{{ genero.genero }}</q-item-label>
+                  </q-item-section>
+                </q-item>
+              </q-list>
+            </q-btn-dropdown>
+          </div>
+</div>
+<div class="q-pa-md">
+    <q-table
+      flat bordered
+      title="Solicitudes en proceso"
+      :rows="filteredData"
+      :columns="columns"
+      color="primary"
+      row-key="name"
+    >
+    <template v-slot:body="props">
+      <q-tr :props="props">
+        <q-td v-for="col in props.cols" :key="col.name" :props="props">
+          <template v-if="col.name === 'nombre'"> <!-- Ajusta aquí el nombre de la columna que tiene el ID del registro -->
+            <router-link :to="'/details/' + props.row.idsolicitud"> <!-- Así se pasa el ID como parámetro en la URL -->
+              {{ props.row[col.name] }}
+            </router-link>
+          </template>
+          <template v-else>
+            {{ props.row[col.name] }}
+          </template>
+        </q-td>
+      </q-tr>
+    </template>
+      <template v-slot:top-right>
+        <q-btn
+          color="primary"
+          icon-right="archive"
+          label="Export to csv"
+          no-caps
+          @click="exportTable"
+        />
+      </template>
+    </q-table>
+  </div>
 
 </template>
 
 <script>
-  import { defineComponent,ref } from "vue";
-  import { exportFile, useQuasar } from 'quasar';
-  import BotonesFil from "src/components/Admin/BotonesFil.vue";
+import { defineComponent,ref, onMounted, computed } from "vue";
+import { exportFile, useQuasar } from 'quasar';
+import BotonesFil from "src/components/Admin/BotonesFil.vue";
+import axios from "axios";
+import { useRouter } from "vue-router";
 
-    const columns = [
-    {
-      name: 'name',
-      required: true,
-      label: 'Dessert (100g serving)',
-      align: 'left',
-      field: row => row.name,
-      format: val => `${val}`,
-      sortable: true
-    },
-    { name: 'calories', align: 'center', label: 'Calories', field: 'calories', sortable: true },
-    { name: 'fat', label: 'Fat (g)', field: 'fat', sortable: true },
-    { name: 'carbs', label: 'Carbs (g)', field: 'carbs' },
-    { name: 'protein', label: 'Protein (g)', field: 'protein' },
-    { name: 'sodium', label: 'Sodium (mg)', field: 'sodium' },
-    { name: 'calcium', label: 'Calcium (%)', field: 'calcium', sortable: true, sort: (a, b) => parseInt(a, 10) - parseInt(b, 10) },
-    { name: 'iron', label: 'Iron (%)', field: 'iron', sortable: true, sort: (a, b) => parseInt(a, 10) - parseInt(b, 10) }
-  ]
+const columns = [
+  {
+    name: 'nombre',
+    required: true,
+    label: 'Nombre',
+    align: 'left',
+    field: row => row.nombre,
+    format: val => `${val}`,
+    sortable: true
+  },
+  { name: 'beca', align: 'center', label: 'Beca', field: 'beca', sortable: true },
+  { name: 'carrera', label: 'Carrera', field: 'carrera', sortable: true },
+  { name: 'area', label: 'Área', field: 'area' },
+  { name: 'grado', label: 'Grado', field: 'grado' },
+  { name: 'genero', label: 'Género', field: 'genero' },
+  { name: 'idsolicitud', label: 'Solicitud', field: 'idsolicitud' }
+];
 
-  const rows = [
-    {
-      name: 'Frozen Yogurt',
-      calories: 159,
-      fat: 6.0,
-      carbs: 24,
-      protein: 4.0,
-      sodium: 87,
-      calcium: '14%',
-      iron: '1%'
-    },
-    {
-      name: 'Ice cream sandwich',
-      calories: 237,
-      fat: 9.0,
-      carbs: 37,
-      protein: 4.3,
-      sodium: 129,
-      calcium: '8%',
-      iron: '1%'
-    },
-    {
-      name: 'Eclair',
-      calories: 262,
-      fat: 16.0,
-      carbs: 23,
-      protein: 6.0,
-      sodium: 337,
-      calcium: '6%',
-      iron: '7%'
-    },
-    {
-      name: 'Cupcake',
-      calories: 305,
-      fat: 3.7,
-      carbs: 67,
-      protein: 4.3,
-      sodium: 413,
-      calcium: '3%',
-      iron: '8%'
-    },
-    {
-      name: 'Gingerbread',
-      calories: 356,
-      fat: 16.0,
-      carbs: 49,
-      protein: 3.9,
-      sodium: 327,
-      calcium: '7%',
-      iron: '16%'
-    },
-    {
-      name: 'Jelly bean',
-      calories: 375,
-      fat: 0.0,
-      carbs: 94,
-      protein: 0.0,
-      sodium: 50,
-      calcium: '0%',
-      iron: '0%'
-    },
-    {
-      name: 'Lollipop',
-      calories: 392,
-      fat: 0.2,
-      carbs: 98,
-      protein: 0,
-      sodium: 38,
-      calcium: '0%',
-      iron: '2%'
-    },
-    {
-      name: 'Honeycomb',
-      calories: 408,
-      fat: 3.2,
-      carbs: 87,
-      protein: 6.5,
-      sodium: 562,
-      calcium: '0%',
-      iron: '45%'
-    },
-    {
-      name: 'Donut',
-      calories: 452,
-      fat: 25.0,
-      carbs: 51,
-      protein: 4.9,
-      sodium: 326,
-      calcium: '2%',
-      iron: '22%'
-    },
-    {
-      name: 'KitKat',
-      calories: 518,
-      fat: 26.0,
-      carbs: 65,
-      protein: 7,
-      sodium: 54,
-      calcium: '12%',
-      iron: '6%'
+
+function wrapCsvValue (val, formatFn, row) {
+  let formatted = formatFn !== void 0
+    ? formatFn(val, row)
+    : val
+
+  formatted = formatted === void 0 || formatted === null
+    ? ''
+    : String(formatted)
+
+  formatted = formatted.split('"').join('""')
+  /**
+   * Excel accepts \n and \r in strings, but some other CSV parsers do not
+   * Uncomment the next two lines to escape new lines
+   */
+  // .split('\n').join('\\n')
+  // .split('\r').join('\\r')
+
+  return `"${formatted}"`
+}
+function isActiveButton(route) {
+      return currentRoute.value === route;
     }
-  ]
 
-  function wrapCsvValue (val, formatFn, row) {
-    let formatted = formatFn !== void 0
-      ? formatFn(val, row)
-      : val
+export default {
 
-    formatted = formatted === void 0 || formatted === null
-      ? ''
-      : String(formatted)
+  name: 'DetailsPage',
+  // props: {
+  //   // Aquí recibes el parámetro del ID del registro de la URL
+  //   id: {
+  //     type: String,
+  //     required: true,
+  //   },
+  // },
 
-    formatted = formatted.split('"').join('""')
-    /**
-     * Excel accepts \n and \r in strings, but some other CSV parsers do not
-     * Uncomment the next two lines to escape new lines
-     */
-    // .split('\n').join('\\n')
-    // .split('\r').join('\\r')
+  data() {
+    return {
+      // Variables para almacenar los datos del registro
+      // Puedes cargar los datos aquí usando la API en el método 'created'
+    };
+  },
 
-    return `"${formatted}"`
-  }
-
-  export default {
-    components: {
-      BotonesFil,
+  methods: {
+    loadData() {
+      // Llama a la API para obtener los detalles del registro usando this.id
+      // Actualiza los datos del registro en las variables de data
     },
-    setup () {
-      const $q = useQuasar()
+  },
 
-      return {
-        columns,
-        rows,
+  components: {
+  },
+  setup () {
+    const router = useRouter(); // Agrega esta línea para obtener el enrutador
+    const data = ref([]);
+    const $q = useQuasar()
+    const selectedBeca = ref(null);
+    const becas = ref([]);
+    const carreras = ref([]);
+    const areas = ref([]);
+    const grados = ref([]);
+    const generos = ref([]);
+    const selectedCarrera = ref(null);
+    const selectedArea = ref(null);
+    const selectedGrado = ref(null);
+    const selectedGenero = ref(null);
 
-        exportTable () {
-          // naive encoding to csv format
-          const content = [columns.map(col => wrapCsvValue(col.label))].concat(
-            rows.map(row => columns.map(col => wrapCsvValue(
-              typeof col.field === 'function'
-                ? col.field(row)
-                : row[ col.field === void 0 ? col.name : col.field ],
-              col.format,
-              row
-            )).join(','))
-          ).join('\r\n')
+    const isBecaDropdownOpen = ref(false);
+    const isCarreraDropdownOpen = ref(false);
+    const isAreaDropdownOpen = ref(false);
+    const isGradoDropdownOpen = ref(false);
+    const isGeneroDropdownOpen = ref(false);
 
-          const status = exportFile(
-            'table-export.csv',
-            content,
-            'text/csv'
-          )
 
-          if (status !== true) {
-            $q.notify({
-              message: 'Browser denied file download...',
-              color: 'negative',
-              icon: 'warning'
-            })
-          }
+    const filteredData = computed(() => {
+      return data.value.filter((item) => {
+        const filterByBeca = !selectedBeca.value || item.beca === selectedBeca.value;
+        const filterByCarrera = !selectedCarrera.value || item.carrera === selectedCarrera.value;
+        const filterByArea = !selectedArea.value || item.area === selectedArea.value;
+        const filterByGrado = !selectedGrado.value || item.grado === selectedGrado.value;
+        const filterByGenero = !selectedGenero.value || item.genero === selectedGenero.value;
+
+        return filterByBeca && filterByCarrera && filterByArea && filterByGrado && filterByGenero;
+      });
+    });
+
+
+    const idsolicitud = computed(() => {
+      // Aquí obtenemos el 'id' del registro desde el enrutador
+      return router.currentRoute.value.params.idsolicitud;
+    });
+
+
+
+    function loadData() {
+      // Aquí llamas a la API para obtener los detalles del registro utilizando el 'id'
+      axios
+        .get(`http://127.0.0.1:3000/api/solicitud/${router.currentRoute.value.params.idsolicitud}`)
+        .then((response) => {
+          data.value = response.data; // Actualiza los datos del registro en la variable 'data'
+        })
+        .catch((error) => {
+          console.error('Error al obtener los detalles del registro:', error);
+        });
+    }
+
+    // Realizar una solicitud al servidor para obtener la lista de becas
+    onMounted(() => {
+      axios.get('http://127.0.0.1:3000/api/becas/all')
+        .then(response => {
+          becas.value = response.data;
+        })
+        .catch(error => {
+          console.error('Error al obtener las becas:', error);
+        });
+    });
+
+    onMounted(() => {
+      axios.get('http://127.0.0.1:3000/api/carrera')
+        .then(response => {
+          carreras.value = response.data;
+        })
+        .catch(error => {
+          console.error('Error al obtener las carreras:', error);
+        });
+    });
+
+    onMounted(() => {
+      axios.get('http://127.0.0.1:3000/api/area')
+        .then(response => {
+          areas.value = response.data;
+        })
+        .catch(error => {
+          console.error('Error al obtener las areas:', error);
+        });
+    });
+
+    onMounted(() => {
+      axios.get('http://127.0.0.1:3000/api/grado')
+        .then(response => {
+          grados.value = response.data;
+        })
+        .catch(error => {
+          console.error('Error al obtener las grados:', error);
+        });
+    });
+
+    onMounted(() => {
+      axios.get('http://127.0.0.1:3000/api/genero')
+        .then(response => {
+          generos.value = response.data;
+        })
+        .catch(error => {
+          console.error('Error al obtener las generos:', error);
+        });
+    });
+
+    axios.get('http://127.0.0.1:3000/api/columns/proceso')
+      .then(response => {
+        data.value = response.data;
+      })
+      .catch(error => {
+        console.error('Error al obtener los datos:', error);
+    });
+
+
+    function onItemClick(selectedItem, dropdownType) {
+      switch (dropdownType) {
+        case 'beca':
+          selectedBeca.value = selectedItem;
+          break;
+        case 'carrera':
+          selectedCarrera.value = selectedItem;
+          break;
+        case 'area':
+          selectedArea.value = selectedItem;
+          break;
+        case 'grado':
+          selectedGrado.value = selectedItem;
+          break;
+        case 'genero':
+          selectedGenero.value = selectedItem;
+          break;
+        default:
+          break;
+      }
+      isBecaDropdownOpen.value = false;
+      isCarreraDropdownOpen.value = false;
+      isAreaDropdownOpen.value = false;
+      isGradoDropdownOpen.value = false;
+      isGeneroDropdownOpen.value = false;
+    }
+
+    return {
+      columns,
+      data,
+      selectedBeca,
+      filteredData,
+      onItemClick,
+      becas,
+      carreras,
+      areas,
+      grados,
+      generos,
+      isBecaDropdownOpen,
+      isCarreraDropdownOpen,
+      isAreaDropdownOpen,
+      isGradoDropdownOpen,
+      isGeneroDropdownOpen,
+
+      exportTable () {
+        // naive encoding to csv format
+        const content = [columns.map(col => wrapCsvValue(col.label))].concat(
+          data.value.map(row => columns.map(col => wrapCsvValue(
+            typeof col.field === 'function'
+              ? col.field(row)
+              : row[ col.field === void 0 ? col.name : col.field ],
+            col.format,
+            row
+          )).join(','))
+        ).join('\r\n')
+
+        const status = exportFile(
+          'table-export.csv',
+          content,
+          'text/csv'
+        )
+
+        if (status !== true) {
+          $q.notify({
+            message: 'Browser denied file download...',
+            color: 'negative',
+            icon: 'warning'
+          })
         }
       }
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>
-  .titulo{
-    color: #1ab192;
+
+.titulo{
+  color: #1ab192;
     text-transform: uppercase;
     line-height: 40px;
     font-size: 1.9em;
     text-align: center;
-  }
+}
 </style>
