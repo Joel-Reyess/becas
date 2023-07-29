@@ -93,9 +93,7 @@ export default {
       try {
         // Enviar la solicitud POST al servidor usando Axios (asegúrate de importar Axios)
         await axios.post('http://127.0.0.1:3000/api/upload', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data', // Es importante configurar correctamente el encabezado Content-Type para el envío de archivos
-          },
+          
         });
 
         // Aquí podrías mostrar un mensaje de éxito o realizar otras acciones después de cargar los archivos

@@ -101,6 +101,11 @@ const routes = [
         component: () => import("src/pages/alumnopages/becacultural/PreFormc.vue"),
       },
       {
+        path: "cultural/socio",
+        name: "cultural/socio",
+        component: () => import("src/pages/alumnopages/becacultural/SocioAcac.vue"),
+      },
+      {
         path: "cultural/paso1",
         name: "cultural/paso1",
         component: () => import("src/pages/alumnopages/becacultural/UnoFormc.vue"),
@@ -108,17 +113,22 @@ const routes = [
       {
         path: "cultural/paso2",
         name: "cultural/paso2",
-        component: () => import("src/pages/alumnopages/becacultural/AdjuntarFormc.vue"),
+        component: () => import("src/pages/alumnopages/becacultural/ResumenBecac.vue"),
       },
       {
         path: "cultural/paso3",
         name: "cultural/paso3",
-        component: () => import("src/pages/alumnopages/becacultural/ResumenBecac.vue"),
+        component: () => import("src/pages/alumnopages/becacultural/AdjuntarFormc.vue"),
       },
       {
         path: "deportiva",
         name: "deportiva",
         component: () => import("src/pages/alumnopages/becadeportiva/PreFormd.vue"),
+      },
+      {
+        path: "deportiva/socio",
+        name: "deportiva/socio",
+        component: () => import("src/pages/alumnopages/becadeportiva/SocioAcad.vue"),
       },
       {
         path: "deportiva/paso1",
@@ -128,12 +138,12 @@ const routes = [
       {
         path: "deportiva/paso2",
         name: "deportiva/paso2",
-        component: () => import("src/pages/alumnopages/becadeportiva/AdjuntarFormd.vue"),
+        component: () => import("src/pages/alumnopages/becadeportiva/ResumenBecad.vue"),
       },
       {
         path: "deportiva/paso3",
         name: "deportiva/paso3",
-        component: () => import("src/pages/alumnopages/becadeportiva/ResumenBecad.vue"),
+        component: () => import("src/pages/alumnopages/becadeportiva/AdjuntarFormd.vue"),
       },
       {
         path: "economica",

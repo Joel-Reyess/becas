@@ -436,7 +436,7 @@ export default {
               icon: "cloud_done",
               message: "Datos enviados correctamente",
             });
-            router.push("/alumno/cultural/paso3");
+            router.push("/alumno/cultural/paso2");
           })
           .catch((error) => {
             console.error("Error al enviar los datos:", error);
@@ -448,11 +448,148 @@ export default {
             });
           });
       }
+
+
+
+      const onSubmit = () => {
+      formDataCarta.value = {
+        nombre: nombre.value,
+        matricula: matricula.value,
+        domicilio: domicilio.value,
+        telefono: telefono.value,
+        celular: celular.value,
+        correoper: correoper.value,
+        nacimiento: nacimiento.value,
+        estadocivil: estadocivil.value,
+        genero: genero.value.value,
+        beca: beca.value.value,
+        nivelestudios: nivelestudios.value,
+        escuela: escuela.value,
+        tipoes: tipoes.value,
+        municipio: municipio.value,
+        promedio: promedio.value,
+        carrera: carrera.value.value,
+        area: area.value.value,
+        cuatrimestre: cuatrimestre.value,
+        grupo: grupo.value,
+        promedioult: promedioult.value,
+        apoyo: apoyo.value,
+        nombreapoyo: nombreapoyo.value,
+        apoyoint: apoyoint,value,
+        motivos: motivos.value,
+
+      };
+
+      localStorage.setItem("formDataCarta", JSON.stringify(formDataCarta.value));
+      const accept = true;
+
+      if (accept !== true) {
+        $q.notify({
+          color: "red-5",
+          textColor: "white",
+          icon: "warning",
+          message: "Necesitas revisar que todo este correcto",
+        });
+      } else {
+        axios
+          .post("http://127.0.0.1:3000/api/form/carta", formDataCarta)
+          .then((res) => {
+            $q.notify({
+              color: "green-4",
+              textColor: "white",
+              icon: "cloud_done",
+              message: "Datos enviados correctamente",
+            });
+            router.push("/alumno/cultural/paso2");
+          })
+          .catch((error) => {
+            console.error("Error al enviar los datos:", error);
+            $q.notify({
+              color: "red-5",
+              textColor: "white",
+              icon: "warning",
+              message: "Error al enviar los datos",
+            });
+          });
+      }
+      const onSubmit = () => {
+      formDataSocio.value = {
+        nombre: nombre.value,
+        nacimiento: nacimiento.value,
+        domicilio: domicilio.value,
+        conquienvive: conquienvive.value,
+        telefono: telefono.value,
+        celular: celular.value,
+        transporte: transporte.value,
+        ingreso: ingreso.value,
+        padre: padre.value,
+        madre: madre.value,
+        hermanos: hermanos.value,
+        total: total.value,
+        alimentacion: alimentacion.value,
+        telefonia: telefonia.value,
+        credito: credito.value,
+        renta: renta.value,
+        servicios: servicios.value,
+        abono: abono.value,
+        importe: importe.value,
+        totale: totale.value,
+        vivienda: vivienda.value,
+        paredes: paredes.value,
+        techos: techos.value,
+        pisos: pisos.value,
+        mobiliario: mobiliario.value,
+        servmedico: servmedico.value,
+        asistencia: asistencia.value,
+        cronicas: cronicas.value,
+        tipo: tipo.value,
+        consumo: consumo.value,
+        finde: finde.value,
+        actividades: actividades.value,
+        traslado: traslado.value,
+        mediotra: mediotra.value,
+
+      };
+
+      localStorage.setItem("formDataSocio", JSON.stringify(formDataSocio.value));
+
+      if (accept !== true) {
+        $q.notify({
+          color: "red-5",
+          textColor: "white",
+          icon: "warning",
+          message: "Necesitas revisar que todo este correcto",
+        });
+      } else {
+        axios
+          .post("http://127.0.0.1:3000/api/form/socio", formDataSocio)
+          .then((res) => {
+            $q.notify({
+              color: "green-4",
+              textColor: "white",
+              icon: "cloud_done",
+              message: "Datos enviados correctamente",
+            });
+            router.push("/alumno/cultural/paso2");
+          })
+          .catch((error) => {
+            console.error("Error al enviar los datos:", error);
+            $q.notify({
+              color: "red-5",
+              textColor: "white",
+              icon: "warning",
+              message: "Error al enviar los datos",
+            });
+          });
+      }
+    }
     };
 
+  };
 
-    return {
-      onSubmit,
+
+  return {
+    onSubmit,
       nombre,
       matricula,
       curp,
