@@ -1,6 +1,6 @@
 <template>
   <q-page class="q-pa-md container" padding>
-    <p class="title">Beca Excelencia</p>
+    <p class="title">Beca Inclusión</p>
     <ButtonProgress></ButtonProgress>
     <ProgresoBar></ProgresoBar>
     <q-space />
@@ -335,7 +335,7 @@
             type="submit"
             color="primary"
             @click="onSubmit"
-            to="/alumno/excelencia/socio"
+            to="/alumno/inclusion/socio"
           />
         </div>
       </q-form>
@@ -403,7 +403,7 @@ export default {
 
     onMounted(async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:3000/api/becas/5");
+        const response = await axios.get("http://127.0.0.1:3000/api/becas/6");
         const becaData = response.data;
         if (becaData) {
           beca.value = becaData.beca;
@@ -527,8 +527,8 @@ export default {
         motivo: motivo.value,
 
       };
-      if (beca.value === "Excelencia") {
-        formDataCarta.value.beca = 5;
+      if (beca.value === "Inclusion") {
+        formDataCarta.value.beca = 6;
       }
 
       localStorage.setItem("formDataCarta", JSON.stringify(formDataCarta.value));
@@ -551,7 +551,7 @@ export default {
               icon: "cloud_done",
               message: "Datos enviados correctamente",
             });
-            router.push("/alumno/excelencia/socio");
+            router.push("/alumno/inclusion/socio");
           })
           .catch((error) => {
             console.error("Error al enviar los datos:", error);

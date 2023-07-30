@@ -151,6 +151,11 @@ const routes = [
         component: () => import("src/pages/alumnopages/becaeconomica/PreFormEc.vue"),
       },
       {
+        path: "economica/socio",
+        name: "economica/socio",
+        component: () => import("src/pages/alumnopages/becaeconomica/SocioAcaec.vue"),
+      },
+      {
         path: "economica/paso1",
         name: "economica/paso1",
         component: () => import("src/pages/alumnopages/becaeconomica/UnoFormEc.vue"),
@@ -158,17 +163,22 @@ const routes = [
       {
         path: "economica/paso2",
         name: "economica/paso2",
-        component: () => import("src/pages/alumnopages/becaeconomica/AdjuntarFormEc.vue"),
+        component: () => import("src/pages/alumnopages/becaeconomica/ResumenBecaEc.vue"),
       },
       {
         path: "economica/paso3",
         name: "economica/paso3",
-        component: () => import("src/pages/alumnopages/becaeconomica/ResumenBecaEc.vue"),
+        component: () => import("src/pages/alumnopages/becaeconomica/AdjuntarFormEc.vue"),
       },
       {
         path: "excelencia",
         name: "excelencia",
         component: () => import("src/pages/alumnopages/becaexcelencia/PreFormEx.vue"),
+      },
+      {
+        path: "excelencia/socio",
+        name: "excelencia/socio",
+        component: () => import("src/pages/alumnopages/becaexcelencia/SocioAcaEx.vue"),
       },
       {
         path: "excelencia/paso1",
@@ -178,52 +188,62 @@ const routes = [
       {
         path: "excelencia/paso2",
         name: "excelencia/paso2",
-        component: () => import("src/pages/alumnopages/becaexcelencia/AdjuntarFormEx.vue"),
+        component: () => import("src/pages/alumnopages/becaexcelencia/ResumenBecaEx.vue"),
       },
       {
         path: "excelencia/paso3",
         name: "excelencia/paso3",
-        component: () => import("src/pages/alumnopages/becaexcelencia/ResumenBecaEx.vue"),
+        component: () => import("src/pages/alumnopages/becaexcelencia/AdjuntarFormEx.vue"),
       },
       {
         path: "inclusion",
         name: "inclusion",
-        component: () => import("src/pages/alumnopages/becainclusion/PreForm.vue"),
+        component: () => import("src/pages/alumnopages/becainclusion/PreFormIn.vue"),
+      },
+      {
+        path: "inclusion/socio",
+        name: "inclusion/socio",
+        component: () => import("src/pages/alumnopages/becainclusion/SocioAcaIn.vue"),
       },
       {
         path: "inclusion/paso1",
         name: "inclusion/paso1",
-        component: () => import("src/pages/alumnopages/becainclusion/UnoForm.vue"),
+        component: () => import("src/pages/alumnopages/becainclusion/UnoFormIn.vue"),
       },
       {
         path: "inclusion/paso2",
         name: "inclusion/paso2",
-        component: () => import("src/pages/alumnopages/becainclusion/AdjuntarForm.vue"),
+        component: () => import("src/pages/alumnopages/becainclusion/ResumenBecaIn.vue"),
       },
       {
         path: "inclusion/paso3",
         name: "inclusion/paso3",
-        component: () => import("src/pages/alumnopages/becainclusion/ResumenForm.vue"),
+        component: () => import("src/pages/alumnopages/becainclusion/AdjuntarForm.vue"),
       },
       {
         path: "postgrado",
         name: "postgrado",
-        component: () => import("src/pages/alumnopages/becapostgrado/PreForm.vue"),
+        component: () => import("src/pages/alumnopages/becapostgrado/PreFormPo.vue"),
+      },
+      {
+        path: "postgrado/socio",
+        name: "postgrado/socio",
+        component: () => import("src/pages/alumnopages/becapostgrado/SocioAcaPo.vue"),
       },
       {
         path: "postgrado/paso1",
         name: "postgrado/paso1",
-        component: () => import("src/pages/alumnopages/becapostgrado/UnoForm.vue"),
+        component: () => import("src/pages/alumnopages/becapostgrado/UnoFormPo.vue"),
       },
       {
         path: "postgrado/paso2",
         name: "postgrado/paso2",
-        component: () => import("src/pages/alumnopages/becapostgrado/AdjuntarForm.vue"),
+        component: () => import("src/pages/alumnopages/becapostgrado/ResumenBecaPo.vue"),
       },
       {
         path: "postgrado/paso3",
         name: "postgrado/paso3",
-        component: () => import("src/pages/alumnopages/becapostgrado/ResumenForm.vue"),
+        component: () => import("src/pages/alumnopages/becapostgrado/AdjuntarFormPo.vue"),
       },
       {
         path: "referencia",
@@ -248,22 +268,52 @@ const routes = [
       {
         path: "reincorporacion",
         name: "reincorporacion",
-        component: () => import("src/pages/alumnopages/becareincorporacion/PreForm.vue"),
+        component: () => import("src/pages/alumnopages/becareincorporacion/PreFormRe.vue"),
+      },
+      {
+        path: "reincorporacion/socio",
+        name: "reincorporacion/socio",
+        component: () => import("src/pages/alumnopages/becareincorporacion/SocioAcaRe.vue"),
       },
       {
         path: "reincorporacion/paso1",
         name: "reincorporacion/paso1",
-        component: () => import("src/pages/alumnopages/becareincorporacion/UnoForm.vue"),
+        component: () => import("src/pages/alumnopages/becareincorporacion/UnoFormRe.vue"),
       },
       {
         path: "reincorporacion/paso2",
         name: "reincorporacion/paso2",
-        component: () => import("src/pages/alumnopages/becareincorporacion/AdjuntarForm.vue"),
+        component: () => import("src/pages/alumnopages/becareincorporacion/ResumenBecaRe.vue"),
       },
       {
         path: "reincorporacion/paso3",
         name: "reincorporacion/paso3",
-        component: () => import("src/pages/alumnopages/becareincorporacion/ResumenForm.vue"),
+        component: () => import("src/pages/alumnopages/becareincorporacion/AdjuntarFormRe.vue"),
+      },
+      {
+        path: "transporte",
+        name: "transporte",
+        component: () => import("src/pages/alumnopages/becatransporte/PreFormTr.vue"),
+      },
+      {
+        path: "transporte/socio",
+        name: "transporte/socio",
+        component: () => import("src/pages/alumnopages/becatransporte/SocioAcaTr.vue"),
+      },
+      {
+        path: "transporte/paso1",
+        name: "transporte/paso1",
+        component: () => import("src/pages/alumnopages/becatransporte/UnoFormTr.vue"),
+      },
+      {
+        path: "transporte/paso2",
+        name: "transporte/paso2",
+        component: () => import("src/pages/alumnopages/becatransporte/ResumenBecaTr.vue"),
+      },
+      {
+        path: "transporte/paso3",
+        name: "transporte/paso3",
+        component: () => import("src/pages/alumnopages/becatransporte/AdjuntarFormTr.vue"),
       },
     ],
   },

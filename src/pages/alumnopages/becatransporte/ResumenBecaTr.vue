@@ -1,10 +1,9 @@
 <template>
   <q-page>
     <div class="q-pa-md">
-      <div class="title">Beca Económica</div>
+      <div class="title">Beca Transporte</div>
       <button-progress></button-progress>
       <dos-progreso-bar></dos-progreso-bar>
-
       <div class="q-gutter-md container">
         <q-form @submit="onSubmit" @reset="onReset">
           <div class="q-pt-lg">
@@ -583,8 +582,8 @@ export default {
 
     const onSubmit = () => {
       //para el formulario de la beca
-      if (beca.value === "Economica") {
-        formData.value.beca = 4;
+      if (beca.value === "Transporte") {
+        formData.value.beca = 10;
       }
       localStorage.setItem("formData", JSON.stringify(formData.value));
       axios
@@ -629,7 +628,7 @@ export default {
         });
 
       localStorage.removeItem("formDataSocio");
-      router.push({ path: "/alumno/economica/paso3" });
+      router.push({ path: "/alumno/transporte/paso3" });
     };
 
     return {
