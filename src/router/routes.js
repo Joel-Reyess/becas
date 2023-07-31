@@ -49,6 +49,12 @@ const routes = [
         component: () => import("src/pages/adminpages/DetallesBeca.vue"),
         props: true,
       },
+      {
+        path: '/detailsss/:idsolicitud', // El ID es el identificador único del registro que se pasará en la URL
+        name: 'DetailsPages',
+        component: () => import("src/pages/adminpages/DetallesProceso.vue"),
+        props: true,
+      },
     ],
   },
   {
@@ -96,6 +102,11 @@ const routes = [
         component: () => import("src/pages/alumnopages/becaacademica/ResumenBeca.vue"),
       },
       {
+        path: "academica/thk",
+        name: "academica/thk",
+        component: () => import("src/pages/alumnopages/becaacademica/ThankAca.vue"),
+      },
+      {
         path: "cultural",
         name: "cultural",
         component: () => import("src/pages/alumnopages/becacultural/PreFormc.vue"),
@@ -119,6 +130,11 @@ const routes = [
         path: "cultural/paso3",
         name: "cultural/paso3",
         component: () => import("src/pages/alumnopages/becacultural/AdjuntarFormc.vue"),
+      },
+      {
+        path: "cultural/thk",
+        name: "cultural/thk",
+        component: () => import("src/pages/alumnopages/becacultural/ThankCul.vue"),
       },
       {
         path: "deportiva",
@@ -146,6 +162,11 @@ const routes = [
         component: () => import("src/pages/alumnopages/becadeportiva/AdjuntarFormd.vue"),
       },
       {
+        path: "deportiva/thk",
+        name: "deportiva/thk",
+        component: () => import("src/pages/alumnopages/becadeportiva/ThankDep.vue"),
+      },
+      {
         path: "economica",
         name: "economica",
         component: () => import("src/pages/alumnopages/becaeconomica/PreFormEc.vue"),
@@ -169,6 +190,11 @@ const routes = [
         path: "economica/paso3",
         name: "economica/paso3",
         component: () => import("src/pages/alumnopages/becaeconomica/AdjuntarFormEc.vue"),
+      },
+      {
+        path: "economica/thk",
+        name: "economica/thk",
+        component: () => import("src/pages/alumnopages/becaeconomica/ThankEc.vue"),
       },
       {
         path: "excelencia",
@@ -196,6 +222,11 @@ const routes = [
         component: () => import("src/pages/alumnopages/becaexcelencia/AdjuntarFormEx.vue"),
       },
       {
+        path: "excelencia/thk",
+        name: "excelencia/thk",
+        component: () => import("src/pages/alumnopages/becaexelencia/ThankEx.vue"),
+      },
+      {
         path: "inclusion",
         name: "inclusion",
         component: () => import("src/pages/alumnopages/becainclusion/PreFormIn.vue"),
@@ -218,7 +249,12 @@ const routes = [
       {
         path: "inclusion/paso3",
         name: "inclusion/paso3",
-        component: () => import("src/pages/alumnopages/becainclusion/AdjuntarForm.vue"),
+        component: () => import("src/pages/alumnopages/becainclusion/AdjuntarFormIn.vue"),
+      },
+      {
+        path: "inclusion/thk",
+        name: "inclusion/thk",
+        component: () => import("src/pages/alumnopages/becainclusion/ThankIn.vue"),
       },
       {
         path: "postgrado",
@@ -246,24 +282,34 @@ const routes = [
         component: () => import("src/pages/alumnopages/becapostgrado/AdjuntarFormPo.vue"),
       },
       {
+        path: "postgrado/thk",
+        name: "postgrado/thk",
+        component: () => import("src/pages/alumnopages/becapostgrado/ThankPo.vue"),
+      },
+      {
         path: "referencia",
         name: "referencia",
-        component: () => import("src/pages/alumnopages/becareferencia/PreForm.vue"),
+        component: () => import("src/pages/alumnopages/becareferencia/PreFormRef.vue"),
       },
       {
         path: "referencia/paso1",
         name: "referencia/paso1",
-        component: () => import("src/pages/alumnopages/becareferencia/UnoForm.vue"),
+        component: () => import("src/pages/alumnopages/becareferencia/UnoFormRef.vue"),
       },
       {
         path: "referencia/paso2",
         name: "referencia/paso2",
-        component: () => import("src/pages/alumnopages/becareferencia/AdjuntarForm.vue"),
+        component: () => import("src/pages/alumnopages/becareferencia/ResumenBecaRef.vue"),
       },
       {
         path: "referencia/paso3",
         name: "referencia/paso3",
-        component: () => import("src/pages/alumnopages/becareferencia/ResumenForm.vue"),
+        component: () => import("src/pages/alumnopages/becareferencia/AdjuntarFormRef.vue"),
+      },
+      {
+        path: "referencia/thk",
+        name: "referencia/thk",
+        component: () => import("src/pages/alumnopages/becareferencia/ThankRf.vue"),
       },
       {
         path: "reincorporacion",
@@ -291,6 +337,11 @@ const routes = [
         component: () => import("src/pages/alumnopages/becareincorporacion/AdjuntarFormRe.vue"),
       },
       {
+        path: "reincorporacion/thk",
+        name: "reincorporacion/thk",
+        component: () => import("src/pages/alumnopages/becareincorporacion/ThankRe.vue"),
+      },
+      {
         path: "transporte",
         name: "transporte",
         component: () => import("src/pages/alumnopages/becatransporte/PreFormTr.vue"),
@@ -314,6 +365,11 @@ const routes = [
         path: "transporte/paso3",
         name: "transporte/paso3",
         component: () => import("src/pages/alumnopages/becatransporte/AdjuntarFormTr.vue"),
+      },
+      {
+        path: "transporte/thk",
+        name: "transporte/thk",
+        component: () => import("src/pages/alumnopages/becatransporte/ThankTr.vue"),
       },
     ],
   },

@@ -130,7 +130,7 @@
       <q-tr :props="props">
         <q-td v-for="col in props.cols" :key="col.name" :props="props">
           <template v-if="col.name === 'nombre'"> <!-- Ajusta aquí el nombre de la columna que tiene el ID del registro -->
-            <router-link :to="'/details/' + props.row.idsolicitud"> <!-- Así se pasa el ID como parámetro en la URL -->
+            <router-link :to="'/detailsss/' + props.row.idsolicitud"> <!-- Así se pasa el ID como parámetro en la URL -->
               {{ props.row[col.name] }}
             </router-link>
           </template>
@@ -205,7 +205,7 @@ function isActiveButton(route) {
 
 export default {
 
-  name: 'DetailsPage',
+  name: 'DetailsPages',
   // props: {
   //   // Aquí recibes el parámetro del ID del registro de la URL
   //   id: {

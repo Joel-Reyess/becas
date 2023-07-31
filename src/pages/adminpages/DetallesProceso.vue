@@ -20,9 +20,13 @@
                   <p class="q-mb-sm"><strong>Grupo:</strong> {{ formData && formData.grupo }}</p>
                   <p class="q-mb-sm"><strong>Correo tutor:</strong> {{ formData && formData.correotutor }}</p>
                   <p class="q-mb-sm"><strong>Genero:</strong> {{ getGeneroContent(formData && formData.idgenero) }}</p>
-                  <p class="q-mb-sm"><strong>Porcentaje:</strong> {{ formData && formData.porcentaje }}</p>
                   <p class="q-mb-sm"><strong>Estado:</strong> {{ getEstadoContent(formData && formData.idestado) }}</p>
+                  <p class="q-mb-sm">En caso de que ya haya sido aprovada </p>
+                  <p class="q-mb-sm"><strong>Porcentaje:</strong> {{ formData && formData.porcentaje }}</p>
                   <q-select v-model="estadoRef" :options="estados" label="Estado" />
+                  <q-space />
+                  <q-input v-model="porcentaje" type="text" class="col-5 q-pt-lg" label="Porcentaje que se le asignara a la beca" />
+                  <p>¡En caso de ya sea aprovada la beca y deben asignarle un procentaje a la becaasd!</p>
                   <q-btn type="submit" color="primary" label="Guardar" class="q-mt-md" />
                 </div>
               </q-card-section>
@@ -88,8 +92,9 @@ export default{
         const onSubmit = async () => {
           try {
             // Realiza una solicitud HTTP para actualizar el registro con el nuevo valor del estado
-            await axios.put(`http://127.0.0.1:3000/api/solicitud/${props.idsolicitud}`, {
+            await axios.put(`http://127.0.0.1:3000/api/solicitudes/${props.idsolicitud}`, {
               idestado: estadoRef.value.value, // Aquí envías el nuevo valor del estado seleccionado
+              porcentaje: porcentaje.value,
             });
 
             // Maneja el éxito, por ejemplo, muestra un mensaje de éxito o navega a otra página

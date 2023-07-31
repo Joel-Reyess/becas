@@ -1,44 +1,25 @@
 <template>
   <q-page class="q-pa-md container" padding>
-    <p class="title">Beca Economica</p>
+    <p class="title">Beca Económica</p>
     <button-progress></button-progress>
-    <dos-progreso-bar></dos-progreso-bar>
+    <tres-progress></tres-progress>
     <q-space />
     <p>¡Adjuntar solo archivos PDF!</p>
     <q-space />
     <div class="q-pa-xs q-pt-lg">
-      <q-card class="my-card q-card--bordered">
+      <q-card class="my-card q-card-bordered">
         <q-form
           @submit="onSubmit"
           @reset="onReset"
           class="q-gutter-md"
+          enctype="multipart/form-data"
         >
         <div class="row" padding>
-        <q-file filled bottom-slots class="col-5 q-pt-lg" v-model="solicitud" label="Solicitud" counter max-files="12" accept="application/pdf">
+        <q-file filled bottom-slots class="col-5 q-pt-lg" v-model="compromiso" name="pdfFiles" label="Carta compromiso y aceptacion de beca" counter max-files="12" accept="application/pdf">
           <q-btn round dense flat icon="add" @click.stop.prevent />
         </q-file>
         <q-space />
-        <q-file filled bottom-slots class="col-5 q-pt-lg" v-model="credencial" label="Credencial, ambos lados" counter max-files="12" accept="application/pdf">
-          <q-btn round dense flat icon="add" @click.stop.prevent />
-        </q-file>
-        <q-space />
-        <q-file filled bottom-slots class="col-5 q-pt-lg" v-model="boleta" label="Boleta de calificaciones" counter max-files="12" accept="application/pdf">
-          <q-btn round dense flat icon="add" @click.stop.prevent />
-        </q-file>
-        <q-space />
-        <q-file filled bottom-slots class="col-5 q-pt-lg" v-model="comprobante" label="Comprobante de ingresos" counter max-files="12" accept="application/pdf">
-          <q-btn round dense flat icon="add" @click.stop.prevent />
-        </q-file>
-        <q-space />
-        <q-file filled bottom-slots class="col-5 q-pt-lg" v-model="socioeconomicos" label="Datos socioeconomicos" counter max-files="12" accept="application/pdf">
-          <q-btn round dense flat icon="add" @click.stop.prevent />
-        </q-file>
-        <q-space />
-        <q-file filled bottom-slots class="col-5 q-pt-lg" v-model="compromiso" label="Carta compromiso y aceptacion de beca" counter max-files="12" accept="application/pdf">
-          <q-btn round dense flat icon="add" @click.stop.prevent />
-        </q-file>
-        <q-space />
-        <q-file filled bottom-slots class="col-5 q-pt-lg" v-model="conducta" label="Carta buena conducta" counter max-files="12" accept="application/pdf">
+        <q-file filled bottom-slots class="col-5 q-pt-lg" v-model="escrito" name="pdfFiles" label="Escrito de petición de BECA en puño y letra del interesado hacia la universidad" counter max-files="12" accept="application/pdf">
           <q-btn round dense flat icon="add" @click.stop.prevent />
         </q-file>
         <q-space />
@@ -59,29 +40,62 @@
 </template>
 
 <script>
-import { defineComponent,ref } from "vue";
+import { defineComponent, ref } from "vue";
 import ButtonProgress from "src/components/Alumno/ButtonProgress.vue";
-import DosProgresoBar from "src/components/Alumno/DosProgresoBar.vue";
-export default {
+import TresProgress from 'src/components/Alumno/TresProgress.vue';
+import axios from "axios";
+import { useRouter } from "vue-router";
 
-  components:{
+
+export default {
+  components: {
     ButtonProgress,
-    DosProgresoBar,
+    TresProgress,
   },
-  setup () {
+  setup() {
     const accept = ref(false);
-    return {
-      solicitud: ref(null),
-      credencial: ref(null),
-      boleta: ref(null),
-      comprobante: ref(null),
-      socioeconomicos: ref(null),
-      compromiso: ref(null),
-      conducta: ref(null),
-      accept,
+    const compromiso = ref(null);
+    const escrito = ref(null);
+
+    const router = useRouter();
+
+    // Función onSubmit para enviar los archivos al servidor
+    async function onSubmit() {
+      const formData = new FormData();
+      formData.append('compromiso', compromiso.value);
+      formData.append('escrito', escrito.value);
+
+      try {
+        await axios.post('http://127.0.0.1:3000/upload', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        },
+        router.push("/alumno/economica/thk"),
+        );
+        // Aquí puedes agregar la lógica que necesites después de enviar los archivos
+        // Por ejemplo, mostrar un mensaje de éxito, redireccionar a otra página, etc.
+        console.log('Archivos enviados correctamente',formData);
+      } catch (error) {
+        console.error('Error al enviar los archivos:', error);
+        // Aquí puedes manejar el error, mostrar un mensaje de error, etc.
+      }
     }
-  }
-}
+
+    function onReset() {
+      compromiso.value = null;
+      escrito.value = null;
+    }
+    return {
+      onSubmit,
+      onReset,
+      accept,
+      compromiso,
+      escrito,
+    };
+  },
+
+};
 </script>
 
 <style lang="scss" scoped>

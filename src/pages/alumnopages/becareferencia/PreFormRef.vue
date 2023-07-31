@@ -1,9 +1,13 @@
 <template>
   <q-page class="q-pa-md container" padding>
-    <p class="title">Beca Reincorporación</p>
+    <p class="title">Beca Referencia</p>
     <ButtonProgress></ButtonProgress>
     <ProgresoBar></ProgresoBar>
     <q-space />
+    <q-space />
+    <div class="seccion">
+      <p>Información del Solicitante</p>
+    </div>
     <div class="q-pa-xs q-pt-lg">
       <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
         <div class="row">
@@ -36,9 +40,9 @@
           <q-space />
           <q-input
             filled
-            v-model="curp"
-            label="Ingrese su curp"
-            hint="Clave Única de Registro de Población"
+            v-model="domicilio"
+            label="Ingrese su domicilio"
+            hint="Domicilio en el cual vive"
             lazy-rules
             :rules="[
               (val) =>
@@ -63,16 +67,71 @@
           <q-space />
           <q-input
             filled
+            type="number"
+            v-model="celular"
+            label="Celular"
+            hint="Numero de celular"
+            lazy-rules
+            :rules="[
+              (val) =>
+                (val !== null && val !== '') || 'Por favor completa este campo',
+            ]"
+            class="col-5 q-pt-lg"
+          />
+          <q-space />
+          <q-input
+            filled
             type="email"
-            v-model="correoinstitucional"
+            v-model="correoper"
             label="Correo"
-            hint="Correo Institucional"
+            hint="Correo Personal"
             lazy-rules
             :rules="[
               (val) =>
                 (val && val.length > 0) || 'Por favor completa este campo',
             ]"
             class="col-5 q-pt-lg"
+          />
+          <q-space />
+          <q-date
+            filled
+            v-model="nacimiento"
+            label="Fecha de nacimiento"
+            hint="Fecha valida"
+            lazy-rules
+            :rules="[
+              (val) =>
+                (val !== null && val !== '') || 'Por favor completa este campo',
+            ]"
+            class="col-5 q-pt-lg"
+          />
+          <q-space />
+          <q-input
+            filled
+            v-model="estadocivil"
+            label="Estado civl"
+            hint="Soltero o casado"
+            lazy-rules
+            :rules="[
+              (val) =>
+                (val !== null && val !== '') || 'Por favor completa este campo',
+            ]"
+            class="col-5 q-pt-lg"
+          />
+          <q-space />
+          <q-select
+            filled
+            v-model="genero"
+            label="Sexo"
+            hint="Selecciona tu genero"
+            lazy-rules
+            :rules="[
+              (val) =>
+                (val !== null && val !== undefined) ||
+                'Por favor completa este campo',
+            ]"
+            class="col-5 q-pt-lg"
+            :options="generos"
           />
           <q-space />
           <q-select
@@ -83,10 +142,76 @@
             lazy-rules
             :rules="[
               (val) =>
-                (val && val.length > 0) || 'Por favor completa este campo',
+                (val !== null && val !== undefined) || 'Por favor completa este campo',
             ]"
             class="col-5 q-pt-lg"
             :options="becas"
+          />
+          <q-space />
+          <q-input
+            filled
+            v-model="nivelestudios"
+            label="Nivel de estudios"
+            hint="Escribe el nivel de estudios"
+            lazy-rules
+            :rules="[
+              (val) =>
+                (val && val.length > 0) || 'Por favor completa este campo',
+            ]"
+            class="col-5 q-pt-lg"
+          />
+          <q-space />
+          <q-input
+            filled
+            v-model="nombreescuela"
+            label="Nombre de la escuela"
+            hint="Escribe el nombre de la escuela"
+            lazy-rules
+            :rules="[
+              (val) =>
+                (val && val.length > 0) || 'Por favor completa este campo',
+            ]"
+            class="col-5 q-pt-lg"
+          />
+          <q-space />
+          <q-input
+            filled
+            v-model="tipoescuela"
+            label="Tipo de escuela publica o privada"
+            hint="Escribe el tipo de la escuela"
+            lazy-rules
+            :rules="[
+              (val) =>
+                (val && val.length > 0) || 'Por favor completa este campo',
+            ]"
+            class="col-5 q-pt-lg"
+          />
+          <q-space />
+          <q-input
+            filled
+            v-model="municipio"
+            label="Municipio donde se encuentra"
+            hint="Escribe el tipo de la escuela"
+            lazy-rules
+            :rules="[
+              (val) =>
+                (val && val.length > 0) || 'Por favor completa este campo',
+            ]"
+            class="col-5 q-pt-lg"
+          />
+          <q-space />
+          <q-input
+            filled
+            type="number"
+            v-model="promedio"
+            label="Promedio de calificación obtenida"
+            hint="Escribe el promedio de calificación"
+            lazy-rules
+            :rules="[
+              (val) =>
+                (val !== null && val !== '') || 'Por favor completa este campo',
+            ]"
+            class="col-5 q-pt-lg"
           />
           <q-space />
           <q-select
@@ -119,39 +244,25 @@
             :options="areas"
           />
           <q-space />
-          <q-select
-            filled
-            v-model="grado"
-            label="Grado"
-            hint="Grado al que perteneces ya sea TSU, LIC o ING"
-            lazy-rules
-            :rules="[
-              (val) =>
-                (val !== null && val !== undefined) ||
-                'Por favor completa este campo',
-            ]"
-            class="col-5 q-pt-lg"
-            :options="grados"
-          />
-          <q-space />
           <q-input
             filled
-            v-model="cuatrimestre"
+            v-model="cuatrisoli"
             label="Cuatrimestre"
-            hint="Cuatrimestre al que deseas aplicar la beca"
+            hint="¿En que cuatrimestre se encuentra al momento de solicitar la beca?"
             lazy-rules
             :rules="[
               (val) =>
-                (val && val.length > 0) || 'Por favor completa este campo',
+              (val && val.length > 0) || 'Por favor completa este campo',
             ]"
             class="col-5 q-pt-lg"
           />
           <q-space />
           <q-input
             filled
-            v-model="grupo"
-            label="Grupo"
-            hint="Grupo al que perteneces"
+            type="number"
+            v-model="promedioult"
+            label="Promedio de calificación obtenida en el ultimo cuatrimestre cursado"
+            hint="Escribe tu promedio pasado"
             lazy-rules
             :rules="[
               (val) =>
@@ -161,45 +272,54 @@
           />
           <q-space />
           <q-input
-            filled
-            v-model="correotutor"
-            label="Correo del tutor"
-            hint="Correo de tutor"
+          filled
+          v-model="grupo"
+          label="Grupo"
+          hint="Grupo al que perteneces"
             lazy-rules
             :rules="[
               (val) =>
-                (val !== null && val !== '') || 'Por favor completa este campo',
+              (val !== null && val !== '') || 'Por favor completa este campo',
             ]"
+            class="col-5 q-pt-lg"
+            />
+          <q-space />
+          <q-input
+            filled
+            v-model="apoyo"
+            label="Si o No"
+            hint="¿Cuenta con algun apoyo económico o especie para su educacionde algun organismo público o privado?"
             class="col-5 q-pt-lg"
           />
           <q-space />
-          <q-select
+          <q-input
             filled
-            v-model="genero"
-            label="Genero"
-            hint="Selecciona tu genero"
-            lazy-rules
-            :rules="[
-              (val) =>
-                (val !== null && val !== undefined) ||
-                'Por favor completa este campo',
-            ]"
+            v-model="nombreapoyo"
+            label="Nombre del apoyo"
+            hint="Si es que cuenta con uno"
             class="col-5 q-pt-lg"
-            :options="generos"
           />
           <q-space />
-          <q-select
+          <q-input
             filled
-            v-model="estado"
-            label="Pendiente"
-            hint="Así inicia el estado de tu beca"
+            type="number"
+            v-model="cuanto"
+            label="¿Con cúanto lo apoyan?"
+            hint="Escribe la cantidad que recibes de apoyo"
+            class="col-5 q-pt-lg"
+          />
+          <q-space />
+          <q-input
+            filled
+            v-model="motivo"
+            label="Motivo"
+            hint="Escribe el motivo por el cual cree que se le debe conceder la beca"
             lazy-rules
             :rules="[
               (val) =>
                 (val && val.length > 0) || 'Por favor completa este campo',
             ]"
             class="col-5 q-pt-lg"
-            :options="estados"
           />
           <q-space />
         </div>
@@ -215,7 +335,7 @@
             type="submit"
             color="primary"
             @click="onSubmit"
-            to="/alumno/reincorporacion/paso2"
+            to="/alumno/referencia/paso1"
           />
         </div>
       </q-form>
@@ -243,10 +363,22 @@ export default {
     const router = useRouter();
     const nombre = ref();
     const matricula = ref();
-    const curp = ref();
+    const domicilio = ref();
     const telefono = ref();
-    const correoinstitucional = ref();
-    const beca = ref(null);
+    const celular = ref();
+    const correoper = ref();
+    const nacimiento = ref(new Date());
+    const estadocivil = ref ();
+    const genero = ref(null);
+    const beca = ref({
+      value: null,
+      label:"",
+    });
+    const nivelestudios = ref();
+    const nombreescuela = ref();
+    const tipoescuela = ref();
+    const municipio = ref();
+    const promedio = ref();
     const carrera = ref({
       value: null,
       label: "",
@@ -255,42 +387,26 @@ export default {
       value: null,
       label: "",
     });
-    const grado = ref({
-      value: null,
-      label: "",
-    });
-    const cuatrimestre = ref();
+    const cuatrisoli = ref();
     const grupo = ref();
-    const correotutor = ref();
-    const genero = ref(null);
-    const estado = ref(null);
+    const promedioult = ref();
+    const apoyo = ref();
+    const nombreapoyo = ref();
+    const cuanto = ref();
+    const motivo = ref();
+
 
     const becas = ref([]);
-    const estados = ref([]);
     const carreras = ref([]);
     const areas = ref([]);
-    const grados = ref([]);
     const generos = ref([]);
 
     onMounted(async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:3000/api/becas/9");
+        const response = await axios.get("http://127.0.0.1:3000/api/becas/1");
         const becaData = response.data;
         if (becaData) {
           beca.value = becaData.beca;
-        }
-        console.log(response);
-      } catch (error) {
-        console.error("Error al obtener la beca:", error);
-      }
-    });
-
-    onMounted(async () => {
-      try {
-        const response = await axios.get("http://127.0.0.1:3000/api/estados/1");
-        const estadoData = response.data;
-        if (estadoData) {
-          estado.value = estadoData.estado;
         }
         console.log(response);
       } catch (error) {
@@ -326,32 +442,13 @@ export default {
             return {
               label: item.area,
               value: item.idarea,
-            }
+            };
           });
           area.value = areas.value[0];
         }
         console.log(response);
       } catch (error) {
         console.error("Error al obtener el area:", error);
-      }
-    });
-
-    onMounted(async () => {
-      try {
-        const response = await axios.get("http://127.0.0.1:3000/api/grado");
-        const gradoData = response.data;
-        if (gradoData && gradoData.length > 0) {
-          grados.value = gradoData.map((item) => {
-            return{
-              label: item.grado,
-              value: item.idgrado,
-            }
-          });
-          grado.value = grados.value[0];
-        }
-        console.log(response);
-      } catch (error) {
-        console.error("Error al obtener el grado:", error);
       }
     });
 
@@ -374,84 +471,35 @@ export default {
       }
     });
 
-    const formData = ref({
+    const formDataCarta = ref({
       nombre: "",
       matricula: "",
-      curp: "",
+      domicilio: "",
       telefono: "",
-      correoinstitucional: "",
+      celular: "",
+      correoper: "",
+      nacimiento: "",
+      estadocivil:"",
+      genero: [],
       beca: [],
+      nivelestudios: "",
+      nombreescuela: "",
+      tipoescuela: "",
+      municipio: "",
+      promedio: "",
       carrera: [],
       area: [],
-      grado: [],
-      cuatrimestre: "",
+      cuatrisoli: "",
       grupo: "",
-      correotutor: "",
-      genero: [],
-      estado: [],
+      promedioult: "",
+      apoyo: "",
+      nombreapoyo: "",
+      cuanto: "",
+      motivo: "",
     });
-    localStorage.setItem("formData", JSON.stringify(formData.value));
+    localStorage.setItem("formDataCarta", JSON.stringify(formDataCarta.value));
 
     const onSubmit = () => {
-      formData.value = {
-        nombre: nombre.value,
-        matricula: matricula.value,
-        curp: curp.value,
-        telefono: telefono.value,
-        correoinstitucional: correoinstitucional.value,
-        beca: beca.value,
-        carrera: carrera.value.value,
-        area: area.value.value,
-        grado: grado.value.value,
-        cuatrimestre: cuatrimestre.value,
-        grupo: grupo.value,
-        correotutor: correotutor.value,
-        genero: genero.value.value,
-        estado: estado.value.value,
-      };
-      if (beca.value === "Reincorporacion") {
-        formData.value.beca = 9;
-      }
-      if (estado.value === "Pendiente") {
-        formData.value.estado = 1;
-      }
-
-      localStorage.setItem("formData", JSON.stringify(formData.value));
-      const accept = true;
-
-      if (accept !== true) {
-        $q.notify({
-          color: "red-5",
-          textColor: "white",
-          icon: "warning",
-          message: "Necesitas revisar que todo este correcto",
-        });
-      } else {
-        axios
-          .post("http://127.0.0.1:3000/api/form", formData)
-          .then((res) => {
-            $q.notify({
-              color: "green-4",
-              textColor: "white",
-              icon: "cloud_done",
-              message: "Datos enviados correctamente",
-            });
-            router.push("/alumno/reincorporacion/paso2");
-          })
-          .catch((error) => {
-            console.error("Error al enviar los datos:", error);
-            $q.notify({
-              color: "red-5",
-              textColor: "white",
-              icon: "warning",
-              message: "Error al enviar los datos",
-            });
-          });
-      }
-
-
-
-      const onSubmit = () => {
       formDataCarta.value = {
         nombre: nombre.value,
         matricula: matricula.value,
@@ -464,21 +512,24 @@ export default {
         genero: genero.value.value,
         beca: beca.value.value,
         nivelestudios: nivelestudios.value,
-        escuela: escuela.value,
-        tipoes: tipoes.value,
+        nombreescuela: nombreescuela.value,
+        tipoescuela: tipoescuela.value,
         municipio: municipio.value,
         promedio: promedio.value,
         carrera: carrera.value.value,
         area: area.value.value,
-        cuatrimestre: cuatrimestre.value,
+        cuatrisoli: cuatrisoli.value,
         grupo: grupo.value,
         promedioult: promedioult.value,
         apoyo: apoyo.value,
         nombreapoyo: nombreapoyo.value,
-        apoyoint: apoyoint,value,
-        motivos: motivos.value,
+        cuanto: cuanto.value,
+        motivo: motivo.value,
 
       };
+      if (beca.value === "Referencia") {
+        formDataCarta.value.beca = 8;
+      }
 
       localStorage.setItem("formDataCarta", JSON.stringify(formDataCarta.value));
       const accept = true;
@@ -500,7 +551,7 @@ export default {
               icon: "cloud_done",
               message: "Datos enviados correctamente",
             });
-            router.push("/alumno/reincorporacion/paso2");
+            router.push("/alumno/referencia/paso1");
           })
           .catch((error) => {
             console.error("Error al enviar los datos:", error);
@@ -512,101 +563,38 @@ export default {
             });
           });
       }
-      const onSubmit = () => {
-      formDataSocio.value = {
-        nombre: nombre.value,
-        nacimiento: nacimiento.value,
-        domicilio: domicilio.value,
-        conquienvive: conquienvive.value,
-        telefono: telefono.value,
-        celular: celular.value,
-        transporte: transporte.value,
-        ingreso: ingreso.value,
-        padre: padre.value,
-        madre: madre.value,
-        hermanos: hermanos.value,
-        total: total.value,
-        alimentacion: alimentacion.value,
-        telefonia: telefonia.value,
-        credito: credito.value,
-        renta: renta.value,
-        servicios: servicios.value,
-        abono: abono.value,
-        importe: importe.value,
-        totale: totale.value,
-        vivienda: vivienda.value,
-        paredes: paredes.value,
-        techos: techos.value,
-        pisos: pisos.value,
-        mobiliario: mobiliario.value,
-        servmedico: servmedico.value,
-        asistencia: asistencia.value,
-        cronicas: cronicas.value,
-        tipo: tipo.value,
-        consumo: consumo.value,
-        finde: finde.value,
-        actividades: actividades.value,
-        traslado: traslado.value,
-        mediotra: mediotra.value,
-
-      };
-
-      localStorage.setItem("formDataSocio", JSON.stringify(formDataSocio.value));
-
-      if (accept !== true) {
-        $q.notify({
-          color: "red-5",
-          textColor: "white",
-          icon: "warning",
-          message: "Necesitas revisar que todo este correcto",
-        });
-      } else {
-        axios
-          .post("http://127.0.0.1:3000/api/form/socio", formDataSocio)
-          .then((res) => {
-            $q.notify({
-              color: "green-4",
-              textColor: "white",
-              icon: "cloud_done",
-              message: "Datos enviados correctamente",
-            });
-            router.push("/alumno/reincorporacion/paso2");
-          })
-          .catch((error) => {
-            console.error("Error al enviar los datos:", error);
-            $q.notify({
-              color: "red-5",
-              textColor: "white",
-              icon: "warning",
-              message: "Error al enviar los datos",
-            });
-          });
-      }
-    }
     };
-  };
-  return {
-    onSubmit,
+
+    return {
+      onSubmit,
       nombre,
       matricula,
-      curp,
+      domicilio,
       telefono,
-      correoinstitucional,
+      celular,
+      correoper,
+      nacimiento,
+      estadocivil,
+      genero,
       beca,
+      nivelestudios,
+      nombreescuela,
+      tipoescuela,
+      municipio,
+      promedio,
       carrera,
       area,
-      grado,
-      cuatrimestre,
+      cuatrisoli,
       grupo,
-      correotutor,
-      genero,
-      estado,
+      promedioult,
+      apoyo,
+      nombreapoyo,
+      cuanto,
+      motivo,
       accept,
       becas,
-      estados,
       carreras,
       areas,
-      grados,
       generos,
     };
   },
@@ -630,5 +618,20 @@ export default {
 
 .my-card {
   display: contents;
+}
+
+.seccion {
+  background-color: #f2f2f2;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 20px;
+  padding-top: inherit;
+  text-align: center;
+}
+
+.seccion p {
+  font-weight: bold;
+  font-size: 18px;
+  margin: 0;
 }
 </style>

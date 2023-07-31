@@ -1,13 +1,13 @@
 <template>
   <q-page class="q-pa-md container" padding>
-    <p class="title">Beca Academica</p>
+    <p class="title">Beca Transporte</p>
     <button-progress></button-progress>
     <tres-progress></tres-progress>
     <q-space />
     <p>¡Adjuntar solo archivos PDF!</p>
     <q-space />
     <div class="q-pa-xs q-pt-lg">
-      <q-card class="my-card q-card--bordered">
+      <q-card class="my-card q-card-bordered">
         <q-form
           @submit="onSubmit"
           @reset="onReset"
@@ -23,15 +23,19 @@
           <q-btn round dense flat icon="add" @click.stop.prevent />
         </q-file>
         <q-space />
-        <q-file filled bottom-slots class="col-5 q-pt-lg" v-model="comprobante" name="pdfFiles" label="Comprobante de ingresos" counter max-files="12" accept="application/pdf">
-          <q-btn round dense flat icon="add" @click.stop.prevent />
-        </q-file>
-        <q-space />
-        <q-file filled bottom-slots class="col-5 q-pt-lg" v-model="compromiso" name="pdfFiles" label="Carta compromiso y aceptacion de beca" counter max-files="12" accept="application/pdf">
+        <q-file filled bottom-slots class="col-5 q-pt-lg" v-model="comprobante" name="pdfFiles" label="Comprobante de ingresos equivalente a un mes" counter max-files="12" accept="application/pdf">
           <q-btn round dense flat icon="add" @click.stop.prevent />
         </q-file>
         <q-space />
         <q-file filled bottom-slots class="col-5 q-pt-lg" v-model="conducta" name="pdfFiles" label="Carta buena conducta" counter max-files="12" accept="application/pdf">
+          <q-btn round dense flat icon="add" @click.stop.prevent />
+        </q-file>
+        <q-space />
+        <q-file filled bottom-slots class="col-5 q-pt-lg" v-model="constancia" name="pdfFiles" label="Constancia de pago original o inscripción del uso del transporte de la empresa que preste el servicio bajo convenio con la universidad" counter max-files="12" accept="application/pdf">
+          <q-btn round dense flat icon="add" @click.stop.prevent />
+        </q-file>
+        <q-space />
+        <q-file filled bottom-slots class="col-5 q-pt-lg" v-model="escrito" name="pdfFiles" label="Escrito de petición de BECA en puño y letra del interesado hacia la universidad" counter max-files="12" accept="application/pdf">
           <q-btn round dense flat icon="add" @click.stop.prevent />
         </q-file>
         <q-space />
@@ -56,74 +60,77 @@ import { defineComponent, ref } from "vue";
 import ButtonProgress from "src/components/Alumno/ButtonProgress.vue";
 import TresProgress from 'src/components/Alumno/TresProgress.vue';
 import axios from "axios";
+import { useRouter } from "vue-router";
+
 
 export default {
   components: {
     ButtonProgress,
     TresProgress,
-},
+  },
   setup() {
     const accept = ref(false);
-    const files = ref({
-      credencial: null,
-      boleta: null,
-      comprobante: null,
-      compromiso: null,
-      conducta: null,
-    });
+    const credencial = ref(null);
+    const boleta = ref(null);
+    const comprobante = ref(null);
+    const compromiso = ref(null);
+    const conducta = ref(null);
+    const constancia = ref(null);
+    const escrito = ref(null);
 
-    const onFileChange = (fieldName, event) => {
-      const file = event.target.files[0];
-      files.value[fieldName] = file;
-    };
+    const router = useRouter();
 
-    const onSubmit = async () => {
-      // Crear un objeto FormData para enviar los archivos
+    // Función onSubmit para enviar los archivos al servidor
+    async function onSubmit() {
       const formData = new FormData();
-
-      // Agregar cada archivo al objeto FormData
-      Object.entries(files.value).forEach(([fieldName, file]) => {
-        if (file) {
-          formData.append(fieldName, file);
-        }
-      });
-
-      // Agregar otros datos relevantes si los tienes, por ejemplo, formData.append('nombre', 'valor');
+      formData.append('credencial', credencial.value);
+      formData.append('boleta', boleta.value);
+      formData.append('comprobante', comprobante.value);
+      formData.append('compromiso', compromiso.value);
+      formData.append('conducta', conducta.value);
+      formData.append('constancia', constancia.value);
+      formData.append('escrito', escrito.value);
 
       try {
-        // Enviar la solicitud POST al servidor usando Axios (asegúrate de importar Axios)
-        await axios.post('http://127.0.0.1:3000/api/upload', formData, {
-
-        });
-
-        // Aquí podrías mostrar un mensaje de éxito o realizar otras acciones después de cargar los archivos
-        console.log('Archivos cargados exitosamente.');
+        await axios.post('http://127.0.0.1:3000/upload', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        },
+        router.push("/alumno/transporte/thk"),
+        );
+        // Aquí puedes agregar la lógica que necesites después de enviar los archivos
+        // Por ejemplo, mostrar un mensaje de éxito, redireccionar a otra página, etc.
+        console.log('Archivos enviados correctamente',formData);
       } catch (error) {
-        // Manejo de errores
-        console.error('Error al cargar los archivos:', error);
+        console.error('Error al enviar los archivos:', error);
+        // Aquí puedes manejar el error, mostrar un mensaje de error, etc.
       }
-    };
+    }
 
-    const readAsBase64 = (file) => {
-      return new Promise((resolve) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = (event) => {
-          resolve(event.target.result);
-        };
-      });
-    };
-
+    function onReset() {
+      credencial.value = null;
+      boleta.value = null;
+      comprobante.value = null;
+      compromiso.value = null;
+      conducta.value = null;
+      constancia.value = null;
+      escrito.value = null;
+    }
     return {
       onSubmit,
-      credencial: ref(null),
-      boleta: ref(null),
-      comprobante: ref(null),
-      compromiso: ref(null),
-      conducta: ref(null),
+      onReset,
       accept,
+      credencial,
+      boleta,
+      comprobante,
+      compromiso,
+      conducta,
+      constancia,
+      escrito,
     };
   },
+
 };
 </script>
 

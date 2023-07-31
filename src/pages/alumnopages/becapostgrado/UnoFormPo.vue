@@ -4,6 +4,10 @@
     <ButtonProgress></ButtonProgress>
     <ProgresoBar></ProgresoBar>
     <q-space />
+    <q-space />
+    <div class="seccion">
+      <p>Solicitud</p>
+    </div>
     <div class="q-pa-xs q-pt-lg">
       <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
         <div class="row">
@@ -630,7 +634,11 @@ export default {
 
   font-weight: 700;
 }
-
+.seccion p {
+  font-weight: bold;
+  font-size: 18px;
+  margin: 0;
+}
 .my-card {
   display: contents;
 }

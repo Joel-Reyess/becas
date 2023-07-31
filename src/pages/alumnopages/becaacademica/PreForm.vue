@@ -335,7 +335,7 @@
             type="submit"
             color="primary"
             @click="onSubmit"
-            to="/alumno/academica/paso1"
+            to="/alumno/academica/prepaso"
           />
         </div>
       </q-form>

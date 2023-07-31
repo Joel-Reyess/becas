@@ -1,6 +1,6 @@
 <template>
   <q-page class="q-pa-md container" padding>
-    <p class="title">Beca Excelencia</p>
+    <p class="title">Beca Reincorporación</p>
     <ButtonProgress></ButtonProgress>
     <ProgresoBar></ProgresoBar>
     <q-space />
@@ -219,7 +219,7 @@
             type="submit"
             color="primary"
             @click="onSubmit"
-            to="/alumno/excelencia/paso2"
+            to="/alumno/reincorporacion/paso2"
           />
         </div>
       </q-form>
@@ -278,7 +278,7 @@ export default {
 
     onMounted(async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:3000/api/becas/5");
+        const response = await axios.get("http://127.0.0.1:3000/api/becas/9");
         const becaData = response.data;
         if (becaData) {
           beca.value = becaData.beca;
@@ -413,8 +413,8 @@ export default {
         genero: genero.value.value,
         estado: estado.value.value,
       };
-      if (beca.value === "Excelencia") {
-        formData.value.beca = 5;
+      if (beca.value === "Reincorporacion") {
+        formData.value.beca = 9;
       }
       if (estado.value === "Pendiente") {
         formData.value.estado = 1;
@@ -440,7 +440,7 @@ export default {
               icon: "cloud_done",
               message: "Datos enviados correctamente",
             });
-            router.push("/alumno/excelencia/paso2");
+            router.push("/alumno/reincorporacion/paso2");
           })
           .catch((error) => {
             console.error("Error al enviar los datos:", error);
@@ -504,7 +504,7 @@ export default {
               icon: "cloud_done",
               message: "Datos enviados correctamente",
             });
-            router.push("/alumno/excelencia/paso2");
+            router.push("/alumno/reincorporacion/paso2");
           })
           .catch((error) => {
             console.error("Error al enviar los datos:", error);
@@ -574,7 +574,7 @@ export default {
               icon: "cloud_done",
               message: "Datos enviados correctamente",
             });
-            router.push("/alumno/excelencia/paso2");
+            router.push("/alumno/reincorporacion/paso2");
           })
           .catch((error) => {
             console.error("Error al enviar los datos:", error);
@@ -588,10 +588,7 @@ export default {
       }
     }
     };
-
   };
-
-
   return {
     onSubmit,
       nombre,

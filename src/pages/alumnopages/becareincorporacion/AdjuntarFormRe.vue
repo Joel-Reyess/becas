@@ -1,6 +1,6 @@
 <template>
   <q-page class="q-pa-md container" padding>
-    <p class="title">Beca Academica</p>
+    <p class="title">Beca Reincorporación</p>
     <button-progress></button-progress>
     <tres-progress></tres-progress>
     <q-space />
@@ -15,23 +15,11 @@
           enctype="multipart/form-data"
         >
         <div class="row" padding>
-        <q-file filled bottom-slots class="col-5 q-pt-lg" v-model="credencial" name="pdfFiles" label="Credencial, ambos lados" counter max-files="12" accept="application/pdf">
-          <q-btn round dense flat icon="add" @click.stop.prevent />
-        </q-file>
-        <q-space />
-        <q-file filled bottom-slots class="col-5 q-pt-lg" v-model="boleta" name="pdfFiles" label="Boleta de calificaciones" counter max-files="12" accept="application/pdf">
-          <q-btn round dense flat icon="add" @click.stop.prevent />
-        </q-file>
-        <q-space />
-        <q-file filled bottom-slots class="col-5 q-pt-lg" v-model="comprobante" name="pdfFiles" label="Comprobante de ingresos" counter max-files="12" accept="application/pdf">
-          <q-btn round dense flat icon="add" @click.stop.prevent />
-        </q-file>
-        <q-space />
         <q-file filled bottom-slots class="col-5 q-pt-lg" v-model="compromiso" name="pdfFiles" label="Carta compromiso y aceptacion de beca" counter max-files="12" accept="application/pdf">
           <q-btn round dense flat icon="add" @click.stop.prevent />
         </q-file>
         <q-space />
-        <q-file filled bottom-slots class="col-5 q-pt-lg" v-model="conducta" name="pdfFiles" label="Carta buena conducta" counter max-files="12" accept="application/pdf">
+        <q-file filled bottom-slots class="col-5 q-pt-lg" v-model="escrito" name="pdfFiles" label="Escrito de petición de BECA en puño y letra del interesado hacia la universidad" counter max-files="12" accept="application/pdf">
           <q-btn round dense flat icon="add" @click.stop.prevent />
         </q-file>
         <q-space />
@@ -66,22 +54,16 @@ export default {
   },
   setup() {
     const accept = ref(false);
-    const credencial = ref(null);
-    const boleta = ref(null);
-    const comprobante = ref(null);
     const compromiso = ref(null);
-    const conducta = ref(null);
+    const escrito = ref(null);
 
     const router = useRouter();
 
     // Función onSubmit para enviar los archivos al servidor
     async function onSubmit() {
       const formData = new FormData();
-      formData.append('credencial', credencial.value);
-      formData.append('boleta', boleta.value);
-      formData.append('comprobante', comprobante.value);
       formData.append('compromiso', compromiso.value);
-      formData.append('conducta', conducta.value);
+      formData.append('escrito', escrito.value);
 
       try {
         await axios.post('http://127.0.0.1:3000/upload', formData, {
@@ -89,7 +71,7 @@ export default {
             'Content-Type': 'multipart/form-data',
           },
         },
-        router.push("/alumno/academica/thk"),
+        router.push("/alumno/reincorporacion/thk"),
         );
         // Aquí puedes agregar la lógica que necesites después de enviar los archivos
         // Por ejemplo, mostrar un mensaje de éxito, redireccionar a otra página, etc.
@@ -101,21 +83,15 @@ export default {
     }
 
     function onReset() {
-      credencial.value = null;
-      boleta.value = null;
-      comprobante.value = null;
       compromiso.value = null;
-      conducta.value = null;
+      escrito.value = null;
     }
     return {
       onSubmit,
       onReset,
       accept,
-      credencial,
-      boleta,
-      comprobante,
       compromiso,
-      conducta,
+      escrito,
     };
   },
 

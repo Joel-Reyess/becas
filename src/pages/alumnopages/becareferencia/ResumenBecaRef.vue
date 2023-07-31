@@ -1,8 +1,11 @@
 <template>
   <q-page>
     <div class="q-pa-md">
-      <p class="titulo">Mi Beca</p>
+      <div class="title">Beca Referencia</div>
+      <button-progress></button-progress>
+      <dos-progreso-bar></dos-progreso-bar>
       <div class="q-gutter-md container">
+        <q-form @submit="onSubmit" @reset="onReset">
           <div class="q-pt-lg">
             <q-card class="q-pa-md">
               <q-card-section>
@@ -62,14 +65,140 @@
                       getGeneroContent(formData && formData.genero)
                     }}</span>
                   </div>
+                </div>
+              </q-card-section>
+              <q-card-section>
+                <div class="q-pa-md">
+                  <p class="q-mb-sm">Los datos del solicitante a enviar son:</p>
                   <div class="q-mb-sm">
-                    <strong>Estado:</strong>
-                    <span>{{ getEstadoContent(formData && formData.estado) }}</span>
+                    <strong>Nombre:</strong>
+                    <span>{{ formDataCarta && formDataCarta.nombre }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Matrícula:</strong>
+                    <span>{{ formDataCarta && formDataCarta.matricula }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Domicilio:</strong>
+                    <span>{{ formDataCarta && formDataCarta.domicilio }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Teléfono:</strong>
+                    <span>{{ formDataCarta && formDataCarta.telefono }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Celular:</strong>
+                    <span>{{ formDataCarta && formDataCarta.celular }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Correo:</strong>
+                    <span>{{ formDataCarta && formDataCarta.correoper }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Nacimiento:</strong>
+                    <span>{{ formDataCarta && formDataCarta.nacimiento }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Estado Civil:</strong>
+                    <span>{{
+                      formDataCarta && formDataCarta.estadocivil
+                    }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Género:</strong>
+                    <span>{{
+                      getGeneroContent(formDataCarta && formDataCarta.genero)
+                    }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Beca:</strong>
+                    <span>{{
+                      getBecaContent(formDataCarta && formDataCarta.beca)
+                    }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Nivel de Estudios:</strong>
+                    <span>{{
+                      formDataCarta && formDataCarta.nivelestudios
+                    }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Nombre de la Escuela:</strong>
+                    <span>{{
+                      formDataCarta && formDataCarta.nombreescuela
+                    }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Tipo de la Escuela:</strong>
+                    <span>{{
+                      formDataCarta && formDataCarta.tipoescuela
+                    }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Municipio de la Escuela:</strong>
+                    <span>{{ formDataCarta && formDataCarta.municipio }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Promedio de la Escuela:</strong>
+                    <span>{{ formDataCarta && formDataCarta.promedio }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Carrera:</strong>
+                    <span>{{
+                      getCarreraContent(formDataCarta && formDataCarta.carrera)
+                    }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Área:</strong>
+                    <span>{{
+                      getAreaContent(formDataCarta && formDataCarta.area)
+                    }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Cuatrimestre:</strong>
+                    <span>{{ formDataCarta && formDataCarta.cuatrisoli }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Ultimo promedio obtenido:</strong>
+                    <span>{{
+                      formDataCarta && formDataCarta.promedioult
+                    }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Grupo:</strong>
+                    <span>{{ formDataCarta && formDataCarta.grupo }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Apoyo:</strong>
+                    <span>{{ formDataCarta && formDataCarta.apoyo }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Nombre del Apoyo:</strong>
+                    <span>{{
+                      formDataCarta && formDataCarta.nombreapoyo
+                    }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Cantidad del Apoyo:</strong>
+                    <span>{{ formDataCarta && formDataCarta.cuanto }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Motivo:</strong>
+                    <span>{{ formDataCarta && formDataCarta.motivo }}</span>
                   </div>
                 </div>
               </q-card-section>
+              <q-card-actions align="right">
+                <q-btn
+                  label="Subir"
+                  type="submit"
+                  color="primary"
+                  class="q-mb-md"
+                />
+              </q-card-actions>
             </q-card>
           </div>
+        </q-form>
       </div>
     </div>
   </q-page>
@@ -99,7 +228,6 @@ export default {
       grupo: "",
       correotutor: "",
       genero: "",
-      estado: "",
     });
 
     const formDataCarta = ref({
@@ -135,7 +263,6 @@ export default {
     const grados = ref([]);
     const generos = ref([]);
     const becas = ref([]);
-    const estados = ref([]);
 
     const getCarreraContent = (idcarrera) => {
       const carrera = carreras.value.find((c) => c.value === idcarrera);
@@ -156,10 +283,6 @@ export default {
     const getBecaContent = (idbeca) => {
       const beca = becas.value.find((c) => c.value === idbeca);
       return beca ? beca.label : "";
-    };
-    const getEstadoContent = (idestado) => {
-      const estado = estados.value.find((c) => c.value === idestado);
-      return estado ? estado.label : "";
     };
 
     onMounted(async () => {
@@ -256,22 +379,6 @@ export default {
       } catch (error) {
         console.error("Error al obtener la beca:", error);
       }
-
-      try {
-        const response = await axios.get("http://127.0.0.1:3000/api/estado");
-        const estadoData = response.data;
-        if (estadoData && estadoData.length > 0) {
-          estados.value = estadoData.map((item) => {
-            return {
-              label: item.estado,
-              value: item.idestado,
-            };
-          });
-        }
-        console.log(response);
-      } catch (error) {
-        console.error("Error al obtener la beca:", error);
-      }
     });
 
     const onSubmit = () => {
@@ -306,6 +413,9 @@ export default {
         });
 
       localStorage.removeItem("formDataCarta");
+      router.push({ path: "/alumno/referencia/paso3" });
+
+      //para el formulario de socioeconomicos
     };
 
     return {
@@ -319,7 +429,6 @@ export default {
       getGeneroContent,
       carreras,
       getBecaContent,
-      getEstadoContent,
     };
   },
 };
@@ -342,12 +451,5 @@ export default {
 
 .my-card {
   display: contents;
-}
-.titulo{
-    color: #1ab192;
-    text-transform: uppercase;
-    line-height: 40px;
-    font-size: 1.9em;
-    text-align: center;
 }
 </style>
