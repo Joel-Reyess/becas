@@ -26,6 +26,296 @@
                   <q-btn type="submit" color="primary" label="Guardar" class="q-mt-md" />
                 </div>
               </q-card-section>
+              <q-card-section>
+                <div class="q-pa-md">
+                  <p class="q-mb-sm">Los datos del solicitante a enviar son:</p>
+                  <div class="q-mb-sm">
+                    <strong>Nombre:</strong>
+                    <span>{{ formDataCarta && formDataCarta.nombre }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Matrícula:</strong>
+                    <span>{{ formDataCarta && formDataCarta.matricula }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Domicilio:</strong>
+                    <span>{{ formDataCarta && formDataCarta.domicilio }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Teléfono:</strong>
+                    <span>{{ formDataCarta && formDataCarta.telefono }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Celular:</strong>
+                    <span>{{ formDataCarta && formDataCarta.celular }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Correo:</strong>
+                    <span>{{ formDataCarta && formDataCarta.correoper }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Nacimiento:</strong>
+                    <span>{{ formDataCarta && formDataCarta.nacimiento }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Estado Civil:</strong>
+                    <span>{{
+                      formDataCarta && formDataCarta.estadocivil
+                    }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Género:</strong>
+                    <span>{{
+                      getGeneroContent(formDataCarta && formDataCarta.genero)
+                    }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Beca:</strong>
+                    <span>{{
+                      getBecaContent(formDataCarta && formDataCarta.beca)
+                    }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Nivel de Estudios:</strong>
+                    <span>{{
+                      formDataCarta && formDataCarta.nivelestudios
+                    }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Nombre de la Escuela:</strong>
+                    <span>{{
+                      formDataCarta && formDataCarta.nombreescuela
+                    }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Tipo de la Escuela:</strong>
+                    <span>{{
+                      formDataCarta && formDataCarta.tipoescuela
+                    }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Municipio de la Escuela:</strong>
+                    <span>{{ formDataCarta && formDataCarta.municipio }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Promedio de la Escuela:</strong>
+                    <span>{{ formDataCarta && formDataCarta.promedio }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Carrera:</strong>
+                    <span>{{
+                      getCarreraContent(formDataCarta && formDataCarta.carrera)
+                    }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Área:</strong>
+                    <span>{{
+                      getAreaContent(formDataCarta && formDataCarta.area)
+                    }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Cuatrimestre:</strong>
+                    <span>{{ formDataCarta && formDataCarta.cuatrisoli }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Ultimo promedio obtenido:</strong>
+                    <span>{{
+                      formDataCarta && formDataCarta.promedioult
+                    }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Grupo:</strong>
+                    <span>{{ formDataCarta && formDataCarta.grupo }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Apoyo:</strong>
+                    <span>{{ formDataCarta && formDataCarta.apoyo }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Nombre del Apoyo:</strong>
+                    <span>{{
+                      formDataCarta && formDataCarta.nombreapoyo
+                    }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Cantidad del Apoyo:</strong>
+                    <span>{{ formDataCarta && formDataCarta.cuanto }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Motivo:</strong>
+                    <span>{{ formDataCarta && formDataCarta.motivo }}</span>
+                  </div>
+                </div>
+              </q-card-section>
+              <q-card-section>
+                <div class="q-pa-md">
+                  <p class="q-mb-sm">
+                    Los datos enviados de los socioeconomicos son:
+                  </p>
+                  <div class="q-mb-sm">
+                    <strong>Nombre:</strong>
+                    <span>{{ formDataSocio && formDataSocio.nombre }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Nacimiento:</strong>
+                    <span>{{ formDataSocio && formDataSocio.nacimiento }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Domicilio:</strong>
+                    <span>{{ formDataSocio && formDataSocio.domicilio }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Con quien vives actualmente:</strong>
+                    <span>{{
+                      formDataSocio && formDataSocio.conquienvive
+                    }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Teléfono:</strong>
+                    <span>{{ formDataSocio && formDataSocio.telefono }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Celular:</strong>
+                    <span>{{ formDataSocio && formDataSocio.celular }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Modo de trasporte para llegar al domicilio:</strong>
+                    <span>{{ formDataSocio && formDataSocio.transporte }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Ingresos mensuales propios:</strong>
+                    <span>{{ formDataSocio && formDataSocio.ingreso }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Aporte a los ingresos del padre:</strong>
+                    <span>{{ formDataSocio && formDataSocio.padre }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Aporte a los ingresos del madre:</strong>
+                    <span>{{ formDataSocio && formDataSocio.madre }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Aporte a los ingresos de los hermanos:</strong>
+                    <span>{{ formDataSocio && formDataSocio.hermanos }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Total de ingresos mensuales:</strong>
+                    <span>{{ formDataSocio && formDataSocio.total }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Egresos en alimentacion mensuales:</strong>
+                    <span>{{
+                      formDataSocio && formDataSocio.alimentacion
+                    }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Egresos en telefonia mensuales:</strong>
+                    <span>{{ formDataSocio && formDataSocio.telefonia }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Egresos en credito de vivienda mensuales:</strong>
+                    <span>{{ formDataSocio && formDataSocio.credito }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Egresos en renta mensuales:</strong>
+                    <span>{{ formDataSocio && formDataSocio.renta }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Egresos en servicios basicos mensuales:</strong>
+                    <span>{{ formDataSocio && formDataSocio.servicios }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Egresos en abonos o creditos mensuales:</strong>
+                    <span>{{ formDataSocio && formDataSocio.abonos }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Egresos en importe de transorte mensuales:</strong>
+                    <span>{{ formDataSocio && formDataSocio.importe }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Total de egresos mensuales:</strong>
+                    <span>{{ formDataSocio && formDataSocio.totale }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>La situación de tu vivienda:</strong>
+                    <span>{{ formDataSocio && formDataSocio.vivienda }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Tus paredes son de:</strong>
+                    <span>{{ formDataSocio && formDataSocio.paredes }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Tu techo es de:</strong>
+                    <span>{{ formDataSocio && formDataSocio.techos }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Tu piso es de:</strong>
+                    <span>{{ formDataSocio && formDataSocio.pisos }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Cuentas con un mobiliario de:</strong>
+                    <span>{{ formDataSocio && formDataSocio.mobiliario }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong
+                      >Servicios Médicos con los que cuenta la familia:</strong
+                    >
+                    <span>{{ formDataSocio && formDataSocio.servmedico }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Frecuencia con la que asiste al médico:</strong>
+                    <span>{{ formDataSocio && formDataSocio.asistencia }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Padeces de enfermedad cronica:</strong>
+                    <span>{{ formDataSocio && formDataSocio.cronicas }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>El tipo de enfermedad cronica es de:</strong>
+                    <span>{{ formDataSocio && formDataSocio.tipo }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong
+                      >Alimentacion que prefieres o consumes regularmente es
+                      de:</strong
+                    >
+                    <span>{{ formDataSocio && formDataSocio.consumo }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Actividades Familiares el fin de semana:</strong>
+                    <span>{{ formDataSocio && formDataSocio.finde }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Actividades del alumno:</strong>
+                    <span>{{
+                      formDataSocio && formDataSocio.actividades
+                    }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Tiempo de traslado:</strong>
+                    <span>{{ formDataSocio && formDataSocio.traslado }}</span>
+                  </div>
+                  <div class="q-mb-sm">
+                    <strong>Medio de Transporte:</strong>
+                    <span>{{ formDataSocio && formDataSocio.mediotra }}</span>
+                  </div>
+                </div>
+              </q-card-section>
+              <q-card-section>
+                <div class="q-pa-md">
+                  <p class="q-mb-sm">Documentos:</p>
+                  <div v-for="documento in formDataDocumentos" :key="documento.iddocumento" class="q-mb-sm">
+                    <strong>Nombre del documento:</strong>
+                    <span>{{ documento.nombre }}</span>
+                    <br>
+                    <strong>Ruta del documento:</strong>
+                    <span>{{ documento.documento }}</span>
+                    <br>
+                    <!-- Update the link to include the document name in the URL -->
+                    <a :href="`/api/documentos/${documento.documento}`" target="_blank" download>Descargar documento</a>
+                  </div>
+                </div>
+              </q-card-section>
             </q-card>
           </div>
         </q-form>
@@ -53,6 +343,9 @@ export default{
     const estadoRef = ref(null);
     const porcentaje = ref(null);
     const formData = ref(null);
+    const formDataCarta = ref(null);
+    const formDataSocio = ref(null);
+    const formDataDocumentos = ref(null);
     const carreras = ref([]);
     const areas = ref([]);
     const grados = ref([]);
@@ -222,12 +515,51 @@ export default{
 
             // Inicializar el estado seleccionado en el q-select con el valor actual del registro
             estadoRef.value = formData.value.idestado;
+
+            axios.get(`http://127.0.0.1:3000/api/carta/estatic`)
+              .then(response => {
+                formDataCarta.value = response.data[0]; // Asignamos el primer elemento (solo obtiene un registro) a formDataCarta
+              })
+              .catch(error => {
+                console.error('Error al obtener los detalles de la carta:', error);
+                // Puedes manejar el error según tus necesidades.
+              });
+
+            // Realizar una solicitud al servidor para obtener los datos socioeconómicos
+            axios.get(`http://127.0.0.1:3000/api/socioeconomico/estatic`)
+              .then(response => {
+                formDataSocio.value = response.data[0]; // Asignamos el primer elemento (solo obtiene un registro) a formDataSocio
+              })
+              .catch(error => {
+                console.error('Error al obtener los detalles socioeconómicos:', error);
+                // Puedes manejar el error según tus necesidades.
+            });
           })
           .catch((error) => {
             console.error('Error al obtener los detalles del registro:', error);
             // Puedes manejar el error según tus necesidades (por ejemplo, mostrar un mensaje de error en la página).
           });
       }
+    });
+
+    async function getDocumentos(idDocumentos) {
+      try {
+        const response = await axios.get('http://127.0.0.1:3000/api/documentos', {
+          params: {
+            idDocumentos: idDocumentos, // Pasar la lista de IDs como parámetro en la URL
+          },
+        });
+        return response.data;
+      } catch (error) {
+        console.error('Error al obtener los documentos:', error);
+        return [];
+      }
+    }
+
+    onMounted(async () => {
+      const idDocumentos = [1, 2];
+      const documentos = await getDocumentos(idDocumentos);
+      formDataDocumentos.value = documentos;
     });
 
     onMounted(() => {
@@ -293,6 +625,9 @@ export default{
 
     return {
       formData,
+      formDataCarta,
+      formDataSocio,
+      formDataDocumentos,
       getCarreraContent,
       getAreaContent,
       getGradoContent,
