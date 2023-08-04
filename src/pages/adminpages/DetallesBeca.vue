@@ -312,7 +312,7 @@
                     <span>{{ documento.documento }}</span>
                     <br>
                     <!-- Update the link to include the document name in the URL -->
-                    <a :href="`/api/documentos/${documento.documento}`" target="_blank" download>Descargar documento</a>
+                    <a :href="`http://127.0.0.1:3000/api/documentos/${documento.documento}`" target="_blank">Ver documento</a>
                   </div>
                 </div>
               </q-card-section>
